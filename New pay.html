@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-s-cale=1.0">
+    <title>Payment by zen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 5px 10px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 8px 15px rgba(0, 0, 0, 0.06);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .btn-gradient {
+            background: linear-gradient(to right, #6366f1, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+            opacity: 0.9;
+        }
+        .input-group-text {
+            background-color: #e5e7eb;
+            border-color: #d1d5db;
+        }
+        .form-control {
+            transition: all 0.2s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+        .spinner {
+            border-top-color: #fff;
+        }
+        .hidden {
+            display: none;
+        }
+        .whatsapp-btn {
+            background: linear-gradient(to right, #25D366, #128C7E);
+            border: none;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+        .tab-btn.active {
+            border-color: #6366f1;
+            color: #4f46e5;
+        }
+        .employee-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .employee-table th, .employee-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+        .employee-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        .employee-table tbody tr:hover {
+            background-color: #f3f4f6;
+        }
+        .employee-table td.actions {
+            white-space: nowrap;
+        }
+        .salary-value {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="container max-w-lg">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-white rounded-full shadow-md">
+                <i class="fas fa-money-check-alt text-3xl gradient-text"></i>
+            </div>
+            <h1 class="text-3xl font-bold mb-2 text-gray-800">Payment by zen</h1>
+            <div class="bg-yellow-100 text-yellow-800 p-4 mt-5 rounded-xl border border-dashed border-yellow-400">
+                <i class="fas fa-exclamation-triangle me-2"></i> Isi data bank dengan benar, sekali typo hangus gaji kalian!
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="card p-8 mb-6" id="loginForm">
+            <h3 class="text-xl font-semibold mb-6 text-gray-800">Masuk</h3>
+            <form id="loginFormElement" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" id="email" required placeholder="nama@contoh.com">
+                    </div>
+                </div>
+                <div>
+                    <label for="whatsapp" class="block text-sm font-medium text-gray-700 mb-2">Nomor WhatsApp</label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                        <input type="tel" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" id="whatsapp" required placeholder="08123456789">
+                    </div>
+                </div>
+                <button type="submit" class="btn-gradient w-full" id="loginBtn">
+                    <i class="fas fa-sign-in-alt me-2"></i> Masuk
+                </button>
+            </form>
+        </div>
+
+        <!-- Already Claimed Message -->
+        <div class="card p-8 mb-6 hidden" id="alreadyClaimed">
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-check-circle text-2xl text-green-500 mr-2"></i>
+                <h3 class="text-xl font-semibold text-gray-800">Sudah Diambil</h3>
+            </div>
+            <div class="bg-blue-100 text-blue-800 p-4 mt-2 rounded-xl text-center">
+                Gaji untuk akun ini sudah diambil dan tidak dapat diklaim lagi.
+            </div>
+            <button class="btn-gradient w-full mt-6" id="backToLoginBtn">
+                <i class="fas fa-arrow-left me-2"></i> Kembali
+            </button>
+        </div>
+
+        <!-- Salary Info -->
+        <div class="card p-8 mb-6 hidden" id="salaryInfo">
+            <h3 class="text-xl font-semibold text-center mb-6 text-gray-800">Informasi Gaji</h3>
+            <div class="text-center py-6 px-4 bg-blue-50 text-blue-800 rounded-xl border-dashed border-2 border-blue-200">
+                <p class="text-sm font-medium mb-2">Gaji yang didapatkan:</p>
+                <div id="salaryDisplay" class="h-8 flex justify-center items-center">
+                    <!-- Spinner or salary amount will be here -->
+                </div>
+            </div>
+            <button class="btn-gradient w-full mt-6" id="withdrawBtn">
+                <i class="fas fa-money-bill-wave me-2"></i> Withdraw
+            </button>
+        </div>
+
+        <!-- Withdraw Form -->
+        <div class="card p-8 mb-6 hidden" id="withdrawForm">
+            <h3 class="text-xl font-semibold mb-6 text-gray-800">Formulir Withdraw</h3>
+            <form id="withdrawFormElement" class="space-y-6">
+                <div>
+                    <label for="fullName" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" id="fullName" required placeholder="Nama lengkap sesuai rekening">
+                    </div>
+                </div>
+                <div>
+                    <label for="accountNumber" class="block text-sm font-medium text-gray-700 mb-2">Nomor Rekening</label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                            <i class="fas fa-credit-card"></i>
+                        </span>
+                        <input type="text" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" id="accountNumber" required placeholder="Nomor rekening bank">
+                    </div>
+                </div>
+                <div>
+                    <label for="bankName" class="block text-sm font-medium text-gray-700 mb-2">Nama Bank</label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                            <i class="fas fa-university"></i>
+                        </span>
+                        <input type="text" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" id="bankName" required placeholder="Contoh: BCA, Mandiri, BNI">
+                    </div>
+                </div>
+                <div>
+                    <label for="withdrawWhatsApp" class="block text-sm font-medium text-gray-700 mb-2">Nomor WhatsApp</label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                        <input type="tel" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" id="withdrawWhatsApp" required placeholder="08123456789">
+                    </div>
+                </div>
+                <button type="submit" class="whatsapp-btn w-full" id="submitWithdrawBtn">
+                    <i class="fab fa-whatsapp me-2"></i> Kirim Formulir ke Admin
+                </button>
+            </form>
+        </div>
+
+        <!-- Admin Section -->
+        <div class="card p-8 mt-6 hidden" id="adminSection">
+            <div class="flex justify-between items-center mb-6">
+                <h4 class="text-xl font-semibold text-gray-800">Mode Admin</h4>
+                <div class="flex space-x-2">
+                    <button class="text-sm text-gray-500 hover:text-indigo-600 transition-colors" id="bulkIdentBtn">
+                        <i class="fas fa-users-cog me-1"></i> Identifikasi Massal
+                    </button>
+                    <button class="text-sm text-gray-500 hover:text-red-500 transition-colors" id="resetSalariesBtn">
+                        <i class="fas fa-sync-alt me-1"></i> Reset Semua Gaji
+                    </button>
+                    <button class="text-sm text-gray-500 hover:text-red-500 transition-colors" id="exitAdminBtn">
+                        <i class="fas fa-sign-out-alt me-1"></i> Keluar
+                    </button>
+                </div>
+            </div>
+            <div id="adminPanel">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-gray-100 p-4 rounded-lg text-center">
+                        <p class="text-sm text-gray-500">Total Karyawan</p>
+                        <p id="totalEmployeesCount" class="text-2xl font-bold text-gray-800 mt-1">0</p>
+                    </div>
+                    <div class="bg-red-100 p-4 rounded-lg text-center">
+                        <p class="text-sm text-red-700">Belum Diambil</p>
+                        <p id="unclaimedCount" class="text-2xl font-bold text-red-800 mt-1">0</p>
+                    </div>
+                    <div class="bg-green-100 p-4 rounded-lg text-center">
+                        <p class="text-sm text-green-700">Sudah Diambil</p>
+                        <p id="claimedCount" class="text-2xl font-bold text-green-800 mt-1">0</p>
+                    </div>
+                </div>
+                <div id="viewButtons" class="flex space-x-2 border-b border-gray-200 mb-4">
+                    <button id="cardViewBtn" class="py-2 px-4 text-sm font-medium border-b-2 border-transparent hover:border-indigo-500 text-gray-600 transition-colors">Card</button>
+                    <button id="tableViewBtn" class="py-2 px-4 text-sm font-medium border-b-2 border-transparent hover:border-indigo-500 text-gray-600 transition-colors">Tabel</button>
+                    <button id="compactViewBtn" class="py-2 px-4 text-sm font-medium border-b-2 border-transparent hover:border-indigo-500 text-gray-600 transition-colors">Compact</button>
+                </div>
+                
+                <p class="text-sm text-blue-600 bg-blue-50 p-3 rounded-lg border border-blue-200 mb-4">
+                    <i class="fas fa-info-circle me-2"></i> Klik pada gaji untuk mengubahnya. Centang "Sudah Diambil" untuk menandai gaji sudah diambil.
+                </p>
+
+                <div id="employeeList" class="mt-4">
+                    <!-- Daftar karyawan akan dimuat di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Access Button -->
+    <div class="fixed bottom-4 right-4 z-10">
+        <button class="bg-white text-gray-500 hover:text-gray-700 p-4 rounded-full shadow-lg transition-all" id="adminToggleBtn">
+            <i class="fas fa-user-lock"></i>
+        </button>
+    </div>
+
+    <!-- Modal for Success Message -->
+    <div id="successModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 shadow-xl w-full max-w-sm text-center">
+            <i class="fas fa-check-circle text-green-500 text-4xl mb-3"></i>
+            <h5 class="text-xl font-bold mb-2 text-gray-800">Berhasil</h5>
+            <p id="successMessage" class="text-gray-600 mb-4"></p>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="document.getElementById('successModal').classList.add('hidden')">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Modal for Error Message -->
+    <div id="errorModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 shadow-xl w-full max-w-sm text-center">
+            <i class="fas fa-exclamation-circle text-red-500 text-4xl mb-3"></i>
+            <h5 class="text-xl font-bold mb-2 text-gray-800">Error</h5>
+            <p id="errorMessage" class="text-gray-600 mb-4"></p>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="document.getElementById('errorModal').classList.add('hidden')">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 shadow-xl w-full max-w-sm">
+            <h5 class="text-xl font-bold mb-4 text-center text-gray-800">Masukkan Kode Admin</h5>
+            <input type="password" id="adminCodeInput" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Kode Admin">
+            <div class="flex justify-end space-x-2">
+                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="document.getElementById('adminLoginModal').classList.add('hidden')">Batal</button>
+                <button class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600" id="adminLoginBtn">Masuk</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Action Modal -->
+    <div id="bulkActionModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 shadow-xl w-full max-w-md">
+            <div id="bulkActionForm">
+                <h5 class="text-xl font-bold mb-4 text-center text-gray-800">Identifikasi & Atur Gaji Massal</h5>
+                <p class="text-sm text-gray-500 mb-4">Tempelkan daftar email di bawah ini, satu per baris.</p>
+                <textarea id="bulkEmailInput" rows="10" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none mb-4" placeholder="email1@contoh.com&#10;email2@contoh.com&#10;..."></textarea>
+                <div class="flex justify-end space-x-2">
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="document.getElementById('bulkActionModal').classList.add('hidden')">Batal</button>
+                    <button class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600" id="processEmailsBtn">Identifikasi</button>
+                </div>
+            </div>
+            <div id="bulkResults" class="hidden">
+                <h5 class="text-xl font-bold mb-4 text-center text-gray-800">Atur Gaji untuk Karyawan Ditemukan</h5>
+                <p class="text-sm text-gray-500 mb-4">Total <span id="foundCount" class="font-bold">0</span> email yang ditemukan.</p>
+                <ul id="foundEmailsList" class="list-disc list-inside bg-gray-50 p-4 rounded-lg mb-4 h-32 overflow-y-auto text-sm"></ul>
+                <div class="flex items-center mb-4">
+                    <label for="bulkSalaryInput" class="text-sm font-medium text-gray-700 mr-2">Jumlah Gaji</label>
+                    <div class="flex rounded-lg shadow-sm flex-1">
+                        <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">Rp</span>
+                        <input type="number" id="bulkSalaryInput" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" placeholder="Masukkan jumlah gaji">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="document.getElementById('bulkActionForm').classList.remove('hidden'); document.getElementById('bulkResults').classList.add('hidden');">Kembali</button>
+                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" id="applyBulkSalaryBtn">Terapkan Gaji</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Compact Modal -->
+    <div id="editCompactModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 shadow-xl w-full max-w-sm">
+            <h5 class="text-xl font-bold mb-4 text-center text-gray-800">Edit Gaji Karyawan</h5>
+            <div class="mb-4">
+                <p class="text-sm font-medium text-gray-700 mb-2">Email</p>
+                <p id="editCompactEmail" class="font-bold text-gray-800"></p>
+            </div>
+            <div class="mb-4">
+                <label for="editCompactSalaryInput" class="block text-sm font-medium text-gray-700 mb-2">Jumlah Gaji</label>
+                <div class="flex rounded-lg shadow-sm">
+                    <span class="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-200 text-gray-500 text-sm">Rp</span>
+                    <input type="number" id="editCompactSalaryInput" class="form-control flex-1 w-full rounded-r-lg border border-gray-300 px-4 py-2" placeholder="Masukkan jumlah gaji">
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 mb-4">
+                <input class="form-checkbox text-indigo-600 rounded" type="checkbox" id="editCompactClaimedCheckbox">
+                <label class="text-sm text-gray-700" for="editCompactClaimedCheckbox">Sudah Diambil</label>
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="document.getElementById('editCompactModal').classList.add('hidden')">Batal</button>
+                <button class="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600" id="saveCompactEditBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reset Confirmation Modal -->
+    <div id="resetConfirmModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 shadow-xl w-full max-w-sm">
+            <h5 class="text-xl font-bold mb-4 text-center text-gray-800">Konfirmasi Reset Gaji</h5>
+            <p class="text-sm text-gray-600 mb-4">Tindakan ini akan mereset semua gaji menjadi Rp 0 dan mengubah status klaim menjadi "Belum Diambil". Harap masukkan kode admin untuk mengonfirmasi.</p>
+            <input type="password" id="resetConfirmCodeInput" class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Kode Admin">
+            <div class="flex justify-end space-x-2">
+                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300" onclick="document.getElementById('resetConfirmModal').classList.add('hidden')">Batal</button>
+                <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600" id="confirmResetBtn">Reset</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const successModal = document.getElementById('successModal');
+        const errorModal = document.getElementById('errorModal');
+        const adminLoginModal = document.getElementById('adminLoginModal');
+        const adminCodeInput = document.getElementById('adminCodeInput');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+
+        const BIN_ID = "68b3e78443b1c97be931c7c5";
+        const API_KEY = "$2a$10$mx8berYVnQxRc7ATeB018Orxl1veAxJt/HhcqGd2CS6kSzL4yPg82";
+        const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        const ADMIN_CODE = 'Arkana123';
+        const TARGET_WHATSAPP = '+62859106914815';
+
+        let users = [];
+        let currentUser = null;
+        let currentView = 'table'; 
+
+        function normalizeEmail(v) { return String(v || "").trim().toLowerCase(); }
+        function digitsOnly(v) { return String(v || "").replace(/\D+/g, ""); }
+        function normalizePhone(phone) {
+            let d = digitsOnly(phone);
+            if (d.startsWith("62")) return d;
+            if (d.startsWith("0")) return "62" + d.slice(1);
+            return d;
+        }
+        function assertRecordShape(record) {
+            if (Array.isArray(record)) return record;
+            if (record && Array.isArray(record.users)) return record.users;
+            return [];
+        }
+
+        async function fetchUsers() {
+            try {
+                const res = await fetch(`${BASE_URL}/latest`, {
+                    headers: { "X-Master-Key": API_KEY }
+                });
+                if (!res.ok) throw new Error("Gagal mengambil data JSONBin");
+                const data = await res.json();
+                users = assertRecordShape(data.record);
+                // Sort users by their 'claimed' status: false first, then true
+                users.sort((a, b) => {
+                    if (a.claimed === b.claimed) {
+                        return 0;
+                    }
+                    return a.claimed ? 1 : -1;
+                });
+                return users;
+            } catch (error) {
+                console.error("Error fetching users:", error);
+                throw error;
+            }
+        }
+
+        async function saveUsers(nextUsers) {
+            try {
+                const body = JSON.stringify({ users: nextUsers });
+                const res = await fetch(`${BASE_URL}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Master-Key": API_KEY,
+                        "X-Bin-Versioning": "false",
+                    },
+                    body,
+                });
+                if (!res.ok) throw new Error("Gagal menyimpan ke JSONBin");
+                const out = await res.json();
+                users = assertRecordShape(out.record);
+                // Re-sort after saving
+                users.sort((a, b) => {
+                    if (a.claimed === b.claimed) {
+                        return 0;
+                    }
+                    return a.claimed ? 1 : -1;
+                });
+                return users;
+            } catch (error) {
+                console.error("Error saving users:", error);
+                throw error;
+            }
+        }
+
+        function findUserByEmailPhone(email, phone) {
+            const e = normalizeEmail(email);
+            const p = normalizePhone(phone);
+            return users.find(u => normalizeEmail(u.email) === e && normalizePhone(u.phone || u.wa || u.whatsapp) === p) || null;
+        }
+
+        const loginForm = document.getElementById('loginForm');
+        const loginFormElement = document.getElementById('loginFormElement');
+        const loginBtn = document.getElementById('loginBtn');
+        const salaryInfo = document.getElementById('salaryInfo');
+        const withdrawBtn = document.getElementById('withdrawBtn');
+        const withdrawForm = document.getElementById('withdrawForm');
+        const withdrawFormElement = document.getElementById('withdrawFormElement');
+        const submitWithdrawBtn = document.getElementById('submitWithdrawBtn');
+        const salaryAmount = document.getElementById('salaryAmount');
+        const salaryDisplay = document.getElementById('salaryDisplay');
+        const adminSection = document.getElementById('adminSection');
+        const employeeList = document.getElementById('employeeList');
+        const adminToggleBtn = document.getElementById('adminToggleBtn');
+        const exitAdminBtn = document.getElementById('exitAdminBtn');
+        const alreadyClaimed = document.getElementById('alreadyClaimed');
+        const backToLoginBtn = document.getElementById('backToLoginBtn');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const totalEmployeesCount = document.getElementById('totalEmployeesCount');
+        const unclaimedCount = document.getElementById('unclaimedCount');
+        const claimedCount = document.getElementById('claimedCount');
+
+
+        const cardViewBtn = document.getElementById('cardViewBtn');
+        const tableViewBtn = document.getElementById('tableViewBtn');
+        const compactViewBtn = document.getElementById('compactViewBtn');
+
+        const bulkIdentBtn = document.getElementById('bulkIdentBtn');
+        const bulkActionModal = document.getElementById('bulkActionModal');
+        const bulkActionForm = document.getElementById('bulkActionForm');
+        const processEmailsBtn = document.getElementById('processEmailsBtn');
+        const bulkEmailInput = document.getElementById('bulkEmailInput');
+        const bulkResults = document.getElementById('bulkResults');
+        const foundCount = document.getElementById('foundCount');
+        const foundEmailsList = document.getElementById('foundEmailsList');
+        const bulkSalaryInput = document.getElementById('bulkSalaryInput');
+        const applyBulkSalaryBtn = document.getElementById('applyBulkSalaryBtn');
+        let identifiedUsers = [];
+
+        const editCompactModal = document.getElementById('editCompactModal');
+        const editCompactEmail = document.getElementById('editCompactEmail');
+        const editCompactSalaryInput = document.getElementById('editCompactSalaryInput');
+        const editCompactClaimedCheckbox = document.getElementById('editCompactClaimedCheckbox');
+        const saveCompactEditBtn = document.getElementById('saveCompactEditBtn');
+        let userToEditEmail = null;
+
+        const resetSalariesBtn = document.getElementById('resetSalariesBtn');
+        const resetConfirmModal = document.getElementById('resetConfirmModal');
+        const resetConfirmCodeInput = document.getElementById('resetConfirmCodeInput');
+        const confirmResetBtn = document.getElementById('confirmResetBtn');
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successModal.classList.remove('hidden');
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorModal.classList.remove('hidden');
+        }
+
+        function hideAllForms() {
+            loginForm.classList.add('hidden');
+            salaryInfo.classList.add('hidden');
+            withdrawForm.classList.add('hidden');
+            alreadyClaimed.classList.add('hidden');
+            adminSection.classList.add('hidden');
+        }
+
+        loginFormElement.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            if (!email || !whatsapp) {
+                showError('Email dan nomor WhatsApp harus diisi');
+                return;
+            }
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memeriksa data...';
+            loginBtn.disabled = true;
+
+            // Show loading spinner for salary amount
+            salaryDisplay.innerHTML = '<i class="fas fa-spinner fa-spin text-3xl text-gray-400"></i>';
+
+            try {
+                await fetchUsers();
+                const user = findUserByEmailPhone(email, whatsapp);
+                if (user) {
+                    if (user.claimed) {
+                        hideAllForms();
+                        alreadyClaimed.classList.remove('hidden');
+                        return;
+                    }
+                    currentUser = user;
+                    
+                    // Animate salary amount after a slight delay to show the spinner
+                    setTimeout(() => {
+                        const salary = user.salary || 0;
+                        salaryDisplay.innerHTML = `<span id="salaryAmount" class="text-3xl font-bold">Rp 0</span>`;
+                        const salaryAmountElement = document.getElementById('salaryAmount');
+                        animateValue(salaryAmountElement, 0, salary, 1000);
+                    }, 500); // 500ms delay
+
+                    hideAllForms();
+                    salaryInfo.classList.remove('hidden');
+                    showSuccess('Login berhasil! Silakan withdraw gaji Anda.');
+                } else {
+                    showError('Email atau nomor WhatsApp tidak terdaftar dalam sistem');
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                showError('Gagal memverifikasi data. Silakan coba lagi.');
+            } finally {
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i> Masuk';
+                loginBtn.disabled = false;
+            }
+        });
+
+        withdrawBtn.addEventListener('click', () => {
+            hideAllForms();
+            withdrawForm.classList.remove('hidden');
+            document.getElementById('withdrawWhatsApp').value = document.getElementById('whatsapp').value;
+        });
+
+        withdrawFormElement.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const accountNumber = document.getElementById('accountNumber').value;
+            const bankName = document.getElementById('bankName').value;
+            const withdrawWhatsApp = document.getElementById('withdrawWhatsApp').value;
+            if (!fullName || !accountNumber || !bankName || !withdrawWhatsApp) {
+                showError('Semua field harus diisi');
+                return;
+            }
+            submitWithdrawBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
+            submitWithdrawBtn.disabled = true;
+            const userIndex = users.findIndex(u => 
+                normalizeEmail(u.email) === normalizeEmail(currentUser.email) && 
+                normalizePhone(u.phone || u.wa || u.whatsapp) === normalizePhone(currentUser.phone || currentUser.wa || currentUser.whatsapp)
+            );
+            if (userIndex !== -1) {
+                users[userIndex].claimed = true;
+                users[userIndex].claimedAt = new Date().toISOString();
+                try {
+                    await saveUsers(users);
+                } catch (error) {
+                    console.error("Error marking user as claimed:", error);
+                    showError('Gagal memperbarui status klaim. Silakan hubungi admin.');
+                    submitWithdrawBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i> Kirim Formulir ke Admin';
+                    submitWithdrawBtn.disabled = false;
+                    return;
+                }
+            }
+            const message = `Formulir Withdraw Gaji%0A%0A` + `Nama Lengkap: ${fullName}%0A` + `Nomor Rekening: ${accountNumber}%0A` + `Nama Bank: ${bankName}%0A` + `Nomor WhatsApp: ${withdrawWhatsApp}%0A` + `Email: ${currentUser.email}%0A` + `Jumlah Gaji: Rp ${(currentUser.salary || 0).toLocaleString('id-ID')}`;
+            window.open(`https://wa.me/${TARGET_WHATSAPP}?text=${message}`, '_blank');
+            showSuccess('Formulir berhasil dikirim! Gaji telah diklaim dan tidak dapat diklaim lagi.');
+            setTimeout(() => {
+                withdrawFormElement.reset();
+                hideAllForms();
+                loginForm.classList.remove('hidden');
+                submitWithdrawBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i> Kirim Formulir ke Admin';
+                submitWithdrawBtn.disabled = false;
+            }, 3000);
+        });
+
+        adminToggleBtn.addEventListener('click', () => {
+            adminLoginModal.classList.remove('hidden');
+            adminCodeInput.value = '';
+            adminCodeInput.focus();
+        });
+
+        adminLoginBtn.addEventListener('click', () => {
+            const adminCode = adminCodeInput.value;
+            if (adminCode === ADMIN_CODE) {
+                adminLoginModal.classList.add('hidden');
+                hideAllForms();
+                adminSection.classList.remove('hidden');
+                updateViewButtons(currentView);
+                loadEmployeeList();
+                showSuccess('Akses admin berhasil diberikan');
+            } else {
+                showError('Kode admin salah');
+                adminCodeInput.value = '';
+                adminCodeInput.focus();
+            }
+        });
+
+        exitAdminBtn.addEventListener('click', () => {
+            adminSection.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        backToLoginBtn.addEventListener('click', () => {
+            hideAllForms();
+            loginForm.classList.remove('hidden');
+        });
+
+        cardViewBtn.addEventListener('click', () => {
+            updateViewButtons('card');
+            loadEmployeeList();
+        });
+
+        tableViewBtn.addEventListener('click', () => {
+            updateViewButtons('table');
+            loadEmployeeList();
+        });
+        
+        compactViewBtn.addEventListener('click', () => {
+            updateViewButtons('compact');
+            loadEmployeeList();
+        });
+
+        bulkIdentBtn.addEventListener('click', () => {
+            bulkActionModal.classList.remove('hidden');
+            bulkActionForm.classList.remove('hidden');
+            bulkResults.classList.add('hidden');
+            bulkEmailInput.value = '';
+        });
+
+        processEmailsBtn.addEventListener('click', async () => {
+            const emailsText = bulkEmailInput.value.trim();
+            if (!emailsText) {
+                showError('Harap tempelkan daftar email terlebih dahulu.');
+                return;
+            }
+
+            processEmailsBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengidentifikasi...';
+            processEmailsBtn.disabled = true;
+
+            const emails = emailsText.split(/[\n,;]+/).map(e => normalizeEmail(e.trim())).filter(e => e.length > 0);
+            await fetchUsers();
+            
+            identifiedUsers = [];
+            const foundEmailsListHTML = document.createDocumentFragment();
+
+            emails.forEach(email => {
+                const user = users.find(u => normalizeEmail(u.email) === email);
+                if (user) {
+                    identifiedUsers.push(user);
+                    const li = document.createElement('li');
+                    li.textContent = user.email;
+                    foundEmailsListHTML.appendChild(li);
+                }
+            });
+
+            processEmailsBtn.innerHTML = 'Identifikasi';
+            processEmailsBtn.disabled = false;
+
+            foundCount.textContent = identifiedUsers.length;
+            foundEmailsList.innerHTML = '';
+            foundEmailsList.appendChild(foundEmailsListHTML);
+
+            bulkActionForm.classList.add('hidden');
+            bulkResults.classList.remove('hidden');
+        });
+
+        applyBulkSalaryBtn.addEventListener('click', async () => {
+            const newSalary = parseInt(bulkSalaryInput.value);
+            if (isNaN(newSalary) || newSalary < 0) {
+                showError('Masukkan jumlah gaji yang valid.');
+                return;
+            }
+
+            if (identifiedUsers.length === 0) {
+                showError('Tidak ada karyawan yang diidentifikasi untuk diperbarui.');
+                return;
+            }
+
+            applyBulkSalaryBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menerapkan...';
+            applyBulkSalaryBtn.disabled = true;
+
+            try {
+                identifiedUsers.forEach(user => {
+                    const userToUpdate = users.find(u => u.email === user.email);
+                    if (userToUpdate) {
+                        userToUpdate.salary = newSalary;
+                    }
+                });
+
+                await saveUsers(users);
+                showSuccess(`${identifiedUsers.length} gaji karyawan berhasil diperbarui.`);
+                
+                bulkActionModal.classList.add('hidden');
+                loadEmployeeList();
+            } catch (error) {
+                console.error("Error applying bulk salary:", error);
+                showError('Gagal menerapkan gaji massal. Silakan coba lagi.');
+            } finally {
+                applyBulkSalaryBtn.innerHTML = 'Terapkan Gaji';
+                applyBulkSalaryBtn.disabled = false;
+            }
+        });
+
+        saveCompactEditBtn.addEventListener('click', async () => {
+            const newSalary = parseInt(editCompactSalaryInput.value);
+            const isClaimed = editCompactClaimedCheckbox.checked;
+
+            if (isNaN(newSalary) || newSalary < 0) {
+                showError('Masukkan jumlah gaji yang valid.');
+                return;
+            }
+
+            const userIndex = users.findIndex(u => u.email === userToEditEmail);
+            if (userIndex === -1) {
+                showError('Karyawan tidak ditemukan.');
+                return;
+            }
+
+            users[userIndex].salary = newSalary;
+            users[userIndex].claimed = isClaimed;
+            users[userIndex].claimedAt = isClaimed ? (users[userIndex].claimedAt || new Date().toISOString()) : null;
+
+            try {
+                await saveUsers(users);
+                showSuccess('Data karyawan berhasil diperbarui.');
+                editCompactModal.classList.add('hidden');
+                loadEmployeeList();
+            } catch (error) {
+                console.error("Error saving compact edit:", error);
+                showError('Gagal menyimpan perubahan. Silakan coba lagi.');
+            }
+        });
+        
+        // New feature: Reset all salaries
+        resetSalariesBtn.addEventListener('click', () => {
+            resetConfirmModal.classList.remove('hidden');
+            resetConfirmCodeInput.value = '';
+            resetConfirmCodeInput.focus();
+        });
+
+        confirmResetBtn.addEventListener('click', async () => {
+            const confirmCode = resetConfirmCodeInput.value;
+            if (confirmCode === ADMIN_CODE) {
+                resetConfirmModal.classList.add('hidden');
+                try {
+                    confirmResetBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mereset...';
+                    confirmResetBtn.disabled = true;
+
+                    await fetchUsers(); // Get the latest data
+                    users.forEach(user => {
+                        user.salary = 0;
+                        user.claimed = false;
+                        if (user.claimedAt) {
+                            delete user.claimedAt;
+                        }
+                    });
+                    await saveUsers(users);
+                    showSuccess('Semua gaji berhasil direset!');
+                    loadEmployeeList();
+                } catch (error) {
+                    console.error("Error resetting salaries:", error);
+                    showError('Gagal mereset gaji. Silakan coba lagi.');
+                } finally {
+                    confirmResetBtn.innerHTML = 'Reset';
+                    confirmResetBtn.disabled = false;
+                }
+            } else {
+                showError('Kode admin salah.');
+                resetConfirmCodeInput.value = '';
+                resetConfirmCodeInput.focus();
+            }
+        });
+
+        function updateViewButtons(view) {
+            currentView = view;
+            document.querySelectorAll('#viewButtons button').forEach(btn => btn.classList.remove('active', 'border-indigo-500', 'text-indigo-600'));
+            document.getElementById(view + 'ViewBtn').classList.add('active', 'border-indigo-500', 'text-indigo-600');
+        }
+
+        async function loadEmployeeList() {
+            try {
+                await fetchUsers();
+                employeeList.innerHTML = '';
+                
+                // Update stats
+                totalEmployeesCount.textContent = users.length;
+                unclaimedCount.textContent = users.filter(u => !u.claimed).length;
+                claimedCount.textContent = users.filter(u => u.claimed).length;
+
+                if (users.length === 0) {
+                    employeeList.innerHTML = '<div class="text-center p-4 text-gray-500">Tidak ada data karyawan.</div>';
+                    return;
+                }
+
+                if (currentView === 'card') {
+                    users.forEach((user, index) => {
+                        const userDiv = document.createElement('div');
+                        userDiv.className = 'bg-gray-50 p-4 rounded-xl border border-gray-200 mb-4 flex flex-col space-y-4';
+                        userDiv.innerHTML = `
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-gray-800 text-lg">${user.email || 'Tidak ada email'}</h4>
+                                <span class="text-xs font-medium px-2 py-1 rounded-full ${user.claimed ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}">
+                                    ${user.claimed ? 'Sudah Diambil' : 'Belum Diambil'}
+                                </span>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Nomor WhatsApp</p>
+                                <p class="font-medium text-gray-700">${user.phone || user.wa || user.whatsapp || 'Tidak ada'}</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-sm text-gray-500 mb-1">Jumlah Gaji</p>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm text-gray-600">Rp</span>
+                                    <input type="number" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500" value="${user.salary || 0}" data-email="${user.email}">
+                                    <button class="bg-indigo-500 text-white p-2 rounded-lg hover:bg-indigo-600 transition-colors save-salary-btn" data-email="${user.email}">
+                                        <i class="fas fa-save"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input class="form-checkbox text-indigo-600 rounded" type="checkbox" data-email="${user.email}" id="claimed-${index}" ${user.claimed ? 'checked' : ''}>
+                                <label class="text-sm text-gray-700" for="claimed-${index}">Tandai Sudah Diambil</label>
+                            </div>
+                            ${user.claimedAt ? `<small class="block mt-2 text-xs text-gray-400">Diambil pada: ${new Date(user.claimedAt).toLocaleString('id-ID')}</small>` : ''}
+                        `;
+                        employeeList.appendChild(userDiv);
+                    });
+                } else if (currentView === 'table') {
+                    const tableHtml = `
+                        <div class="overflow-x-auto">
+                            <table class="employee-table">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>WA</th>
+                                        <th>Gaji</th>
+                                        <th>Status</th>
+                                        <th class="actions">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${users.map((user, index) => `
+                                        <tr data-email="${user.email}">
+                                            <td class="text-sm">${user.email || 'Tidak ada email'}</td>
+                                            <td class="text-sm">${user.phone || user.wa || user.whatsapp || 'Tidak ada'}</p></td>
+                                            <td class="text-sm">
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="text-gray-600">Rp</span>
+                                                    <input type="number" class="w-24 border border-gray-300 rounded-lg px-2 py-1 text-gray-800 text-sm" value="${user.salary || 0}" data-email="${user.email}">
+                                                    <button class="bg-indigo-500 text-white p-1 rounded-lg hover:bg-indigo-600 transition-colors save-salary-btn" data-email="${user.email}">
+                                                        <i class="fas fa-save fa-xs"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="text-sm">
+                                                <span class="text-sm font-medium px-2 py-1 rounded-full ${user.claimed ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}">
+                                                    ${user.claimed ? 'Sudah' : 'Belum'}
+                                                </span>
+                                            </td>
+                                            <td class="text-sm actions">
+                                                <div class="flex items-center space-x-2">
+                                                    <input class="form-checkbox text-indigo-600 rounded" type="checkbox" data-email="${user.email}" id="claimed-table-${index}" ${user.claimed ? 'checked' : ''}>
+                                                    <label class="text-xs text-gray-700" for="claimed-table-${index}">Diambil</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    employeeList.innerHTML = tableHtml;
+                } else if (currentView === 'compact') {
+                    users.forEach((user, index) => {
+                        const userDiv = document.createElement('div');
+                        userDiv.className = 'bg-gray-50 p-3 rounded-lg border border-gray-200 flex items-center justify-between mb-2';
+                        userDiv.innerHTML = `
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-medium text-gray-800 truncate">${user.email || 'Tidak ada email'}</p>
+                                <p class="text-xs text-gray-500">WA: ${user.phone || user.wa || user.whatsapp || 'Tidak ada'}</p>
+                            </div>
+                            <div class="flex-shrink-0 flex items-center space-x-2">
+                                <span class="text-sm font-bold text-indigo-600">Rp ${user.salary ? user.salary.toLocaleString('id-ID') : 0}</span>
+                                <span class="text-xs font-medium px-2 py-1 rounded-full ${user.claimed ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}">
+                                    ${user.claimed ? 'Sudah' : 'Belum'}
+                                </span>
+                                <button class="text-gray-500 hover:text-indigo-600 edit-compact-btn" data-email="${user.email}">
+                                    <i class="fas fa-pen fa-xs"></i>
+                                </button>
+                            </div>
+                        `;
+                        employeeList.appendChild(userDiv);
+                    });
+                }
+
+                document.querySelectorAll('.save-salary-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const email = e.target.closest('button').getAttribute('data-email');
+                        const input = document.querySelector(`input[data-email="${email}"]`);
+                        const newSalary = input.value;
+                        if (!newSalary || isNaN(newSalary) || newSalary < 0) {
+                            showError('Masukkan jumlah gaji yang valid');
+                            return;
+                        }
+                        const userToUpdate = users.find(u => u.email === email);
+                        if (userToUpdate) {
+                            userToUpdate.salary = parseInt(newSalary);
+                            try {
+                                await saveUsers(users);
+                                showSuccess('Gaji berhasil diperbarui');
+                                loadEmployeeList();
+                            } catch (error) {
+                                console.error("Error saving salary:", error);
+                                showError('Gagal menyimpan perubahan gaji');
+                            }
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.form-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', async (e) => {
+                        const email = e.target.getAttribute('data-email');
+                        const userToUpdate = users.find(u => u.email === email);
+                        if (userToUpdate) {
+                            userToUpdate.claimed = e.target.checked;
+                            userToUpdate.claimedAt = e.target.checked ? new Date().toISOString() : null;
+                            try {
+                                await saveUsers(users);
+                                showSuccess('Status klaim berhasil diperbarui');
+                                loadEmployeeList();
+                            } catch (error) {
+                                console.error("Error saving claim status:", error);
+                                showError('Gagal menyimpan status klaim');
+                            }
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.edit-compact-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        userToEditEmail = e.currentTarget.getAttribute('data-email');
+                        const user = users.find(u => u.email === userToEditEmail);
+                        if (user) {
+                            editCompactEmail.textContent = user.email;
+                            editCompactSalaryInput.value = user.salary || 0;
+                            editCompactClaimedCheckbox.checked = user.claimed;
+                            editCompactModal.classList.remove('hidden');
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error("Error loading employee list:", error);
+                showError('Gagal memuat daftar karyawan');
+            }
+        }
+
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                obj.textContent = `Rp ${value.toLocaleString('id-ID')}`;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    obj.textContent = `Rp ${end.toLocaleString('id-ID')}`;
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        hideAllForms();
+        loginForm.classList.remove('hidden');
+    </script>
+</body>
+</html>
