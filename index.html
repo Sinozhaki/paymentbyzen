@@ -158,6 +158,12 @@
             border-color: #6B7280;
             cursor: not-allowed;
         }
+        
+        .employee-card {
+            background-color: rgba(31, 41, 55, 0.5);
+            border: 1px solid #374151;
+        }
+        
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 text-sm sm:text-base">
@@ -172,7 +178,7 @@
         </div>
 
         <!-- Login Form -->
-        <div class="card p-8 mb-6" id="loginForm">
+        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700" id="loginForm">
             <h3 class="text-xl font-bold mb-6 uppercase">Masuk</h3>
             <form id="loginFormElement" class="space-y-6">
                 <div>
@@ -200,7 +206,7 @@
         </div>
         
         <!-- Restricted Account Message -->
-        <div class="card p-8 mb-6 hidden" id="restrictedAccount">
+        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="restrictedAccount">
             <div class="flex items-center justify-center mb-4">
                 <i class="fas fa-ban text-2xl text-red-500 mr-3"></i>
                 <h3 class="text-xl font-bold uppercase text-red-400">Akun Dibatasi</h3>
@@ -212,7 +218,7 @@
 
 
         <!-- Already Claimed Message -->
-        <div class="card p-8 mb-6 hidden" id="alreadyClaimed">
+        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="alreadyClaimed">
             <div class="flex items-center justify-center mb-4">
                 <i class="fas fa-check-circle text-2xl text-green-400 mr-2"></i>
                 <h3 class="text-xl font-bold uppercase">Sudah Diambil</h3>
@@ -226,7 +232,7 @@
         </div>
 
         <!-- Salary Info -->
-        <div class="card p-8 mb-6 hidden" id="salaryInfo">
+        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="salaryInfo">
             <h3 class="text-xl font-bold text-center mb-6 uppercase">Informasi Gaji</h3>
             <div class="text-center py-6 px-4 bg-gray-900 border-dashed border-2 border-gray-700 rounded-md">
                 <p class="text-sm font-medium mb-2">Gaji Kamu:</p>
@@ -240,7 +246,7 @@
         </div>
 
         <!-- Withdraw Form -->
-        <div class="card p-8 mb-6 hidden" id="withdrawForm">
+        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="withdrawForm">
             <h3 class="text-xl font-bold mb-6 uppercase">Form Withdraw</h3>
             <form id="withdrawFormElement" class="space-y-6">
                  <div>
@@ -295,7 +301,7 @@
         </div>
         
         <!-- Financial Tips Section -->
-        <div class="card p-8 mb-6 hidden" id="financialTipsSection">
+        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="financialTipsSection">
             <div class="text-center">
                 <i class="fas fa-check-circle text-4xl text-green-400 mb-4"></i>
                 <h3 class="text-xl font-bold uppercase">Pengajuan Terkirim!</h3>
@@ -311,7 +317,7 @@
         </div>
 
         <!-- Admin Section -->
-        <div class="card p-8 mt-6 hidden" id="adminSection">
+        <div class="p-8 mt-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="adminSection">
             <div class="flex justify-between items-center mb-6">
                 <h4 class="text-xl font-bold uppercase">Mode Admin</h4>
                 <div class="flex space-x-4">
@@ -352,12 +358,7 @@
                         <button data-filter="restricted" class="filter-btn w-full text-center text-sm py-1 px-2 rounded-md transition-colors hover:bg-gray-800">Restricted</button>
                     </div>
                 </div>
-                <div id="viewButtons" class="flex space-x-2 border-b border-gray-700 mb-4">
-                    <button id="cardViewBtn" class="py-2 px-4 text-sm font-medium border-b-2 border-transparent hover:border-amber-500 text-gray-400 transition-colors">Card</button>
-                    <button id="tableViewBtn" class="py-2 px-4 text-sm font-medium border-b-2 border-transparent hover:border-amber-500 text-gray-400 transition-colors">Tabel</button>
-                    <button id="compactViewBtn" class="py-2 px-4 text-sm font-medium border-b-2 border-transparent hover:border-amber-500 text-gray-400 transition-colors">Compact</button>
-                </div>
-
+                
                 <div id="employeeList" class="mt-4 max-h-96 overflow-y-auto pr-2">
                     <!-- Daftar karyawan akan dimuat di sini -->
                 </div>
@@ -374,7 +375,7 @@
 
     <!-- Modals -->
     <div id="successModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm text-center">
+        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm text-center">
             <i class="fas fa-check-circle text-green-400 text-4xl mb-3"></i>
             <h5 class="text-xl font-bold mb-2 uppercase">Berhasil</h5>
             <p id="successMessage" class="text-gray-300 mb-4"></p>
@@ -383,7 +384,7 @@
     </div>
 
     <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm text-center">
+        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm text-center">
             <i class="fas fa-exclamation-circle text-red-500 text-4xl mb-3"></i>
             <h5 class="text-xl font-bold mb-2 uppercase">Error</h5>
             <p id="errorMessage" class="text-gray-300 mb-4"></p>
@@ -392,7 +393,7 @@
     </div>
 
     <div id="adminLoginModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm">
+        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm">
             <h5 class="text-xl font-bold mb-4 text-center uppercase">Kode Admin</h5>
             <input type="password" id="adminCodeInput" class="form-control w-full px-4 py-3 mb-4" placeholder="Kode Admin">
             <div class="flex justify-end space-x-2">
@@ -403,14 +404,13 @@
     </div>
     
     <div id="geminiModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-md">
+        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-md">
             <h5 class="text-xl font-bold mb-4 text-center uppercase accent-text">✨ Pesan Pengingat AI</h5>
             <p class="text-sm text-gray-400 mb-4">Berikut adalah draf pesan yang dibuat oleh AI. Anda bisa menyalinnya atau langsung mengirim via WhatsApp.</p>
             <div id="geminiResultContent" class="p-4 bg-gray-900 rounded-md border border-gray-700 min-h-[150px]">
                 <!-- Loading or result here -->
             </div>
             <div class="flex justify-end space-x-2 mt-6">
-                <button class="btn-primary btn-secondary" onclick="document.getElementById('geminiModal').classList.add('hidden')">Batal</button>
                 <button class="btn-primary btn-secondary" id="copyReminderBtn"><i class="fas fa-copy mr-2"></i> Salin</button>
                 <a href="#" id="sendReminderBtn" target="_blank" class="btn-primary whatsapp-btn inline-flex items-center"><i class="fab fa-whatsapp mr-2"></i> Kirim</a>
             </div>
@@ -418,7 +418,7 @@
     </div>
 
     <div id="bulkActionModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-md">
+        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-md">
             <div id="bulkActionForm">
                 <h5 class="text-xl font-bold mb-4 text-center uppercase">Atur Aksi Massal</h5>
                 <p class="text-sm text-gray-400 mb-4">Tempelkan daftar email di bawah, satu per baris.</p>
@@ -458,39 +458,40 @@
         </div>
     </div>
 
-    <div id="editCompactModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase">Edit Player</h5>
+    <!-- Edit modal for all views -->
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm">
+            <h5 class="text-xl font-bold mb-4 text-center uppercase">Edit Karyawan</h5>
             <div class="mb-4">
                 <p class="text-sm font-medium mb-2">Email</p>
-                <p id="editCompactEmail" class="font-bold text-amber-400 truncate"></p>
+                <p id="editEmail" class="font-bold text-amber-400 truncate"></p>
             </div>
             <div class="mb-4">
-                <label for="editCompactSalaryInput" class="block text-sm font-medium mb-2">Jumlah Gaji</label>
+                <label for="editSalaryInput" class="block text-sm font-medium mb-2">Jumlah Gaji</label>
                 <div class="flex rounded-md shadow-sm">
                     <span class="input-group-text items-center px-4">Rp</span>
-                    <input type="number" id="editCompactSalaryInput" class="form-control flex-1 w-full px-4 py-2" placeholder="Masukkan jumlah gaji">
+                    <input type="number" id="editSalaryInput" class="form-control flex-1 w-full px-4 py-2" placeholder="Masukkan jumlah gaji">
                 </div>
             </div>
             <div class="flex items-center space-x-3 mb-6">
-                <input class="form-checkbox" type="checkbox" id="editCompactClaimedCheckbox">
-                <label class="text-sm" for="editCompactClaimedCheckbox">Sudah Diambil</label>
+                <input class="form-checkbox" type="checkbox" id="editClaimedCheckbox">
+                <label class="text-sm" for="editClaimedCheckbox">Sudah Diambil</label>
             </div>
             <div class="border-t border-gray-700 pt-4">
                  <div class="flex items-center space-x-3">
-                    <input class="form-checkbox" type="checkbox" id="editCompactRestrictedCheckbox">
-                    <label class="text-sm text-red-400" for="editCompactRestrictedCheckbox">Batasi Akun Ini</label>
+                    <input class="form-checkbox" type="checkbox" id="editRestrictedCheckbox">
+                    <label class="text-sm text-red-400" for="editRestrictedCheckbox">Batasi Akun Ini</label>
                 </div>
             </div>
             <div class="flex justify-end space-x-2 mt-6">
-                 <button class="btn-primary btn-secondary" onclick="document.getElementById('editCompactModal').classList.add('hidden')">Batal</button>
-                <button class="btn-primary" id="saveCompactEditBtn">Simpan</button>
+                 <button class="btn-primary btn-secondary" onclick="document.getElementById('editModal').classList.add('hidden')">Batal</button>
+                <button class="btn-primary" id="saveEditBtn">Simpan</button>
             </div>
         </div>
     </div>
     
     <div id="resetConfirmModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm">
+        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm">
             <h5 class="text-xl font-bold mb-4 text-center uppercase">Konfirmasi Reset</h5>
             <p class="text-sm text-gray-400 mb-4">Ini akan mereset SEMUA gaji jadi Rp 0 & status jadi "Belum Diambil". Masukkan kode admin.</p>
             <input type="password" id="resetConfirmCodeInput" class="form-control w-full px-4 py-3 mb-4" placeholder="Kode Admin">
@@ -513,7 +514,6 @@
         let users = [];
         let identifiedUsers = [];
         let currentUser = null;
-        let currentView = 'table';
         let currentFilter = 'all'; 
 
         function qs(selector) { return document.querySelector(selector); }
@@ -530,6 +530,8 @@
         const errorModal = qs('#errorModal');
         const adminLoginModal = qs('#adminLoginModal');
         const geminiModal = qs('#geminiModal');
+        const resetConfirmModal = qs('#resetConfirmModal');
+        const editModal = qs('#editModal');
 
         const bulkActionModal = qs('#bulkActionModal');
         const bulkActionForm = qs('#bulkActionForm');
@@ -706,68 +708,29 @@
                     return;
                 }
                 
-                if (currentView === 'table') {
-                    employeeList.innerHTML = `<div class="overflow-x-auto"><table class="employee-table"><thead><tr><th>Akun</th><th>Gaji</th><th>Status</th><th class="actions">Aksi</th></tr></thead><tbody></tbody></table></div>`;
-                }
-                
                 const fragment = document.createDocumentFragment();
-                filteredUsers.forEach((user, index) => {
-                    const isDisabled = user.restricted ? 'disabled' : '';
-                    const warningIcon = user.restricted ? `<i class="fas fa-exclamation-triangle text-red-500 ml-2" title="Akun ini dibatasi"></i>` : '';
+                filteredUsers.forEach(user => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-900/50 p-4 rounded-md border border-gray-700 mb-2 flex items-center justify-between';
                     
-                    if (currentView === 'compact') {
-                        const userDiv = document.createElement('div');
-                        userDiv.className = 'bg-gray-900/50 p-3 border border-gray-700 rounded-md flex items-center justify-between mb-2';
-                        userDiv.innerHTML = `
-                            <div class="flex-1 min-w-0 mr-4 flex items-center">
-                                <p class="text-sm font-medium text-amber-400 truncate">${user.email || '-'}</p>
-                                ${warningIcon}
-                            </div>
-                            <div class="flex-shrink-0 flex items-center space-x-3">
-                                <span class="text-sm font-bold text-gray-300">Rp ${user.salary.toLocaleString('id-ID')}</span>
-                                <span class="text-xs px-2 py-1 rounded-full ${user.claimed ? 'bg-green-800 text-green-300' : 'bg-gray-700 text-gray-300'}">
-                                    ${user.claimed ? 'KLAIM' : 'BELUM'}
-                                </span>
-                                <button class="text-gray-400 hover:text-amber-400 edit-compact-btn" data-email="${user.email}"><i class="fas fa-pen fa-xs"></i></button>
-                            </div>`;
-                        fragment.appendChild(userDiv);
-                    } else if (currentView === 'table') {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td class="text-sm">
-                                <div class="flex items-center">
-                                  <span class="truncate" style="max-width: 150px;">${user.email || '-'}</span>
-                                  ${warningIcon}
-                                </div>
-                                <div class="text-xs text-gray-400">${user.phone || user.wa || '-'}</div>
-                            </td>
-                            <td class="text-sm">
-                                <div class="flex items-center space-x-2">
-                                    <span>Rp</span>
-                                    <input type="number" class="form-control w-24 px-2 py-1 text-sm salary-input" value="${user.salary}" data-email="${user.email}" ${isDisabled}>
-                                </div>
-                            </td>
-                            <td class="text-sm">
-                                <div class="flex items-center space-x-2">
-                                    <input class="form-checkbox claim-checkbox" type="checkbox" data-email="${user.email}" id="claim-table-${index}" ${user.claimed ? 'checked' : ''} ${isDisabled}>
-                                    <label for="claim-table-${index}" class="${user.claimed ? 'text-green-400' : ''}">Klaim</label>
-                                </div>
-                            </td>
-                            <td class="text-sm actions">
-                                <div class="flex items-center space-x-3">
-                                    <input class="form-checkbox restrict-checkbox" type="checkbox" data-email="${user.email}" id="restrict-table-${index}" ${user.restricted ? 'checked' : ''}>
-                                    <label for="restrict-table-${index}" class="text-red-400">Batasi</label>
-                                </div>
-                            </td>`;
-                        fragment.appendChild(row);
-                    }
+                    const statusText = user.restricted ? 'Dibatasi' : (user.claimed ? 'Sudah Klaim' : 'Belum Klaim');
+                    const statusColor = user.restricted ? 'text-red-400' : (user.claimed ? 'text-green-400' : 'text-yellow-400');
+                    
+                    card.innerHTML = `
+                        <div class="flex-1 min-w-0 mr-4">
+                            <p class="font-bold text-amber-400 truncate">${user.email || '-'}</p>
+                            <p class="text-xs text-gray-400 mt-1">${user.phone || user.wa || '-'}</p>
+                            <p class="text-xs ${statusColor} mt-1">${statusText}</p>
+                        </div>
+                        <div class="flex-shrink-0 flex items-center space-x-2">
+                             <span class="text-sm font-bold text-gray-300">Rp ${user.salary.toLocaleString('id-ID')}</span>
+                             <button class="text-gray-400 hover:text-amber-400 edit-btn" data-email="${user.email}"><i class="fas fa-pen"></i> Edit</button>
+                        </div>
+                    `;
+                    fragment.appendChild(card);
                 });
                 
-                if (currentView === 'table') {
-                    qs('.employee-table tbody').appendChild(fragment);
-                } else {
-                    employeeList.appendChild(fragment);
-                }
+                employeeList.appendChild(fragment);
 
                 addAdminEventListeners();
 
@@ -776,71 +739,31 @@
                 showError('Gagal memuat daftar');
             }
         }
-
+        
         function addAdminEventListeners() {
-            qsa('.claim-checkbox, .restrict-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', async (e) => {
-                    const email = e.target.dataset.email;
-                    const userToUpdate = users.find(u => u.email === email);
-                    if (userToUpdate) {
-                        const type = e.target.classList.contains('claim-checkbox') ? 'claimed' : 'restricted';
-                        userToUpdate[type] = e.target.checked;
-                        if (type === 'claimed') userToUpdate.claimedAt = e.target.checked ? new Date().toISOString() : null;
-                        
-                        try {
-                            await saveUsers(users);
-                            showSuccess(`Status ${type} diperbarui`);
-                            loadEmployeeList();
-                        } catch (error) {
-                            showError(`Gagal simpan status ${type}`);
-                        }
-                    }
-                });
-            });
-
-            qsa('.salary-input').forEach(input => {
-                input.addEventListener('change', async (e) => {
-                     const email = e.target.dataset.email;
-                     const newSalary = parseInt(e.target.value);
-                     const userToUpdate = users.find(u => u.email === email);
-                     if(userToUpdate && !isNaN(newSalary)){
-                         userToUpdate.salary = newSalary;
-                         try {
-                            await saveUsers(users);
-                            showSuccess(`Gaji untuk ${email} diperbarui`);
-                         } catch(err){
-                             showError('Gagal simpan gaji');
-                         }
-                     }
-                });
-            });
-
-            qsa('.edit-compact-btn').forEach(btn => {
+            qsa('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const userToEditEmail = e.currentTarget.dataset.email;
                     const user = users.find(u => u.email === userToEditEmail);
                     if (user) {
-                        qs('#editCompactEmail').textContent = user.email;
-                        qs('#editCompactSalaryInput').value = user.salary;
-                        qs('#editCompactClaimedCheckbox').checked = user.claimed;
-                        qs('#editCompactRestrictedCheckbox').checked = user.restricted;
+                        qs('#editEmail').textContent = user.email;
+                        qs('#editSalaryInput').value = user.salary;
+                        qs('#editClaimedCheckbox').checked = user.claimed;
+                        qs('#editRestrictedCheckbox').checked = user.restricted;
                         
-                        qs('#editCompactSalaryInput').disabled = user.restricted;
-                        qs('#editCompactClaimedCheckbox').disabled = user.restricted;
-
-                        qs('#editCompactModal').classList.remove('hidden');
+                        qs('#editModal').classList.remove('hidden');
                         
-                        qs('#saveCompactEditBtn').onclick = async () => {
+                        qs('#saveEditBtn').onclick = async () => {
                            const userIndex = users.findIndex(u => u.email === userToEditEmail);
                            if(userIndex > -1){
-                               users[userIndex].salary = parseInt(qs('#editCompactSalaryInput').value) || 0;
-                               users[userIndex].claimed = qs('#editCompactClaimedCheckbox').checked;
-                               users[userIndex].restricted = qs('#editCompactRestrictedCheckbox').checked;
+                               users[userIndex].salary = parseInt(qs('#editSalaryInput').value) || 0;
+                               users[userIndex].claimed = qs('#editClaimedCheckbox').checked;
+                               users[userIndex].restricted = qs('#editRestrictedCheckbox').checked;
                                
                                try {
                                    await saveUsers(users);
                                    showSuccess('Data karyawan diperbarui');
-                                   qs('#editCompactModal').classList.add('hidden');
+                                   editModal.classList.add('hidden');
                                    loadEmployeeList();
                                } catch (error) {
                                    showError('Gagal menyimpan perubahan');
@@ -897,6 +820,36 @@
             }
         }
 
+        async function handleResetSalaries() {
+            const confirmBtn = qs('#confirmResetBtn');
+            const originalText = confirmBtn.innerHTML;
+            confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mereset...';
+            confirmBtn.disabled = true;
+
+            try {
+                await fetchUsers();
+                
+                const newUsers = users.map(user => ({
+                    ...user,
+                    salary: 0,
+                    claimed: false
+                }));
+
+                await saveUsers(newUsers);
+
+                showSuccess('Semua gaji berhasil direset!');
+                resetConfirmModal.classList.add('hidden');
+                loadEmployeeList();
+            } catch (error) {
+                console.error("Error resetting salaries:", error);
+                showError('Gagal mereset gaji. Coba lagi.');
+            } finally {
+                confirmBtn.innerHTML = originalText;
+                confirmBtn.disabled = false;
+            }
+        }
+
+
         document.addEventListener('DOMContentLoaded', () => {
             hideAllMainViews();
             loginForm.classList.remove('hidden');
@@ -925,7 +878,6 @@
                     hideAllMainViews();
                     adminSection.classList.remove('hidden');
                     updateFilterButtons(currentFilter);
-                    updateViewButtons(currentView);
                     loadEmployeeList();
                 } else {
                     showError('Kode admin salah');
@@ -937,11 +889,19 @@
                 loginForm.classList.remove('hidden');
             });
 
-            function updateViewButtons(view) {
-                currentView = view;
-                qsa('#viewButtons button').forEach(b => b.classList.remove('active'));
-                qs('#' + view + 'ViewBtn').classList.add('active');
-            }
+            qs('#resetSalariesBtn').addEventListener('click', () => {
+                resetConfirmModal.classList.remove('hidden');
+                qs('#resetConfirmCodeInput').value = '';
+            });
+
+            qs('#confirmResetBtn').addEventListener('click', () => {
+                if (qs('#resetConfirmCodeInput').value === ADMIN_CODE) {
+                    handleResetSalaries();
+                } else {
+                    showError('Kode admin salah');
+                }
+            });
+
 
             function updateFilterButtons(filter) {
                 currentFilter = filter;
@@ -949,11 +909,6 @@
                 qs(`button[data-filter="${filter}"]`).classList.add('active');
             }
 
-            qsa('#viewButtons button').forEach(btn => btn.addEventListener('click', () => {
-                updateViewButtons(btn.id.replace('ViewBtn', ''));
-                loadEmployeeList();
-            }));
-            
             qsa('#filterButtons button').forEach(btn => btn.addEventListener('click', () => {
                 updateFilterButtons(btn.dataset.filter);
                 loadEmployeeList();
@@ -992,7 +947,7 @@
             applyBulkSalaryBtn.addEventListener('click', (e) => {
                 const newSalary = parseInt(qs('#bulkSalaryInput').value);
                 if (isNaN(newSalary) || newSalary < 0) return showError('Masukkan jumlah gaji yang valid.');
-                if (identifiedUsers.length === 0) return showError('Tidak ada karyawan yang diidentifikasi.');
+                if (identifiedUsers.length === 0) return showError('Tidak ada akun yang cocok untuk diperbarui.');
                 
                 handleBulkAction(identifiedUsers, 'salary', newSalary, e.currentTarget);
             });
@@ -1009,4 +964,3 @@
     </script>
 </body>
 </html>
-
