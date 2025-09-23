@@ -3,145 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment by zen - Gemini Edition</title>
+    <title>Payment by zen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'IBM Plex Mono', monospace;
-            background-color: #111827; /* Dark Blue Gray */
-            color: #D1D5DB; /* Light Gray */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231F2937' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light Gray background */
+            color: #1f2937; /* Dark Gray text */
         }
 
         .card {
-            background-color: rgba(31, 41, 55, 0.8); /* Darker Gray with opacity */
-            border-radius: 0.5rem;
-            border: 1px solid #374151; /* Medium Gray */
-            backdrop-filter: blur(8px);
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb; /* Gray-200 */
             transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
-
         .card:hover {
-             border-color: #4B5563;
+             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
         .accent-text {
-            color: #FBBF24; /* Amber */
+            color: #059669; /* Emerald-600 */
         }
 
         .btn-primary {
-            background-color: #F59E0B; /* Amber-500 */
-            color: #111827;
+            background-color: #059669; /* Emerald-600 */
+            color: #ffffff;
             border: 1px solid transparent;
             padding: 0.75rem 1.25rem;
-            font-weight: 700;
-            border-radius: 0.375rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
             transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         }
 
         .btn-primary:hover {
-            background-color: #FBBF24; /* Amber-400 */
+            background-color: #047857; /* Emerald-700 */
         }
         .btn-primary:disabled {
-            background-color: #4B5563;
-            color: #9CA3AF;
+            background-color: #d1d5db; /* Gray-300 */
+            color: #6b7280; /* Gray-500 */
             cursor: not-allowed;
         }
         
         .btn-secondary {
             background-color: transparent;
-            color: #D1D5DB;
-            border: 1px solid #374151;
+            color: #059669;
+            border: 1px solid #059669;
         }
         .btn-secondary:hover {
-            background-color: #374151;
-            color: #F9FAFB;
+            background-color: #d1fae5; /* Emerald-100 */
+            color: #047857;
         }
         
         .whatsapp-btn {
-            background-color: #16A34A; /* Green-600 */
-            color: #F9FAFB;
+            background-color: #16a34a; /* Green-600 */
+            color: #ffffff;
         }
         .whatsapp-btn:hover {
-            background-color: #22C55E; /* Green-500 */
+            background-color: #15803d; /* Green-700 */
         }
 
         .form-control {
-            background-color: #111827;
-            border: 1px solid #374151;
-            color: #D1D5DB;
-            border-radius: 0.375rem;
+            background-color: #f9fafb; /* Gray-50 */
+            border: 1px solid #d1d5db; /* Gray-300 */
+            color: #1f2937;
+            border-radius: 0.5rem;
             transition: all 0.2s ease-in-out;
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Inter', sans-serif;
         }
         .form-control::placeholder {
-            color: #6B7280;
+            color: #9ca3af; /* Gray-400 */
         }
 
         .form-control:focus {
-            border-color: #F59E0B;
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
             outline: none;
         }
         .form-control:disabled, .form-control:read-only {
-            background-color: #374151;
-            color: #9CA3AF;
+            background-color: #e5e7eb; /* Gray-200 */
+            color: #6b7280; /* Gray-500 */
             cursor: not-allowed;
         }
 
         .input-group-text {
-             background-color: #374151;
-             color: #D1D5DB;
-             border: 1px solid #374151;
+             background-color: #f3f4f6; /* Gray-100 */
+             color: #6b7280;
+             border: 1px solid #d1d5db;
              border-right: 0;
-             border-radius: 0.375rem 0 0 0.375rem;
+             border-radius: 0.5rem 0 0 0.5rem;
         }
-
-        .spinner { border-top-color: #fff; }
+        
+        .spinner { border-top-color: #1f2937; }
         .hidden { display: none; }
        
-        .tab-btn.active, .filter-btn.active {
-            border-color: #F59E0B;
-            color: #FBBF24;
-            background-color: rgba(251, 191, 36, 0.1);
-        }
-
-        .employee-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .employee-table th, .employee-table td {
-            padding: 12px;
-            border: 1px solid #374151;
-            text-align: left;
-        }
-        .employee-table th {
-            background-color: #1F2937;
-            font-weight: 700;
-        }
-        .employee-table tbody tr:hover {
-            background-color: #1F2937;
+        .filter-btn.active {
+            border-color: #059669;
+            color: #059669;
+            background-color: #d1fae5; /* Emerald-100 */
         }
         
         .form-checkbox {
             appearance: none;
             width: 1.25rem;
             height: 1.25rem;
-            border: 2px solid #4B5563;
-            background-color: #1F2937;
+            border: 2px solid #9ca3af;
+            background-color: #f9fafb;
             border-radius: 0.25rem;
             cursor: pointer;
             position: relative;
             transition: all 0.2s ease-in-out;
         }
         .form-checkbox:checked {
-            background-color: #F59E0B;
-            border-color: #F59E0B;
+            background-color: #059669;
+            border-color: #059669;
         }
         .form-checkbox:checked::after {
             content: '✓';
@@ -149,41 +130,35 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -52%);
-            color: #111827;
+            color: #ffffff;
             font-size: 1rem;
             font-weight: bold;
         }
         .form-checkbox:disabled {
-            background-color: #4B5563;
-            border-color: #6B7280;
+            background-color: #e5e7eb;
+            border-color: #d1d5db;
             cursor: not-allowed;
         }
-        
-        .employee-card {
-            background-color: rgba(31, 41, 55, 0.5);
-            border: 1px solid #374151;
-        }
-        
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4 text-sm sm:text-base">
-    <div class="container max-w-lg">
+    <div class="container max-w-lg w-full">
         <!-- Header -->
-        <div class="text-center mb-10">
-             <h1 class="text-3xl font-bold mb-2 uppercase tracking-widest accent-text">Payment</h1>
-             <p class="text-lg text-gray-400">by Zen</p>
-            <div class="bg-yellow-900 bg-opacity-30 text-yellow-300 p-4 mt-5 border border-dashed border-yellow-600 rounded-md">
+        <div class="text-center mb-8">
+             <h1 class="text-3xl font-bold mb-1 uppercase tracking-wider accent-text">Payment</h1>
+             <p class="text-lg text-gray-500">by Zen</p>
+            <div class="bg-yellow-100 text-yellow-800 p-4 mt-5 border border-dashed border-yellow-400 rounded-lg">
                 <i class="fas fa-exclamation-triangle me-2"></i> Isi data bank dengan benar, salah ketik gaji hangus!
             </div>
         </div>
 
         <!-- Login Form -->
-        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700" id="loginForm">
-            <h3 class="text-xl font-bold mb-6 uppercase">Masuk</h3>
+        <div class="card p-8 mb-6" id="loginForm">
+            <h3 class="text-xl font-bold mb-6 uppercase text-gray-700">Masuk</h3>
             <form id="loginFormElement" class="space-y-6">
                 <div>
-                    <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                    <div class="flex rounded-md shadow-sm">
+                    <label for="email" class="block text-sm font-medium mb-2 text-gray-600">Email</label>
+                    <div class="flex rounded-lg shadow-sm">
                         <span class="input-group-text inline-flex items-center px-4">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -191,39 +166,39 @@
                     </div>
                 </div>
                 <div>
-                    <label for="whatsapp" class="block text-sm font-medium mb-2">Nomor WhatsApp</label>
-                    <div class="flex rounded-md shadow-sm">
+                    <label for="whatsapp" class="block text-sm font-medium mb-2 text-gray-600">Nomor WhatsApp</label>
+                    <div class="flex rounded-lg shadow-sm">
                         <span class="input-group-text inline-flex items-center px-4">
                             <i class="fas fa-phone"></i>
                         </span>
                         <input type="tel" class="form-control flex-1 w-full px-4 py-3" id="whatsapp" required placeholder="08123456789">
                     </div>
                 </div>
-                <button type="submit" class="btn-primary w-full" id="loginBtn">
+                <button type="submit" class="btn-primary w-full !mt-8" id="loginBtn">
                     <i class="fas fa-sign-in-alt me-2"></i> Masuk
                 </button>
             </form>
         </div>
         
         <!-- Restricted Account Message -->
-        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="restrictedAccount">
+        <div class="card p-8 mb-6 hidden" id="restrictedAccount">
             <div class="flex items-center justify-center mb-4">
                 <i class="fas fa-ban text-2xl text-red-500 mr-3"></i>
-                <h3 class="text-xl font-bold uppercase text-red-400">Akun Dibatasi</h3>
+                <h3 class="text-xl font-bold uppercase text-red-600">Akun Dibatasi</h3>
             </div>
-            <div class="bg-red-900 bg-opacity-50 text-red-300 p-4 mt-2 text-center rounded-md">
+            <div class="bg-red-100 text-red-800 p-4 mt-2 text-center rounded-lg">
                 Akun Anda telah dibatasi. Anda tidak dapat mengklaim gaji saat ini. Silakan hubungi admin untuk informasi lebih lanjut.
             </div>
         </div>
 
 
         <!-- Already Claimed Message -->
-        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="alreadyClaimed">
+        <div class="card p-8 mb-6 hidden" id="alreadyClaimed">
             <div class="flex items-center justify-center mb-4">
-                <i class="fas fa-check-circle text-2xl text-green-400 mr-2"></i>
-                <h3 class="text-xl font-bold uppercase">Sudah Diambil</h3>
+                <i class="fas fa-check-circle text-2xl text-green-500 mr-2"></i>
+                <h3 class="text-xl font-bold uppercase text-gray-700">Sudah Diambil</h3>
             </div>
-            <div class="bg-blue-900 bg-opacity-50 text-blue-300 p-4 mt-2 text-center rounded-md">
+            <div class="bg-blue-100 text-blue-800 p-4 mt-2 text-center rounded-lg">
                 Gaji untuk akun ini sudah diambil.
             </div>
             <button class="btn-primary btn-secondary w-full mt-6" id="backToLoginBtn">
@@ -232,10 +207,10 @@
         </div>
 
         <!-- Salary Info -->
-        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="salaryInfo">
-            <h3 class="text-xl font-bold text-center mb-6 uppercase">Informasi Gaji</h3>
-            <div class="text-center py-6 px-4 bg-gray-900 border-dashed border-2 border-gray-700 rounded-md">
-                <p class="text-sm font-medium mb-2">Gaji Kamu:</p>
+        <div class="card p-8 mb-6 hidden" id="salaryInfo">
+            <h3 class="text-xl font-bold text-center mb-6 uppercase text-gray-700">Informasi Gaji</h3>
+            <div class="text-center py-6 px-4 bg-gray-50 border-dashed border-2 border-gray-200 rounded-lg">
+                <p class="text-sm font-medium mb-2 text-gray-600">Gaji Kamu:</p>
                 <div id="salaryDisplay" class="h-8 flex justify-center items-center text-3xl font-bold">
                     <!-- Spinner or salary amount will be here -->
                 </div>
@@ -246,12 +221,12 @@
         </div>
 
         <!-- Withdraw Form -->
-        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="withdrawForm">
-            <h3 class="text-xl font-bold mb-6 uppercase">Form Withdraw</h3>
+        <div class="card p-8 mb-6 hidden" id="withdrawForm">
+            <h3 class="text-xl font-bold mb-6 uppercase text-gray-700">Form Withdraw</h3>
             <form id="withdrawFormElement" class="space-y-6">
                  <div>
-                    <label for="fullName" class="block text-sm font-medium mb-2">Nama Lengkap</label>
-                    <div class="flex rounded-md shadow-sm">
+                    <label for="fullName" class="block text-sm font-medium mb-2 text-gray-600">Nama Lengkap</label>
+                    <div class="flex rounded-lg shadow-sm">
                         <span class="input-group-text inline-flex items-center px-4">
                             <i class="fas fa-user"></i>
                         </span>
@@ -259,8 +234,8 @@
                     </div>
                 </div>
                 <div>
-                    <label for="accountNumber" class="block text-sm font-medium mb-2">No. Rekening</label>
-                    <div class="flex rounded-md shadow-sm">
+                    <label for="accountNumber" class="block text-sm font-medium mb-2 text-gray-600">No. Rekening</label>
+                    <div class="flex rounded-lg shadow-sm">
                         <span class="input-group-text inline-flex items-center px-4">
                             <i class="fas fa-credit-card"></i>
                         </span>
@@ -268,8 +243,8 @@
                     </div>
                 </div>
                 <div>
-                    <label for="bankName" class="block text-sm font-medium mb-2">Nama Bank</label>
-                    <div class="flex rounded-md shadow-sm">
+                    <label for="bankName" class="block text-sm font-medium mb-2 text-gray-600">Nama Bank</label>
+                    <div class="flex rounded-lg shadow-sm">
                         <span class="input-group-text inline-flex items-center px-4">
                             <i class="fas fa-university"></i>
                         </span>
@@ -277,8 +252,8 @@
                     </div>
                 </div>
                 <div>
-                    <label for="withdrawEmail" class="block text-sm font-medium mb-2">Email (Otomatis)</label>
-                    <div class="flex rounded-md shadow-sm">
+                    <label for="withdrawEmail" class="block text-sm font-medium mb-2 text-gray-600">Email (Otomatis)</label>
+                    <div class="flex rounded-lg shadow-sm">
                         <span class="input-group-text inline-flex items-center px-4">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -286,30 +261,30 @@
                     </div>
                 </div>
                 <div>
-                    <label for="withdrawWhatsApp" class="block text-sm font-medium mb-2">Nomor WhatsApp (Otomatis)</label>
-                    <div class="flex rounded-md shadow-sm">
+                    <label for="withdrawWhatsApp" class="block text-sm font-medium mb-2 text-gray-600">Nomor WhatsApp (Otomatis)</label>
+                    <div class="flex rounded-lg shadow-sm">
                         <span class="input-group-text inline-flex items-center px-4">
                             <i class="fas fa-phone"></i>
                         </span>
                         <input type="tel" class="form-control flex-1 w-full px-4 py-3" id="withdrawWhatsApp" required readonly>
                     </div>
                 </div>
-                <button type="submit" class="btn-primary whatsapp-btn w-full" id="submitWithdrawBtn">
+                <button type="submit" class="btn-primary whatsapp-btn w-full !mt-8" id="submitWithdrawBtn">
                     <i class="fab fa-whatsapp me-2"></i> Kirim ke Admin
                 </button>
             </form>
         </div>
         
         <!-- Financial Tips Section -->
-        <div class="p-8 mb-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="financialTipsSection">
+        <div class="card p-8 mb-6 hidden" id="financialTipsSection">
             <div class="text-center">
-                <i class="fas fa-check-circle text-4xl text-green-400 mb-4"></i>
-                <h3 class="text-xl font-bold uppercase">Pengajuan Terkirim!</h3>
-                <p class="text-gray-400 mt-2 mb-6">Sambil menunggu gajimu diproses, dapatkan beberapa tips keuangan dari AI.</p>
+                <i class="fas fa-check-circle text-4xl text-green-500 mb-4"></i>
+                <h3 class="text-xl font-bold uppercase text-gray-700">Pengajuan Terkirim!</h3>
+                <p class="text-gray-500 mt-2 mb-6">Sambil menunggu gajimu diproses, dapatkan beberapa tips keuangan dari AI.</p>
                 <button class="btn-primary w-full" id="getFinancialTipsBtn">
                     ✨ Dapatkan Tips Keuangan
                 </button>
-                <div id="financialTipsResult" class="hidden mt-6 text-left p-4 bg-gray-900 rounded-md border border-gray-700"></div>
+                <div id="financialTipsResult" class="hidden mt-6 text-left p-4 bg-gray-50 rounded-lg border border-gray-200"></div>
                 <button class="btn-primary btn-secondary w-full mt-6" id="finishBtn">
                     Selesai
                 </button>
@@ -317,45 +292,45 @@
         </div>
 
         <!-- Admin Section -->
-        <div class="p-8 mt-6 bg-gray-900/50 rounded-lg border border-gray-700 hidden" id="adminSection">
+        <div class="card p-8 mt-6 hidden" id="adminSection">
             <div class="flex justify-between items-center mb-6">
-                <h4 class="text-xl font-bold uppercase">Mode Admin</h4>
+                <h4 class="text-xl font-bold uppercase text-gray-700">Mode Admin</h4>
                 <div class="flex space-x-4">
-                    <button class="text-sm text-gray-400 hover:text-amber-400 transition-colors" id="bulkIdentBtn" title="Identifikasi Massal">
+                    <button class="text-sm text-gray-500 hover:text-emerald-600 transition-colors" id="bulkIdentBtn" title="Identifikasi Massal">
                         <i class="fas fa-users-cog"></i>
                     </button>
-                    <button class="text-sm text-gray-400 hover:text-red-500 transition-colors" id="resetSalariesBtn" title="Reset Semua Gaji">
+                    <button class="text-sm text-gray-500 hover:text-red-600 transition-colors" id="resetSalariesBtn" title="Reset Semua Gaji">
                         <i class="fas fa-sync-alt"></i>
                     </button>
-                    <button class="text-sm text-gray-400 hover:text-gray-200 transition-colors" id="exitAdminBtn" title="Keluar">
+                    <button class="text-sm text-gray-500 hover:text-gray-800 transition-colors" id="exitAdminBtn" title="Keluar">
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
             </div>
             <div id="adminPanel">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-gray-900 p-4 rounded-md text-center">
-                        <p class="text-xs text-gray-400">Total</p>
+                    <div class="bg-gray-100 p-4 rounded-lg text-center">
+                        <p class="text-xs text-gray-500 uppercase font-medium">Total</p>
                         <p id="totalEmployeesCount" class="text-2xl font-bold mt-1">0</p>
                     </div>
-                    <div class="bg-gray-900 p-4 rounded-md text-center">
-                        <p class="text-xs text-green-400">Diklaim</p>
-                        <p id="claimedCount" class="text-2xl font-bold text-green-400 mt-1">0</p>
+                    <div class="bg-green-100 p-4 rounded-lg text-center">
+                        <p class="text-xs text-green-600 uppercase font-medium">Diklaim</p>
+                        <p id="claimedCount" class="text-2xl font-bold text-green-600 mt-1">0</p>
                     </div>
-                    <div class="bg-gray-900 p-4 rounded-md text-center">
-                        <p class="text-xs text-yellow-400">Belum Klaim</p>
-                        <p id="unclaimedCount" class="text-2xl font-bold text-yellow-400 mt-1">0</p>
+                    <div class="bg-yellow-100 p-4 rounded-lg text-center">
+                        <p class="text-xs text-yellow-600 uppercase font-medium">Belum Klaim</p>
+                        <p id="unclaimedCount" class="text-2xl font-bold text-yellow-600 mt-1">0</p>
                     </div>
-                    <div class="bg-gray-900 p-4 rounded-md text-center">
-                        <p class="text-xs text-red-400">Dibatasi</p>
-                        <p id="restrictedCount" class="text-2xl font-bold text-red-400 mt-1">0</p>
+                    <div class="bg-red-100 p-4 rounded-lg text-center">
+                        <p class="text-xs text-red-600 uppercase font-medium">Dibatasi</p>
+                        <p id="restrictedCount" class="text-2xl font-bold text-red-600 mt-1">0</p>
                     </div>
                 </div>
                  <div class="mb-4">
-                    <div id="filterButtons" class="flex space-x-1 rounded-md bg-gray-900 p-1">
-                        <button data-filter="all" class="filter-btn w-full text-center text-sm py-1 px-2 rounded-md transition-colors hover:bg-gray-800">Semua</button>
-                        <button data-filter="active" class="filter-btn w-full text-center text-sm py-1 px-2 rounded-md transition-colors hover:bg-gray-800">Aktif</button>
-                        <button data-filter="restricted" class="filter-btn w-full text-center text-sm py-1 px-2 rounded-md transition-colors hover:bg-gray-800">Restricted</button>
+                    <div id="filterButtons" class="flex space-x-1 rounded-lg bg-gray-100 p-1">
+                        <button data-filter="all" class="filter-btn w-full text-center text-sm py-1.5 px-2 rounded-md transition-colors hover:bg-gray-200">Semua</button>
+                        <button data-filter="active" class="filter-btn w-full text-center text-sm py-1.5 px-2 rounded-md transition-colors hover:bg-gray-200">Aktif</button>
+                        <button data-filter="restricted" class="filter-btn w-full text-center text-sm py-1.5 px-2 rounded-md transition-colors hover:bg-gray-200">Restricted</button>
                     </div>
                 </div>
                 
@@ -368,33 +343,33 @@
 
     <!-- Admin Access Button -->
     <div class="fixed bottom-4 right-4 z-10">
-        <button class="bg-gray-800 text-gray-400 hover:text-amber-400 p-4 rounded-full shadow-lg transition-all border border-gray-700" id="adminToggleBtn">
+        <button class="bg-white text-gray-600 hover:text-emerald-600 p-4 rounded-full shadow-lg transition-all border border-gray-200" id="adminToggleBtn">
             <i class="fas fa-user-lock"></i>
         </button>
     </div>
 
     <!-- Modals -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm text-center">
-            <i class="fas fa-check-circle text-green-400 text-4xl mb-3"></i>
-            <h5 class="text-xl font-bold mb-2 uppercase">Berhasil</h5>
-            <p id="successMessage" class="text-gray-300 mb-4"></p>
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="card p-6 w-full max-w-sm text-center">
+            <i class="fas fa-check-circle text-green-500 text-4xl mb-3"></i>
+            <h5 class="text-xl font-bold mb-2 uppercase text-gray-700">Berhasil</h5>
+            <p id="successMessage" class="text-gray-600 mb-4"></p>
             <button class="btn-primary btn-secondary" onclick="document.getElementById('successModal').classList.add('hidden')">Tutup</button>
         </div>
     </div>
 
-    <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm text-center">
+    <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="card p-6 w-full max-w-sm text-center">
             <i class="fas fa-exclamation-circle text-red-500 text-4xl mb-3"></i>
-            <h5 class="text-xl font-bold mb-2 uppercase">Error</h5>
-            <p id="errorMessage" class="text-gray-300 mb-4"></p>
+            <h5 class="text-xl font-bold mb-2 uppercase text-gray-700">Error</h5>
+            <p id="errorMessage" class="text-gray-600 mb-4"></p>
             <button class="btn-primary btn-secondary" onclick="document.getElementById('errorModal').classList.add('hidden')">Tutup</button>
         </div>
     </div>
 
-    <div id="adminLoginModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase">Kode Admin</h5>
+    <div id="adminLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="card p-6 w-full max-w-sm">
+            <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Kode Admin</h5>
             <input type="password" id="adminCodeInput" class="form-control w-full px-4 py-3 mb-4" placeholder="Kode Admin">
             <div class="flex justify-end space-x-2">
                  <button class="btn-primary btn-secondary" onclick="document.getElementById('adminLoginModal').classList.add('hidden')">Batal</button>
@@ -403,11 +378,11 @@
         </div>
     </div>
     
-    <div id="geminiModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-md">
+    <div id="geminiModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="card p-6 w-full max-w-md">
             <h5 class="text-xl font-bold mb-4 text-center uppercase accent-text">✨ Pesan Pengingat AI</h5>
-            <p class="text-sm text-gray-400 mb-4">Berikut adalah draf pesan yang dibuat oleh AI. Anda bisa menyalinnya atau langsung mengirim via WhatsApp.</p>
-            <div id="geminiResultContent" class="p-4 bg-gray-900 rounded-md border border-gray-700 min-h-[150px]">
+            <p class="text-sm text-gray-500 mb-4">Berikut adalah draf pesan yang dibuat oleh AI. Anda bisa menyalinnya atau langsung mengirim via WhatsApp.</p>
+            <div id="geminiResultContent" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[150px]">
                 <!-- Loading or result here -->
             </div>
             <div class="flex justify-end space-x-2 mt-6">
@@ -417,11 +392,11 @@
         </div>
     </div>
 
-    <div id="bulkActionModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-md">
+    <div id="bulkActionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="card p-6 w-full max-w-md">
             <div id="bulkActionForm">
-                <h5 class="text-xl font-bold mb-4 text-center uppercase">Atur Aksi Massal</h5>
-                <p class="text-sm text-gray-400 mb-4">Tempelkan daftar email di bawah, satu per baris.</p>
+                <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Atur Aksi Massal</h5>
+                <p class="text-sm text-gray-500 mb-4">Tempelkan daftar email di bawah, satu per baris.</p>
                 <textarea id="bulkEmailInput" rows="10" class="form-control w-full px-4 py-2 resize-none mb-4" placeholder="email1@contoh.com&#10;email2@contoh.com&#10;..."></textarea>
                 <div class="flex justify-end space-x-2">
                     <button class="btn-primary btn-secondary" onclick="document.getElementById('bulkActionModal').classList.add('hidden')">Batal</button>
@@ -429,24 +404,24 @@
                 </div>
             </div>
             <div id="bulkResults" class="hidden">
-                <h5 class="text-xl font-bold mb-4 text-center uppercase">Pilih Aksi</h5>
-                <p class="text-sm text-gray-400 mb-4">Total <span id="foundCount" class="font-bold text-amber-400">0</span> email ditemukan.</p>
-                <ul id="foundEmailsList" class="list-disc list-inside bg-gray-900 p-4 mb-4 h-32 overflow-y-auto text-sm border border-gray-700 rounded-md"></ul>
+                <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Pilih Aksi</h5>
+                <p class="text-sm text-gray-600 mb-4">Total <span id="foundCount" class="font-bold text-emerald-600">0</span> email ditemukan.</p>
+                <ul id="foundEmailsList" class="list-disc list-inside bg-gray-50 p-4 mb-4 h-32 overflow-y-auto text-sm border border-gray-200 rounded-lg"></ul>
                 <div class="flex items-center mb-4">
-                    <label for="bulkSalaryInput" class="text-sm font-medium mr-2">Gaji</label>
-                    <div class="flex flex-1 rounded-md shadow-sm">
+                    <label for="bulkSalaryInput" class="text-sm font-medium mr-2 text-gray-600">Gaji</label>
+                    <div class="flex flex-1 rounded-lg shadow-sm">
                         <span class="input-group-text items-center px-4">Rp</span>
                         <input type="number" id="bulkSalaryInput" class="form-control flex-1 w-full px-4 py-2" placeholder="Jumlah Gaji">
                     </div>
                      <button class="btn-primary whatsapp-btn ml-2" id="applyBulkSalaryBtn">Terapkan</button>
                 </div>
-                <div class="border-t border-gray-700 mt-4 pt-4 flex justify-between items-center">
-                    <p class="text-sm text-gray-400">Ubah Status Akun:</p>
+                <div class="border-t border-gray-200 mt-4 pt-4 flex justify-between items-center">
+                    <p class="text-sm text-gray-600">Ubah Status Akun:</p>
                     <div class="flex space-x-2">
-                        <button class="btn-primary bg-green-600 hover:bg-green-500" id="removeBulkRestrictionBtn">
+                        <button class="btn-primary bg-green-600 hover:bg-green-700" id="removeBulkRestrictionBtn">
                             <i class="fas fa-check-circle mr-2"></i>Aktifkan
                         </button>
-                        <button class="btn-primary bg-red-600 hover:bg-red-500" id="applyBulkRestrictionBtn">
+                        <button class="btn-primary bg-red-600 hover:bg-red-700" id="applyBulkRestrictionBtn">
                             <i class="fas fa-ban mr-2"></i>Batasi
                         </button>
                     </div>
@@ -459,16 +434,16 @@
     </div>
 
     <!-- Edit modal for all views -->
-    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase">Edit Karyawan</h5>
+    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="card p-6 w-full max-w-sm">
+            <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Edit Karyawan</h5>
             <div class="mb-4">
-                <p class="text-sm font-medium mb-2">Email</p>
-                <p id="editEmail" class="font-bold text-amber-400 truncate"></p>
+                <p class="text-sm font-medium mb-2 text-gray-600">Email</p>
+                <p id="editEmail" class="font-bold text-emerald-600 truncate"></p>
             </div>
             <div class="mb-4">
-                <label for="editSalaryInput" class="block text-sm font-medium mb-2">Jumlah Gaji</label>
-                <div class="flex rounded-md shadow-sm">
+                <label for="editSalaryInput" class="block text-sm font-medium mb-2 text-gray-600">Jumlah Gaji</label>
+                <div class="flex rounded-lg shadow-sm">
                     <span class="input-group-text items-center px-4">Rp</span>
                     <input type="number" id="editSalaryInput" class="form-control flex-1 w-full px-4 py-2" placeholder="Masukkan jumlah gaji">
                 </div>
@@ -477,10 +452,10 @@
                 <input class="form-checkbox" type="checkbox" id="editClaimedCheckbox">
                 <label class="text-sm" for="editClaimedCheckbox">Sudah Diambil</label>
             </div>
-            <div class="border-t border-gray-700 pt-4">
+            <div class="border-t border-gray-200 pt-4">
                  <div class="flex items-center space-x-3">
                     <input class="form-checkbox" type="checkbox" id="editRestrictedCheckbox">
-                    <label class="text-sm text-red-400" for="editRestrictedCheckbox">Batasi Akun Ini</label>
+                    <label class="text-sm text-red-600" for="editRestrictedCheckbox">Batasi Akun Ini</label>
                 </div>
             </div>
             <div class="flex justify-end space-x-2 mt-6">
@@ -490,14 +465,14 @@
         </div>
     </div>
     
-    <div id="resetConfirmModal" class="fixed inset-0 bg-black bg-opacity-70 hidden flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-6 w-full max-w-sm">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase">Konfirmasi Reset</h5>
-            <p class="text-sm text-gray-400 mb-4">Ini akan mereset SEMUA gaji jadi Rp 0 & status jadi "Belum Diambil". Masukkan kode admin.</p>
+    <div id="resetConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="card p-6 w-full max-w-sm">
+            <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Konfirmasi Reset</h5>
+            <p class="text-sm text-gray-500 mb-4">Ini akan mereset SEMUA gaji jadi Rp 0 & status jadi "Belum Diambil". Masukkan kode admin.</p>
             <input type="password" id="resetConfirmCodeInput" class="form-control w-full px-4 py-3 mb-4" placeholder="Kode Admin">
             <div class="flex justify-end space-x-2">
                 <button class="btn-primary btn-secondary" onclick="document.getElementById('resetConfirmModal').classList.add('hidden')">Batal</button>
-                <button class="btn-primary bg-red-600 hover:bg-red-500" id="confirmResetBtn">Reset</button>
+                <button class="btn-primary bg-red-600 hover:bg-red-700" id="confirmResetBtn">Reset</button>
             </div>
         </div>
     </div>
@@ -636,7 +611,7 @@
                     } else {
                         currentUser = user;
                         setTimeout(() => {
-                             qs('#salaryDisplay').innerHTML = `<span id="salaryAmount" class="text-3xl font-bold"></span>`;
+                             qs('#salaryDisplay').innerHTML = `<span id="salaryAmount" class="text-3xl font-bold text-gray-800"></span>`;
                             animateValue(qs('#salaryAmount'), 0, user.salary, 1000);
                         }, 500);
                         salaryInfo.classList.remove('hidden');
@@ -711,20 +686,20 @@
                 const fragment = document.createDocumentFragment();
                 filteredUsers.forEach(user => {
                     const card = document.createElement('div');
-                    card.className = 'bg-gray-900/50 p-4 rounded-md border border-gray-700 mb-2 flex items-center justify-between';
+                    card.className = 'bg-white p-4 rounded-lg border border-gray-200 mb-2 flex items-center justify-between';
                     
                     const statusText = user.restricted ? 'Dibatasi' : (user.claimed ? 'Sudah Klaim' : 'Belum Klaim');
-                    const statusColor = user.restricted ? 'text-red-400' : (user.claimed ? 'text-green-400' : 'text-yellow-400');
+                    const statusColor = user.restricted ? 'text-red-600' : (user.claimed ? 'text-green-600' : 'text-yellow-600');
                     
                     card.innerHTML = `
                         <div class="flex-1 min-w-0 mr-4">
-                            <p class="font-bold text-amber-400 truncate">${user.email || '-'}</p>
-                            <p class="text-xs text-gray-400 mt-1">${user.phone || user.wa || '-'}</p>
-                            <p class="text-xs ${statusColor} mt-1">${statusText}</p>
+                            <p class="font-bold text-emerald-600 truncate">${user.email || '-'}</p>
+                            <p class="text-xs text-gray-500 mt-1">${user.phone || user.wa || '-'}</p>
+                            <p class="text-xs ${statusColor} mt-1 font-medium">${statusText}</p>
                         </div>
-                        <div class="flex-shrink-0 flex items-center space-x-2">
-                             <span class="text-sm font-bold text-gray-300">Rp ${user.salary.toLocaleString('id-ID')}</span>
-                             <button class="text-gray-400 hover:text-amber-400 edit-btn" data-email="${user.email}"><i class="fas fa-pen"></i> Edit</button>
+                        <div class="flex-shrink-0 flex items-center space-x-3">
+                             <span class="text-sm font-bold text-gray-700">Rp ${user.salary.toLocaleString('id-ID')}</span>
+                             <button class="text-gray-500 hover:text-emerald-600 edit-btn" data-email="${user.email}"><i class="fas fa-pen"></i></button>
                         </div>
                     `;
                     fragment.appendChild(card);
