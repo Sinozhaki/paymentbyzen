@@ -3,939 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment by zen</title>
+    <title>Form Payment By Zen</title>
+    <!-- Memuat Tailwind CSS untuk styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Memuat Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light Gray background */
-            color: #1f2937; /* Dark Gray text */
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            overflow-x: hidden;
         }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(37, 99, 235, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: all 0.2s ease-out; }
+        .modal-leave-active { opacity: 0; transform: scale(0.95); transition: all 0.2s ease-in; }
 
-        .card {
-            background-color: #ffffff;
-            border-radius: 0.75rem;
-            border: 1px solid #e5e7eb; /* Gray-200 */
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotateZ(360deg); opacity: 0; }
         }
-        .card:hover {
-             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-
-        .accent-text {
-            color: #059669; /* Emerald-600 */
-        }
-
-        .btn-primary {
-            background-color: #059669; /* Emerald-600 */
-            color: #ffffff;
-            border: 1px solid transparent;
-            padding: 0.75rem 1.25rem;
-            font-weight: 500;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        }
-
-        .btn-primary:hover {
-            background-color: #047857; /* Emerald-700 */
-        }
-        .btn-primary:disabled {
-            background-color: #d1d5db; /* Gray-300 */
-            color: #6b7280; /* Gray-500 */
-            cursor: not-allowed;
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: #059669;
-            border: 1px solid #059669;
-        }
-        .btn-secondary:hover {
-            background-color: #d1fae5; /* Emerald-100 */
-            color: #047857;
-        }
-        
-        .whatsapp-btn {
-            background-color: #16a34a; /* Green-600 */
-            color: #ffffff;
-        }
-        .whatsapp-btn:hover {
-            background-color: #15803d; /* Green-700 */
-        }
-
-        .form-control {
-            background-color: #f9fafb; /* Gray-50 */
-            border: 1px solid #d1d5db; /* Gray-300 */
-            color: #1f2937;
-            border-radius: 0.5rem;
-            transition: all 0.2s ease-in-out;
-            font-family: 'Inter', sans-serif;
-        }
-        .form-control::placeholder {
-            color: #9ca3af; /* Gray-400 */
-        }
-
-        .form-control:focus {
-            border-color: #059669;
-            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-            outline: none;
-        }
-        .form-control:disabled, .form-control:read-only {
-            background-color: #e5e7eb; /* Gray-200 */
-            color: #6b7280; /* Gray-500 */
-            cursor: not-allowed;
-        }
-
-        .input-group-text {
-             background-color: #f3f4f6; /* Gray-100 */
-             color: #6b7280;
-             border: 1px solid #d1d5db;
-             border-right: 0;
-             border-radius: 0.5rem 0 0 0.5rem;
-        }
-        
-        .spinner { border-top-color: #1f2937; }
-        .hidden { display: none; }
-       
-        .filter-btn.active {
-            border-color: #059669;
-            color: #059669;
-            background-color: #d1fae5; /* Emerald-100 */
-        }
-        
-        .form-checkbox {
-            appearance: none;
-            width: 1.25rem;
-            height: 1.25rem;
-            border: 2px solid #9ca3af;
-            background-color: #f9fafb;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease-in-out;
-        }
-        .form-checkbox:checked {
-            background-color: #059669;
-            border-color: #059669;
-        }
-        .form-checkbox:checked::after {
-            content: '✓';
+        .dollar {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -52%);
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: bold;
+            top: -10vh;
+            font-size: 2rem;
+            animation-name: fall;
+            animation-timing-function: linear;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
-        .form-checkbox:disabled {
-            background-color: #e5e7eb;
-            border-color: #d1d5db;
-            cursor: not-allowed;
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 8px rgba(255, 255, 255, 0.2); }
+            50% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.6), 0 0 15px rgba(255, 255, 255, 0.3); }
         }
+        .glowing-card { animation: pulse-glow 2.5s infinite ease-in-out; }
+
+        input, button { -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 text-sm sm:text-base">
-    <div class="container max-w-lg w-full">
-        <!-- Header -->
-        <div class="text-center mb-8">
-             <h1 class="text-3xl font-bold mb-1 uppercase tracking-wider accent-text">Payment</h1>
-             <p class="text-lg text-gray-500">by Zen</p>
-            <div class="bg-yellow-100 text-yellow-800 p-4 mt-5 border border-dashed border-yellow-400 rounded-lg">
-                <i class="fas fa-exclamation-triangle me-2"></i> Isi data bank dengan benar, salah ketik gaji hangus!
-            </div>
-        </div>
+<body class="antialiased">
 
-        <!-- Login Form -->
-        <div class="card p-8 mb-6" id="loginForm">
-            <h3 class="text-xl font-bold mb-6 uppercase text-gray-700">Masuk</h3>
-            <form id="loginFormElement" class="space-y-6">
-                <div>
-                    <label for="email" class="block text-sm font-medium mb-2 text-gray-600">Email</label>
-                    <div class="flex rounded-lg shadow-sm">
-                        <span class="input-group-text inline-flex items-center px-4">
-                            <i class="fas fa-envelope"></i>
-                        </span>
-                        <input type="email" class="form-control flex-1 w-full px-4 py-3" id="email" required placeholder="nama@contoh.com">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+            <div class="text-center mb-8">
+                <h1 class="text-2xl md:text-3xl font-bold text-blue-600">Portal Pembayaran Zen</h1>
+                <p class="text-slate-500 mt-2">Login untuk melihat status akun & pembayaran Anda.</p>
+            </div>
+            <form id="login-form">
+                <div class="space-y-5">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                        <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg></div><input type="email" id="email" name="email" required placeholder="contoh@gmail.com" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition duration-150 ease-in-out"></div>
+                    </div>
+                    <div>
+                        <label for="whatsapp" class="block text-sm font-medium text-slate-700 mb-1">No. WhatsApp</label>
+                        <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.518.76a11.034 11.034 0 006.364 6.364l.76-1.518a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2.153a1 1 0 01-.986-.836l-.74-4.435a1 1 0 01.54-1.06l1.518-.76a11.034 11.034 0 00-6.364-6.364l-.76 1.518a1 1 0 01-1.06.54l-4.435-.74A1 1 0 013 4.847V3z" /></svg></div><input type="text" id="whatsapp" name="whatsapp" required placeholder="Contoh: 081234567890" class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition duration-150 ease-in-out"></div>
                     </div>
                 </div>
-                <div>
-                    <label for="whatsapp" class="block text-sm font-medium mb-2 text-gray-600">Nomor WhatsApp</label>
-                    <div class="flex rounded-lg shadow-sm">
-                        <span class="input-group-text inline-flex items-center px-4">
-                            <i class="fas fa-phone"></i>
-                        </span>
-                        <input type="tel" class="form-control flex-1 w-full px-4 py-3" id="whatsapp" required placeholder="08123456789">
-                    </div>
-                </div>
-                <button type="submit" class="btn-primary w-full !mt-8" id="loginBtn">
-                    <i class="fas fa-sign-in-alt me-2"></i> Masuk
-                </button>
+                <div class="mt-8"><button type="submit" id="login-button" class="w-full flex justify-center items-center gap-2 bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" disabled><span id="login-button-text">Memuat Data...</span><svg id="spinner" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></button></div>
             </form>
-        </div>
-        
-        <!-- Restricted Account Message -->
-        <div class="card p-8 mb-6 hidden" id="restrictedAccount">
-            <div class="flex items-center justify-center mb-4">
-                <i class="fas fa-ban text-2xl text-red-500 mr-3"></i>
-                <h3 class="text-xl font-bold uppercase text-red-600">Akun Dibatasi</h3>
-            </div>
-            <div class="bg-red-100 text-red-800 p-4 mt-2 text-center rounded-lg">
-                Akun Anda telah dibatasi. Anda tidak dapat mengklaim gaji saat ini. Silakan hubungi admin untuk informasi lebih lanjut.
-            </div>
-        </div>
-
-
-        <!-- Already Claimed Message -->
-        <div class="card p-8 mb-6 hidden" id="alreadyClaimed">
-            <div class="flex items-center justify-center mb-4">
-                <i class="fas fa-check-circle text-2xl text-green-500 mr-2"></i>
-                <h3 class="text-xl font-bold uppercase text-gray-700">Sudah Diambil</h3>
-            </div>
-            <div class="bg-blue-100 text-blue-800 p-4 mt-2 text-center rounded-lg">
-                Gaji untuk akun ini sudah diambil.
-            </div>
-            <button class="btn-primary btn-secondary w-full mt-6" id="backToLoginBtn">
-                <i class="fas fa-arrow-left me-2"></i> Kembali
-            </button>
-        </div>
-
-        <!-- Salary Info -->
-        <div class="card p-8 mb-6 hidden" id="salaryInfo">
-            <h3 class="text-xl font-bold text-center mb-6 uppercase text-gray-700">Informasi Gaji</h3>
-            <div class="text-center py-6 px-4 bg-gray-50 border-dashed border-2 border-gray-200 rounded-lg">
-                <p class="text-sm font-medium mb-2 text-gray-600">Gaji Kamu:</p>
-                <div id="salaryDisplay" class="h-8 flex justify-center items-center text-3xl font-bold">
-                    <!-- Spinner or salary amount will be here -->
-                </div>
-            </div>
-            <button class="btn-primary w-full mt-6" id="withdrawBtn">
-                <i class="fas fa-money-bill-wave me-2"></i> Withdraw
-            </button>
-        </div>
-
-        <!-- Withdraw Form -->
-        <div class="card p-8 mb-6 hidden" id="withdrawForm">
-            <h3 class="text-xl font-bold mb-6 uppercase text-gray-700">Form Withdraw</h3>
-            <form id="withdrawFormElement" class="space-y-6">
-                 <div>
-                    <label for="fullName" class="block text-sm font-medium mb-2 text-gray-600">Nama Lengkap</label>
-                    <div class="flex rounded-lg shadow-sm">
-                        <span class="input-group-text inline-flex items-center px-4">
-                            <i class="fas fa-user"></i>
-                        </span>
-                        <input type="text" class="form-control flex-1 w-full px-4 py-3" id="fullName" required placeholder="Sesuai rekening">
-                    </div>
-                </div>
-                <div>
-                    <label for="accountNumber" class="block text-sm font-medium mb-2 text-gray-600">No. Rekening</label>
-                    <div class="flex rounded-lg shadow-sm">
-                        <span class="input-group-text inline-flex items-center px-4">
-                            <i class="fas fa-credit-card"></i>
-                        </span>
-                        <input type="text" class="form-control flex-1 w-full px-4 py-3" id="accountNumber" required placeholder="Nomor rekening bank">
-                    </div>
-                </div>
-                <div>
-                    <label for="bankName" class="block text-sm font-medium mb-2 text-gray-600">Nama Bank</label>
-                    <div class="flex rounded-lg shadow-sm">
-                        <span class="input-group-text inline-flex items-center px-4">
-                            <i class="fas fa-university"></i>
-                        </span>
-                        <input type="text" class="form-control flex-1 w-full px-4 py-3" id="bankName" required placeholder="BCA, Mandiri, dll.">
-                    </div>
-                </div>
-                <div>
-                    <label for="withdrawEmail" class="block text-sm font-medium mb-2 text-gray-600">Email (Otomatis)</label>
-                    <div class="flex rounded-lg shadow-sm">
-                        <span class="input-group-text inline-flex items-center px-4">
-                            <i class="fas fa-envelope"></i>
-                        </span>
-                        <input type="email" class="form-control flex-1 w-full px-4 py-3" id="withdrawEmail" required readonly>
-                    </div>
-                </div>
-                <div>
-                    <label for="withdrawWhatsApp" class="block text-sm font-medium mb-2 text-gray-600">Nomor WhatsApp (Otomatis)</label>
-                    <div class="flex rounded-lg shadow-sm">
-                        <span class="input-group-text inline-flex items-center px-4">
-                            <i class="fas fa-phone"></i>
-                        </span>
-                        <input type="tel" class="form-control flex-1 w-full px-4 py-3" id="withdrawWhatsApp" required readonly>
-                    </div>
-                </div>
-                <button type="submit" class="btn-primary whatsapp-btn w-full !mt-8" id="submitWithdrawBtn">
-                    <i class="fab fa-whatsapp me-2"></i> Kirim ke Admin
-                </button>
-            </form>
-        </div>
-        
-        <!-- Financial Tips Section -->
-        <div class="card p-8 mb-6 hidden" id="financialTipsSection">
-            <div class="text-center">
-                <i class="fas fa-check-circle text-4xl text-green-500 mb-4"></i>
-                <h3 class="text-xl font-bold uppercase text-gray-700">Pengajuan Terkirim!</h3>
-                <p class="text-gray-500 mt-2 mb-6">Sambil menunggu gajimu diproses, dapatkan beberapa tips keuangan dari AI.</p>
-                <button class="btn-primary w-full" id="getFinancialTipsBtn">
-                    ✨ Dapatkan Tips Keuangan
-                </button>
-                <div id="financialTipsResult" class="hidden mt-6 text-left p-4 bg-gray-50 rounded-lg border border-gray-200"></div>
-                <button class="btn-primary btn-secondary w-full mt-6" id="finishBtn">
-                    Selesai
-                </button>
-            </div>
-        </div>
-
-        <!-- Admin Section -->
-        <div class="card p-8 mt-6 hidden" id="adminSection">
-            <div class="flex justify-between items-center mb-6">
-                <h4 class="text-xl font-bold uppercase text-gray-700">Mode Admin</h4>
-                <div class="flex space-x-4">
-                    <button class="text-sm text-gray-500 hover:text-emerald-600 transition-colors" id="bulkIdentBtn" title="Identifikasi Massal">
-                        <i class="fas fa-users-cog"></i>
-                    </button>
-                    <button class="text-sm text-gray-500 hover:text-red-600 transition-colors" id="resetSalariesBtn" title="Reset Semua Gaji">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-                    <button class="text-sm text-gray-500 hover:text-gray-800 transition-colors" id="exitAdminBtn" title="Keluar">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-            </div>
-            <div id="adminPanel">
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-gray-100 p-4 rounded-lg text-center">
-                        <p class="text-xs text-gray-500 uppercase font-medium">Total</p>
-                        <p id="totalEmployeesCount" class="text-2xl font-bold mt-1">0</p>
-                    </div>
-                    <div class="bg-green-100 p-4 rounded-lg text-center">
-                        <p class="text-xs text-green-600 uppercase font-medium">Diklaim</p>
-                        <p id="claimedCount" class="text-2xl font-bold text-green-600 mt-1">0</p>
-                    </div>
-                    <div class="bg-yellow-100 p-4 rounded-lg text-center">
-                        <p class="text-xs text-yellow-600 uppercase font-medium">Belum Klaim</p>
-                        <p id="unclaimedCount" class="text-2xl font-bold text-yellow-600 mt-1">0</p>
-                    </div>
-                    <div class="bg-red-100 p-4 rounded-lg text-center">
-                        <p class="text-xs text-red-600 uppercase font-medium">Dibatasi</p>
-                        <p id="restrictedCount" class="text-2xl font-bold text-red-600 mt-1">0</p>
-                    </div>
-                </div>
-                 <div class="mb-4">
-                    <div id="filterButtons" class="flex space-x-1 rounded-lg bg-gray-100 p-1">
-                        <button data-filter="all" class="filter-btn w-full text-center text-sm py-1.5 px-2 rounded-md transition-colors hover:bg-gray-200">Semua</button>
-                        <button data-filter="active" class="filter-btn w-full text-center text-sm py-1.5 px-2 rounded-md transition-colors hover:bg-gray-200">Aktif</button>
-                        <button data-filter="restricted" class="filter-btn w-full text-center text-sm py-1.5 px-2 rounded-md transition-colors hover:bg-gray-200">Restricted</button>
-                    </div>
-                </div>
-                
-                <div id="employeeList" class="mt-4 max-h-96 overflow-y-auto pr-2">
-                    <!-- Daftar karyawan akan dimuat di sini -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Access Button -->
-    <div class="fixed bottom-4 right-4 z-10">
-        <button class="bg-white text-gray-600 hover:text-emerald-600 p-4 rounded-full shadow-lg transition-all border border-gray-200" id="adminToggleBtn">
-            <i class="fas fa-user-lock"></i>
-        </button>
-    </div>
-
-    <!-- Modals -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm text-center">
-            <i class="fas fa-check-circle text-green-500 text-4xl mb-3"></i>
-            <h5 class="text-xl font-bold mb-2 uppercase text-gray-700">Berhasil</h5>
-            <p id="successMessage" class="text-gray-600 mb-4"></p>
-            <button class="btn-primary btn-secondary" onclick="document.getElementById('successModal').classList.add('hidden')">Tutup</button>
-        </div>
-    </div>
-
-    <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm text-center">
-            <i class="fas fa-exclamation-circle text-red-500 text-4xl mb-3"></i>
-            <h5 class="text-xl font-bold mb-2 uppercase text-gray-700">Error</h5>
-            <p id="errorMessage" class="text-gray-600 mb-4"></p>
-            <button class="btn-primary btn-secondary" onclick="document.getElementById('errorModal').classList.add('hidden')">Tutup</button>
-        </div>
-    </div>
-
-    <div id="adminLoginModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Kode Admin</h5>
-            <input type="password" id="adminCodeInput" class="form-control w-full px-4 py-3 mb-4" placeholder="Kode Admin">
-            <div class="flex justify-end space-x-2">
-                 <button class="btn-primary btn-secondary" onclick="document.getElementById('adminLoginModal').classList.add('hidden')">Batal</button>
-                <button class="btn-primary" id="adminLoginBtn">Masuk</button>
-            </div>
+            <div id="message" class="mt-6 text-center text-sm font-medium hidden"></div>
         </div>
     </div>
     
-    <div id="geminiModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-md">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase accent-text">✨ Pesan Pengingat AI</h5>
-            <p class="text-sm text-gray-500 mb-4">Berikut adalah draf pesan yang dibuat oleh AI. Anda bisa menyalinnya atau langsung mengirim via WhatsApp.</p>
-            <div id="geminiResultContent" class="p-4 bg-gray-50 rounded-lg border border-gray-200 min-h-[150px]">
-                <!-- Loading or result here -->
+    <!-- Modal -->
+    <div id="payment-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60">
+        <div id="modal-content" class="relative bg-white rounded-2xl shadow-xl w-full max-w-sm mx-auto modal-enter">
+            
+            <div id="payment-status-view">
+                <div class="p-6"><h3 class="text-xl text-center font-bold text-slate-800 mb-4">Status Pembayaran</h3><div id="payment-card" class="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl shadow-lg p-6 flex flex-col h-56 transition-shadow duration-300"><div class="flex justify-between items-center"><span class="font-bold text-xl tracking-wide">ZEN PAY</span><svg class="w-10 h-8" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="5" width="32" height="18" rx="3" fill="white" fill-opacity="0.3"/><rect x="7" y="10" width="8" height="6" rx="1" stroke="white" stroke-width="1.5"/><rect x="18" y="11.5" width="2" height="3" rx="0.5" fill="white"/><rect x="22" y="11.5" width="2" height="3" rx="0.5" fill="white"/><rect x="26" y="11.5" width="2" height="3" rx="0.5" fill="white"/></svg></div><div class="flex-grow flex flex-col justify-center items-center"><p class="text-sm font-light text-blue-100 mb-1">Total Pembayaran</p><p id="modal-payment-amount" class="text-5xl font-bold tracking-wider text-white"></p></div><div class="flex justify-between items-end text-sm text-blue-100"><div class="flex flex-col"><span class="text-xs uppercase tracking-widest font-light">Card Holder</span><span id="card-holder-email" class="font-semibold text-white truncate"></span></div><div class="flex flex-col items-end"><span class="text-xs uppercase tracking-widest font-light">Status</span><span id="card-status" class="font-semibold text-white capitalize"></span></div></div></div><div class="mt-6 grid grid-cols-2 gap-3"><button id="close-modal-btn" class="w-full bg-slate-200 text-slate-800 font-semibold py-2.5 px-4 rounded-lg hover:bg-slate-300 transition">Tutup</button><button id="withdraw-btn" class="w-full bg-blue-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-blue-700 transition">Withdraw Gaji</button></div></div>
             </div>
-            <div class="flex justify-end space-x-2 mt-6">
-                <button class="btn-primary btn-secondary" id="copyReminderBtn"><i class="fas fa-copy mr-2"></i> Salin</button>
-                <a href="#" id="sendReminderBtn" target="_blank" class="btn-primary whatsapp-btn inline-flex items-center"><i class="fab fa-whatsapp mr-2"></i> Kirim</a>
-            </div>
-        </div>
-    </div>
 
-    <div id="bulkActionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-md">
-            <div id="bulkActionForm">
-                <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Atur Aksi Massal</h5>
-                <p class="text-sm text-gray-500 mb-4">Tempelkan daftar email di bawah, satu per baris.</p>
-                <textarea id="bulkEmailInput" rows="10" class="form-control w-full px-4 py-2 resize-none mb-4" placeholder="email1@contoh.com&#10;email2@contoh.com&#10;..."></textarea>
-                <div class="flex justify-end space-x-2">
-                    <button class="btn-primary btn-secondary" onclick="document.getElementById('bulkActionModal').classList.add('hidden')">Batal</button>
-                    <button class="btn-primary" id="processEmailsBtn">Proses</button>
-                </div>
-            </div>
-            <div id="bulkResults" class="hidden">
-                <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Pilih Aksi</h5>
-                <p class="text-sm text-gray-600 mb-4">Total <span id="foundCount" class="font-bold text-emerald-600">0</span> email ditemukan.</p>
-                <ul id="foundEmailsList" class="list-disc list-inside bg-gray-50 p-4 mb-4 h-32 overflow-y-auto text-sm border border-gray-200 rounded-lg"></ul>
-                <div class="flex items-center mb-4">
-                    <label for="bulkSalaryInput" class="text-sm font-medium mr-2 text-gray-600">Gaji</label>
-                    <div class="flex flex-1 rounded-lg shadow-sm">
-                        <span class="input-group-text items-center px-4">Rp</span>
-                        <input type="number" id="bulkSalaryInput" class="form-control flex-1 w-full px-4 py-2" placeholder="Jumlah Gaji">
-                    </div>
-                     <button class="btn-primary whatsapp-btn ml-2" id="applyBulkSalaryBtn">Terapkan</button>
-                </div>
-                <div class="border-t border-gray-200 mt-4 pt-4 flex justify-between items-center">
-                    <p class="text-sm text-gray-600">Ubah Status Akun:</p>
-                    <div class="flex space-x-2">
-                        <button class="btn-primary bg-green-600 hover:bg-green-700" id="removeBulkRestrictionBtn">
-                            <i class="fas fa-check-circle mr-2"></i>Aktifkan
-                        </button>
-                        <button class="btn-primary bg-red-600 hover:bg-red-700" id="applyBulkRestrictionBtn">
-                            <i class="fas fa-ban mr-2"></i>Batasi
-                        </button>
-                    </div>
-                </div>
-                 <div class="mt-6 flex justify-end">
-                    <button class="btn-primary btn-secondary" onclick="document.getElementById('bulkActionForm').classList.remove('hidden'); document.getElementById('bulkResults').classList.add('hidden');">Kembali</button>
-                </div>
-            </div>
+            <div id="withdrawal-form-view" class="hidden">
+                <form id="withdrawal-form"><div class="p-6"><div class="text-center mb-6"><div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-2"><svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg></div><h3 class="text-xl font-bold text-slate-800">Langkah Terakhir</h3><p class="text-sm text-slate-500">Isi detail pencairan dana Anda.</p></div><div class="space-y-5"><div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg></div><input type="text" id="atas-nama" class="peer w-full h-12 px-10 text-slate-900 placeholder-transparent border-b-2 border-slate-300 focus:outline-none focus:border-blue-500" placeholder="Atas Nama" required><label for="atas-nama" class="absolute left-10 -top-3.5 text-slate-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-blue-500 peer-focus:text-sm">Atas Nama</label></div><div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" /><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm3 0a1 1 0 011-1h1a1 1 0 110 2H8a1 1 0 01-1-1zm3 0a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1z" clip-rule="evenodd" /></svg></div><input type="number" id="no-rekening" class="peer w-full h-12 px-10 text-slate-900 placeholder-transparent border-b-2 border-slate-300 focus:outline-none focus:border-blue-500" placeholder="No. Rekening" required><label for="no-rekening" class="absolute left-10 -top-3.5 text-slate-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-blue-500 peer-focus:text-sm">No. Rekening</label></div><div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.496 2.132a1 1 0 00-.992 0l-7 4A1 1 0 003 8v10a1 1 0 001 1h12a1 1 0 001-1V8a1 1 0 00-.504-.868l-7-4zM6 9a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd" /></svg></div><input type="text" id="nama-bank" class="peer w-full h-12 px-10 text-slate-900 placeholder-transparent border-b-2 border-slate-300 focus:outline-none focus:border-blue-500" placeholder="Nama Bank" required><label for="nama-bank" class="absolute left-10 -top-3.5 text-slate-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-placeholder-shown:top-3 peer-focus:-top-3.5 peer-focus:text-blue-500 peer-focus:text-sm">Nama Bank</label></div></div><div class="mt-8 grid grid-cols-2 gap-3"><button type="button" id="back-to-status-btn" class="w-full bg-slate-200 text-slate-800 font-semibold py-2.5 px-4 rounded-lg hover:bg-slate-300 transition">Kembali</button><button type="submit" class="w-full bg-green-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-green-700 transition">Ajukan Withdraw</button></div></div></form></div>
         </div>
     </div>
-
-    <!-- Edit modal for all views -->
-    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Edit Karyawan</h5>
-            <div class="mb-4">
-                <p class="text-sm font-medium mb-2 text-gray-600">Email</p>
-                <p id="editEmail" class="font-bold text-emerald-600 truncate"></p>
-            </div>
-            <div class="mb-4">
-                <label for="editSalaryInput" class="block text-sm font-medium mb-2 text-gray-600">Jumlah Gaji</label>
-                <div class="flex rounded-lg shadow-sm">
-                    <span class="input-group-text items-center px-4">Rp</span>
-                    <input type="number" id="editSalaryInput" class="form-control flex-1 w-full px-4 py-2" placeholder="Masukkan jumlah gaji">
-                </div>
-            </div>
-            <div class="flex items-center space-x-3 mb-6">
-                <input class="form-checkbox" type="checkbox" id="editClaimedCheckbox">
-                <label class="text-sm" for="editClaimedCheckbox">Sudah Diambil</label>
-            </div>
-            <div class="border-t border-gray-200 pt-4">
-                 <div class="flex items-center space-x-3">
-                    <input class="form-checkbox" type="checkbox" id="editRestrictedCheckbox">
-                    <label class="text-sm text-red-600" for="editRestrictedCheckbox">Batasi Akun Ini</label>
-                </div>
-            </div>
-            <div class="flex justify-end space-x-2 mt-6">
-                 <button class="btn-primary btn-secondary" onclick="document.getElementById('editModal').classList.add('hidden')">Batal</button>
-                <button class="btn-primary" id="saveEditBtn">Simpan</button>
-            </div>
-        </div>
-    </div>
-    
-    <div id="resetConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-        <div class="card p-6 w-full max-w-sm">
-            <h5 class="text-xl font-bold mb-4 text-center uppercase text-gray-700">Konfirmasi Reset</h5>
-            <p class="text-sm text-gray-500 mb-4">Ini akan mereset SEMUA gaji jadi Rp 0 & status jadi "Belum Diambil". Masukkan kode admin.</p>
-            <input type="password" id="resetConfirmCodeInput" class="form-control w-full px-4 py-3 mb-4" placeholder="Kode Admin">
-            <div class="flex justify-end space-x-2">
-                <button class="btn-primary btn-secondary" onclick="document.getElementById('resetConfirmModal').classList.add('hidden')">Batal</button>
-                <button class="btn-primary bg-red-600 hover:bg-red-700" id="confirmResetBtn">Reset</button>
-            </div>
-        </div>
-    </div>
-
 
     <script>
-        // --- SCRIPT DENGAN FITUR RESTRICTED MANUAL ---
-        const BIN_ID = "68b3e78443b1c97be931c7c5";
-        const API_KEY = "$2a$10$mx8berYVnQxRc7ATeB018Orxl1veAxJt/HhcqGd2CS6kSzL4yPg82";
-        const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-        const ADMIN_CODE = 'Arkana123';
-        const TARGET_WHATSAPP = '+62859106914815';
-
-        let users = [];
-        let identifiedUsers = [];
+        const SPREADSHEET_ID = '19hSqumZNS1UEylAEnmrlteTuJjVcRgiNhgNJYDxom1M';
+        const SHEET_NAME = 'Sheet1';
+        const API_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${SHEET_NAME}&t=${new Date().getTime()}`;
+        
+        let userData = [];
         let currentUser = null;
-        let currentFilter = 'all'; 
 
-        function qs(selector) { return document.querySelector(selector); }
-        function qsa(selector) { return document.querySelectorAll(selector); }
+        const loginForm = document.getElementById('login-form'),
+              emailInput = document.getElementById('email'),
+              whatsappInput = document.getElementById('whatsapp'),
+              loginButton = document.getElementById('login-button'),
+              loginButtonText = document.getElementById('login-button-text'),
+              spinner = document.getElementById('spinner'),
+              messageDiv = document.getElementById('message'),
+              paymentModal = document.getElementById('payment-modal'),
+              modalContent = document.getElementById('modal-content'),
+              paymentStatusView = document.getElementById('payment-status-view'),
+              withdrawalFormView = document.getElementById('withdrawal-form-view'),
+              closeModalBtn = document.getElementById('close-modal-btn'),
+              withdrawBtn = document.getElementById('withdraw-btn'),
+              backToStatusBtn = document.getElementById('back-to-status-btn'),
+              paymentCard = document.getElementById('payment-card'),
+              cardHolderEmail = document.getElementById('card-holder-email'),
+              cardStatus = document.getElementById('card-status'),
+              modalPaymentAmount = document.getElementById('modal-payment-amount'),
+              withdrawalForm = document.getElementById('withdrawal-form');
         
-        const loginForm = qs('#loginForm');
-        const salaryInfo = qs('#salaryInfo');
-        const withdrawForm = qs('#withdrawForm');
-        const alreadyClaimed = qs('#alreadyClaimed');
-        const restrictedAccount = qs('#restrictedAccount');
-        const adminSection = qs('#adminSection');
-        const financialTipsSection = qs('#financialTipsSection');
-        const successModal = qs('#successModal');
-        const errorModal = qs('#errorModal');
-        const adminLoginModal = qs('#adminLoginModal');
-        const geminiModal = qs('#geminiModal');
-        const resetConfirmModal = qs('#resetConfirmModal');
-        const editModal = qs('#editModal');
+        // [DIPERBAIKI] Logika Audio Web API
+        let audioCtx;
+        let isAudioInitialized = false;
 
-        const bulkActionModal = qs('#bulkActionModal');
-        const bulkActionForm = qs('#bulkActionForm');
-        const bulkResults = qs('#bulkResults');
-        const applyBulkSalaryBtn = qs('#applyBulkSalaryBtn');
-        const applyBulkRestrictionBtn = qs('#applyBulkRestrictionBtn');
-        const removeBulkRestrictionBtn = qs('#removeBulkRestrictionBtn');
-
-        function showSuccess(message) {
-            qs('#successMessage').textContent = message;
-            successModal.classList.remove('hidden');
-        }
-
-        function showError(message) {
-            qs('#errorMessage').textContent = message;
-            errorModal.classList.remove('hidden');
-        }
-        
-        function hideAllMainViews() {
-            [loginForm, salaryInfo, withdrawForm, alreadyClaimed, adminSection, restrictedAccount, financialTipsSection].forEach(el => el.classList.add('hidden'));
-        }
-
-        function normalizeEmail(v) { return String(v || "").trim().toLowerCase(); }
-        function digitsOnly(v) { return String(v || "").replace(/\D+/g, ""); }
-        function normalizePhone(phone) {
-            let d = digitsOnly(phone);
-            if (d.startsWith("62")) return d;
-            if (d.startsWith("0")) return "62" + d.slice(1);
-            return d;
-        }
-        function assertRecordShape(record) {
-            let data = [];
-            if (Array.isArray(record)) data = record;
-            if (record && Array.isArray(record.users)) data = record.users;
-            
-            return data.map(user => ({
-                ...user,
-                claimed: user.claimed || false,
-                restricted: user.restricted || false,
-                salary: user.salary || 0,
-            }));
-        }
-
-        async function fetchUsers() {
+        async function initAudio() {
+            if (isAudioInitialized) return;
             try {
-                const res = await fetch(`${BASE_URL}/latest`, { headers: { "X-Master-Key": API_KEY } });
-                if (!res.ok) throw new Error("Gagal mengambil data JSONBin");
-                const data = await res.json();
-                users = assertRecordShape(data.record);
-                return users;
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                // Resume context jika dalam keadaan suspended (kebijakan browser)
+                if (audioCtx.state === 'suspended') {
+                    await audioCtx.resume();
+                }
+                isAudioInitialized = true;
+                console.log('Audio Context is ready.');
+            } catch (e) {
+                console.error('Web Audio API is not supported in this browser', e);
+            }
+        }
+        
+        function playSound(type) {
+             if (!isAudioInitialized) return;
+             
+             const now = audioCtx.currentTime;
+             const gainNode = audioCtx.createGain();
+             gainNode.connect(audioCtx.destination);
+             
+             const oscillator = audioCtx.createOscillator();
+             oscillator.connect(gainNode);
+
+             if (type === 'main') {
+                oscillator.type = 'triangle';
+                oscillator.frequency.setValueAtTime(800, now);
+                gainNode.gain.setValueAtTime(0.3, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                oscillator.start(now);
+                oscillator.stop(now + 0.1);
+             } else if (type === 'soft') {
+                 oscillator.type = 'sine';
+                 oscillator.frequency.setValueAtTime(600, now);
+                 gainNode.gain.setValueAtTime(0.2, now);
+                 gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+                 oscillator.start(now);
+                 oscillator.stop(now + 0.1);
+             } else if (type === 'focus') {
+                 oscillator.type = 'square';
+                 oscillator.frequency.setValueAtTime(200, now);
+                 gainNode.gain.setValueAtTime(0.1, now);
+                 gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                 oscillator.start(now);
+                 oscillator.stop(now + 0.05);
+             }
+        }
+
+
+        function parseCSV(csvText) {
+            const rows = csvText.trim().split('\n');
+            if (rows.length < 2) return [];
+            const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            const emailIndex = headers.findIndex(h => h.toLowerCase() === 'email');
+            const whatsappIndex = headers.findIndex(h => h.toLowerCase() === 'no whatsapp');
+            const paymentIndex = headers.findIndex(h => h.toLowerCase() === 'payment');
+            const statusIndex = headers.findIndex(h => h.toLowerCase() === 'status');
+            const claimedIndex = headers.findIndex(h => h.toLowerCase() === 'claimed');
+            if (emailIndex === -1 || whatsappIndex === -1) return [];
+            return rows.slice(1).map(row => {
+                const values = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [];
+                return {
+                    email: (values[emailIndex] || '').trim().replace(/"/g, ''),
+                    whatsapp: (values[whatsappIndex] || '').trim().replace(/"/g, ''),
+                    payment: (values[paymentIndex] || 'N/A').trim().replace(/"/g, ''),
+                    status: (values[statusIndex] || 'N/A').trim().replace(/"/g, ''),
+                    claimed: (values[claimedIndex] || 'No').trim().replace(/"/g, '')
+                };
+            }).filter(user => user.email && user.whatsapp);
+        }
+
+        async function fetchData() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Network response was not ok.');
+                const csvText = await response.text();
+                userData = parseCSV(csvText);
+                if (userData.length > 0) {
+                    loginButton.disabled = false;
+                    loginButtonText.textContent = 'Login';
+                } else { throw new Error('No valid user data found.'); }
             } catch (error) {
-                console.error("Error fetching users:", error);
-                throw error;
+                loginButtonText.textContent = 'Gagal Memuat Data';
+                messageDiv.textContent = 'Tidak dapat terhubung ke database.';
+                messageDiv.className = 'mt-6 text-center text-sm font-medium text-red-600';
+                messageDiv.classList.remove('hidden');
             }
         }
 
-        async function saveUsers(nextUsers) {
-            try {
-                const res = await fetch(BASE_URL, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY, "X-Bin-Versioning": "false" },
-                    body: JSON.stringify({ users: nextUsers }),
-                });
-                if (!res.ok) throw new Error("Gagal menyimpan ke JSONBin");
-                const out = await res.json();
-                users = assertRecordShape(out.record);
-                return users;
-            } catch (error) {
-                console.error("Error saving users:", error);
-                throw error;
-            }
-        }
-
-        function findUserByEmailPhone(email, phone) {
-            const e = normalizeEmail(email);
-            const p = normalizePhone(phone);
-            return users.find(u => normalizeEmail(u.email) === e && normalizePhone(u.phone || u.wa || u.whatsapp) === p) || null;
-        }
-
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = qs('#email').value;
-            const whatsapp = qs('#whatsapp').value;
-            const loginBtn = qs('#loginBtn');
-
-            if (!email || !whatsapp) return showError('Email dan WhatsApp harus diisi');
-
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> LOADING...';
-            loginBtn.disabled = true;
-            qs('#salaryDisplay').innerHTML = '<i class="fas fa-spinner fa-spin text-3xl text-gray-400"></i>';
-
-            try {
-                await fetchUsers();
-                const user = findUserByEmailPhone(email, whatsapp);
-
-                if (user) {
-                    hideAllMainViews();
-                    if (user.restricted) {
-                        restrictedAccount.classList.remove('hidden');
-                    } else if (user.claimed) {
-                        alreadyClaimed.classList.remove('hidden');
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = emailInput.value.trim().toLowerCase();
+            const whatsapp = whatsappInput.value.trim();
+            messageDiv.classList.add('hidden');
+            loginButton.disabled = true;
+            loginButtonText.textContent = 'Memverifikasi...';
+            spinner.classList.remove('hidden');
+            currentUser = userData.find(user => user.email.toLowerCase() === email && user.whatsapp === whatsapp);
+            setTimeout(() => {
+                if (currentUser) {
+                    if (currentUser.claimed.toLowerCase().trim() === 'yes') {
+                        messageDiv.textContent = 'Gaji untuk akun ini sudah di-claim dan tidak dapat login lagi.';
+                        messageDiv.className = 'mt-6 text-center text-sm font-medium text-red-600';
+                        messageDiv.classList.remove('hidden');
                     } else {
-                        currentUser = user;
-                        setTimeout(() => {
-                             qs('#salaryDisplay').innerHTML = `<span id="salaryAmount" class="text-3xl font-bold text-gray-800"></span>`;
-                            animateValue(qs('#salaryAmount'), 0, user.salary, 1000);
-                        }, 500);
-                        salaryInfo.classList.remove('hidden');
+                        showPaymentModal(currentUser);
                     }
                 } else {
-                    showError('Email atau WhatsApp tidak terdaftar');
+                    messageDiv.textContent = 'Email atau Nomor WhatsApp salah.';
+                    messageDiv.className = 'mt-6 text-center text-sm font-medium text-red-600';
+                    messageDiv.classList.remove('hidden');
                 }
-            } catch (error) {
-                console.error("Login error:", error);
-                showError('Gagal verifikasi. Coba lagi.');
-            } finally {
-                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i> Masuk';
-                loginBtn.disabled = false;
-            }
-        });
-        
-        qs('#withdrawForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitWithdrawBtn = qs('#submitWithdrawBtn');
-            const userIndex = users.findIndex(u => normalizeEmail(u.email) === normalizeEmail(currentUser.email));
-            
-            if (userIndex !== -1) {
-                submitWithdrawBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengirim...';
-                submitWithdrawBtn.disabled = true;
-                
-                users[userIndex].claimed = true;
-                users[userIndex].claimedAt = new Date().toISOString();
-                
-                try {
-                    await saveUsers(users);
-                    const message = `Formulir Withdraw Gaji%0A%0A` + `Nama: ${qs('#fullName').value}%0A` + `No. Rek: ${qs('#accountNumber').value}%0A` + `Bank: ${qs('#bankName').value}%0A` + `No. WA: ${qs('#withdrawWhatsApp').value}%0A` + `Email: ${qs('#withdrawEmail').value}%0A` + `Jumlah: Rp ${(currentUser.salary || 0).toLocaleString('id-ID')}`;
-                    window.open(`https://wa.me/${TARGET_WHATSAPP}?text=${message}`, '_blank');
-                    
-                    hideAllMainViews();
-                    financialTipsSection.classList.remove('hidden');
-
-                } catch (error) {
-                    showError('Gagal update status. Hubungi admin.');
-                } finally {
-                    submitWithdrawBtn.innerHTML = '<i class="fab fa-whatsapp me-2"></i> Kirim ke Admin';
-                    submitWithdrawBtn.disabled = false;
-                }
-            }
-        });
-        
-        async function loadEmployeeList() {
-            try {
-                await fetchUsers();
-                const employeeList = qs('#employeeList');
-                employeeList.innerHTML = '';
-
-                qs('#totalEmployeesCount').textContent = users.length;
-                qs('#unclaimedCount').textContent = users.filter(u => !u.claimed && !u.restricted).length;
-                qs('#claimedCount').textContent = users.filter(u => u.claimed).length;
-                qs('#restrictedCount').textContent = users.filter(u => u.restricted).length;
-
-                let filteredUsers = users;
-                if(currentFilter === 'active') filteredUsers = users.filter(u => !u.restricted);
-                if(currentFilter === 'restricted') filteredUsers = users.filter(u => u.restricted);
-
-                filteredUsers.sort((a, b) => {
-                    if (a.restricted !== b.restricted) return a.restricted ? -1 : 1;
-                    if (a.claimed !== b.claimed) return a.claimed ? 1 : -1;
-                    return 0;
-                });
-                
-                if (filteredUsers.length === 0) {
-                    employeeList.innerHTML = '<div class="text-center p-4 text-gray-500">Tidak ada data.</div>';
-                    return;
-                }
-                
-                const fragment = document.createDocumentFragment();
-                filteredUsers.forEach(user => {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white p-4 rounded-lg border border-gray-200 mb-2 flex items-center justify-between';
-                    
-                    const statusText = user.restricted ? 'Dibatasi' : (user.claimed ? 'Sudah Klaim' : 'Belum Klaim');
-                    const statusColor = user.restricted ? 'text-red-600' : (user.claimed ? 'text-green-600' : 'text-yellow-600');
-                    
-                    card.innerHTML = `
-                        <div class="flex-1 min-w-0 mr-4">
-                            <p class="font-bold text-emerald-600 truncate">${user.email || '-'}</p>
-                            <p class="text-xs text-gray-500 mt-1">${user.phone || user.wa || '-'}</p>
-                            <p class="text-xs ${statusColor} mt-1 font-medium">${statusText}</p>
-                        </div>
-                        <div class="flex-shrink-0 flex items-center space-x-3">
-                             <span class="text-sm font-bold text-gray-700">Rp ${user.salary.toLocaleString('id-ID')}</span>
-                             <button class="text-gray-500 hover:text-emerald-600 edit-btn" data-email="${user.email}"><i class="fas fa-pen"></i></button>
-                        </div>
-                    `;
-                    fragment.appendChild(card);
-                });
-                
-                employeeList.appendChild(fragment);
-
-                addAdminEventListeners();
-
-            } catch (error) {
-                console.error("Error loading employee list:", error);
-                showError('Gagal memuat daftar');
-            }
-        }
-        
-        function addAdminEventListeners() {
-            qsa('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const userToEditEmail = e.currentTarget.dataset.email;
-                    const user = users.find(u => u.email === userToEditEmail);
-                    if (user) {
-                        qs('#editEmail').textContent = user.email;
-                        qs('#editSalaryInput').value = user.salary;
-                        qs('#editClaimedCheckbox').checked = user.claimed;
-                        qs('#editRestrictedCheckbox').checked = user.restricted;
-                        
-                        qs('#editModal').classList.remove('hidden');
-                        
-                        qs('#saveEditBtn').onclick = async () => {
-                           const userIndex = users.findIndex(u => u.email === userToEditEmail);
-                           if(userIndex > -1){
-                               users[userIndex].salary = parseInt(qs('#editSalaryInput').value) || 0;
-                               users[userIndex].claimed = qs('#editClaimedCheckbox').checked;
-                               users[userIndex].restricted = qs('#editRestrictedCheckbox').checked;
-                               
-                               try {
-                                   await saveUsers(users);
-                                   showSuccess('Data karyawan diperbarui');
-                                   editModal.classList.add('hidden');
-                                   loadEmployeeList();
-                               } catch (error) {
-                                   showError('Gagal menyimpan perubahan');
-                               }
-                           }
-                        };
-                    }
-                });
-            });
+                loginButton.disabled = false;
+                loginButtonText.textContent = 'Login';
+                spinner.classList.add('hidden');
+            }, 1000);
         }
 
-        function animateValue(obj, start, end, duration) {
+        function startDollarRain() {
+            const container = document.createElement('div');
+            container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100vh;pointer-events:none;z-index:9999;';
+            document.body.appendChild(container);
+            for (let i = 0; i < 40; i++) {
+                const dollar = document.createElement('div');
+                dollar.innerHTML = '💵';
+                dollar.classList.add('dollar');
+                dollar.style.left = Math.random() * 100 + 'vw';
+                dollar.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                dollar.style.animationDelay = Math.random() * 4 + 's';
+                dollar.style.animationIterationCount = '1';
+                container.appendChild(dollar);
+            }
+            setTimeout(() => container.remove(), 7000);
+        }
+
+        function animateValue(obj, start, end, duration, currencySymbol) {
             let startTimestamp = null;
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = Math.floor(progress * (end - start) + start);
-                obj.textContent = `Rp ${value.toLocaleString('id-ID')}`;
-                if (progress < 1) window.requestAnimationFrame(step);
+                const easedProgress = 1 - Math.pow(1 - progress, 3);
+                const currentValue = Math.floor(easedProgress * (end - start) + start);
+                obj.innerHTML = currencySymbol + currentValue;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    obj.innerHTML = currencySymbol + end;
+                    startDollarRain();
+                }
             };
             window.requestAnimationFrame(step);
         }
+
+        function showPaymentModal(user) {
+            paymentModal.classList.remove('hidden');
+            paymentStatusView.classList.remove('hidden');
+            withdrawalFormView.classList.add('hidden');
+            paymentCard.classList.add('glowing-card');
+            cardHolderEmail.textContent = user.email;
+            cardStatus.textContent = user.status || 'N/A';
+            requestAnimationFrame(() => {
+                modalContent.classList.add('modal-enter-active');
+                modalContent.classList.remove('modal-enter');
+            });
+            const paymentText = user.payment || 'N/A';
+            const currencySymbol = paymentText.startsWith('$') ? '$' : '';
+            const numericalValueMatch = paymentText.match(/\d+/);
+            if (numericalValueMatch) {
+                const endValue = parseInt(numericalValueMatch[0], 10);
+                setTimeout(() => animateValue(modalPaymentAmount, 0, endValue, 1200, currencySymbol), 150);
+            } else {
+                modalPaymentAmount.textContent = 'Belum Ada';
+            }
+        }
         
-        async function handleBulkAction(usersToChange, action, value, btn) {
-            const originalText = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            
-            try {
-                let changedCount = 0;
-                usersToChange.forEach(userToChange => {
-                    const userToUpdate = users.find(u => u.email === userToChange.email);
-                    if (userToUpdate) {
-                        userToUpdate[action] = value;
-                        changedCount++;
-                    }
-                });
-
-                if (changedCount > 0) {
-                    await saveUsers(users);
-                    showSuccess(`${changedCount} akun berhasil diperbarui.`);
-                } else {
-                    showError("Tidak ada akun yang cocok untuk diperbarui.");
-                }
-                
-                bulkActionModal.classList.add('hidden');
-                loadEmployeeList();
-            } catch (error) {
-                console.error(`Error applying bulk ${action}:`, error);
-                showError(`Gagal menerapkan aksi massal.`);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = originalText;
-            }
+        function handleWithdrawalSubmit(event) {
+            event.preventDefault();
+            const atasNama = document.getElementById('atas-nama').value;
+            const noRekening = document.getElementById('no-rekening').value;
+            const namaBank = document.getElementById('nama-bank').value;
+            const message = `*PENGAJUAN WITHDRAWAL*%0A%0A*Nama:* ${atasNama}%0A*No. Rekening:* ${noRekening}%0A*Bank:* ${namaBank}%0A%0A*Email:* ${currentUser.email}%0A*No. WhatsApp:* ${currentUser.whatsapp}%0A*Status Akun:* ${currentUser.status}`;
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=62859106914815&text=${message}`;
+            window.open(whatsappUrl, '_blank');
+            closePaymentModal();
         }
 
-        async function handleResetSalaries() {
-            const confirmBtn = qs('#confirmResetBtn');
-            const originalText = confirmBtn.innerHTML;
-            confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mereset...';
-            confirmBtn.disabled = true;
-
-            try {
-                await fetchUsers();
-                
-                const newUsers = users.map(user => ({
-                    ...user,
-                    salary: 0,
-                    claimed: false
-                }));
-
-                await saveUsers(newUsers);
-
-                showSuccess('Semua gaji berhasil direset!');
-                resetConfirmModal.classList.add('hidden');
-                loadEmployeeList();
-            } catch (error) {
-                console.error("Error resetting salaries:", error);
-                showError('Gagal mereset gaji. Coba lagi.');
-            } finally {
-                confirmBtn.innerHTML = originalText;
-                confirmBtn.disabled = false;
-            }
+        function closePaymentModal() {
+            paymentCard.classList.remove('glowing-card');
+            modalContent.classList.add('modal-leave-active');
+            modalContent.classList.remove('modal-enter-active');
+            setTimeout(() => {
+                paymentModal.classList.add('hidden');
+                modalContent.classList.remove('modal-leave-active');
+                modalContent.classList.add('modal-enter');
+                withdrawalForm.reset();
+            }, 200);
+        }
+        
+        function switchToWithdrawForm() {
+            paymentStatusView.classList.add('hidden');
+            withdrawalFormView.classList.remove('hidden');
+            paymentCard.classList.remove('glowing-card');
         }
 
-
-        document.addEventListener('DOMContentLoaded', () => {
-            hideAllMainViews();
-            loginForm.classList.remove('hidden');
-            
-            qs('#backToLoginBtn').addEventListener('click', () => {
-                hideAllMainViews();
-                loginForm.classList.remove('hidden');
-            });
-
-             qs('#withdrawBtn').addEventListener('click', () => {
-                hideAllMainViews();
-                withdrawForm.classList.remove('hidden');
-                qs('#withdrawWhatsApp').value = currentUser.phone || currentUser.wa || currentUser.whatsapp;
-                qs('#withdrawEmail').value = currentUser.email;
-            });
-            
-            qs('#adminToggleBtn').addEventListener('click', () => {
-                adminLoginModal.classList.remove('hidden');
-                qs('#adminCodeInput').value = '';
-                qs('#adminCodeInput').focus();
-            });
-
-            qs('#adminLoginBtn').addEventListener('click', () => {
-                if (qs('#adminCodeInput').value === ADMIN_CODE) {
-                    adminLoginModal.classList.add('hidden');
-                    hideAllMainViews();
-                    adminSection.classList.remove('hidden');
-                    updateFilterButtons(currentFilter);
-                    loadEmployeeList();
+        document.addEventListener('click', (e) => {
+            initAudio(); // Inisialisasi audio saat klik pertama di mana saja
+            const button = e.target.closest('button');
+            if (button) {
+                if (button.classList.contains('bg-blue-600') || button.classList.contains('bg-green-600')) {
+                    playSound('main');
                 } else {
-                    showError('Kode admin salah');
+                    playSound('soft');
                 }
-            });
-            
-            qs('#exitAdminBtn').addEventListener('click', () => {
-                hideAllMainViews();
-                loginForm.classList.remove('hidden');
-            });
-
-            qs('#resetSalariesBtn').addEventListener('click', () => {
-                resetConfirmModal.classList.remove('hidden');
-                qs('#resetConfirmCodeInput').value = '';
-            });
-
-            qs('#confirmResetBtn').addEventListener('click', () => {
-                if (qs('#resetConfirmCodeInput').value === ADMIN_CODE) {
-                    handleResetSalaries();
-                } else {
-                    showError('Kode admin salah');
-                }
-            });
-
-
-            function updateFilterButtons(filter) {
-                currentFilter = filter;
-                qsa('#filterButtons button').forEach(b => b.classList.remove('active'));
-                qs(`button[data-filter="${filter}"]`).classList.add('active');
             }
-
-            qsa('#filterButtons button').forEach(btn => btn.addEventListener('click', () => {
-                updateFilterButtons(btn.dataset.filter);
-                loadEmployeeList();
-            }));
-
-            qs('#bulkIdentBtn').addEventListener('click', () => {
-                bulkActionModal.classList.remove('hidden');
-                bulkActionForm.classList.remove('hidden');
-                bulkResults.classList.add('hidden');
-                qs('#bulkEmailInput').value = '';
-            });
-            
-            qs('#processEmailsBtn').addEventListener('click', async () => {
-                const emailsText = qs('#bulkEmailInput').value.trim();
-                if (!emailsText) return showError('Harap tempelkan daftar email.');
-
-                const btn = qs('#processEmailsBtn');
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Mengidentifikasi...';
-                btn.disabled = true;
-
-                const emails = emailsText.split(/[\n,;]+/).map(e => normalizeEmail(e.trim())).filter(e => e.length > 0);
-                await fetchUsers();
-                
-                identifiedUsers = users.filter(u => emails.includes(normalizeEmail(u.email)));
-                
-                qs('#foundCount').textContent = identifiedUsers.length;
-                qs('#foundEmailsList').innerHTML = identifiedUsers.map(u => `<li>${u.email}</li>`).join('');
-
-                btn.innerHTML = 'Proses';
-                btn.disabled = false;
-                
-                bulkActionForm.classList.add('hidden');
-                bulkResults.classList.remove('hidden');
-            });
-            
-            applyBulkSalaryBtn.addEventListener('click', (e) => {
-                const newSalary = parseInt(qs('#bulkSalaryInput').value);
-                if (isNaN(newSalary) || newSalary < 0) return showError('Masukkan jumlah gaji yang valid.');
-                if (identifiedUsers.length === 0) return showError('Tidak ada akun yang cocok untuk diperbarui.');
-                
-                handleBulkAction(identifiedUsers, 'salary', newSalary, e.currentTarget);
-            });
-            
-            applyBulkRestrictionBtn.addEventListener('click', (e) => {
-                handleBulkAction(identifiedUsers, 'restricted', true, e.currentTarget);
-            });
-
-            removeBulkRestrictionBtn.addEventListener('click', (e) => {
-                handleBulkAction(identifiedUsers, 'restricted', false, e.currentTarget);
-            });
-
         });
+
+        document.addEventListener('focusin', (e) => {
+            initAudio(); // Inisialisasi audio saat fokus pertama di mana saja
+            if (e.target.tagName === 'INPUT') {
+                playSound('focus');
+            }
+        });
+
+        loginForm.addEventListener('submit', handleLogin);
+        closeModalBtn.addEventListener('click', closePaymentModal);
+        withdrawBtn.addEventListener('click', switchToWithdrawForm);
+        backToStatusBtn.addEventListener('click', () => {
+             withdrawalFormView.classList.add('hidden');
+             paymentStatusView.classList.remove('hidden');
+             paymentCard.classList.add('glowing-card');
+        });
+        withdrawalForm.addEventListener('submit', handleWithdrawalSubmit);
+        paymentModal.addEventListener('click', e => (e.target === paymentModal) && closePaymentModal());
+        window.addEventListener('keydown', e => (e.key === 'Escape' && !paymentModal.classList.contains('hidden')) && closePaymentModal());
+        document.addEventListener('DOMContentLoaded', fetchData);
     </script>
 </body>
 </html>
+
