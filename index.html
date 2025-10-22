@@ -1,166 +1,1163 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Zen</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-        }
-        .toast {
-            visibility: hidden; min-width: 250px; margin-left: -125px;
-            color: #fff; text-align: center; border-radius: 8px;
-            padding: 16px; position: fixed; z-index: 100;
-            left: 50%; bottom: 30px; opacity: 0;
-            transition: visibility 0s, opacity 0.5s linear;
-        }
-        .toast.show { visibility: visible; opacity: 1; }
-        .toggle-claim:checked ~ .dot { transform: translateX(100%); background-color: #3b82f6; }
-        .toggle-claim:checked ~ .block { background-color: #bfdbfe; }
-        .modal-content { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
-        
-        @keyframes pulse-dot {
-          0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(0.8); opacity: 0.7; }
-        }
-        .animate-pulse-dot { animation: pulse-dot 1.2s infinite ease-in-out; }
-        .animate-pulse-dot:nth-child(2) { animation-delay: 0.2s; }
-        .animate-pulse-dot:nth-child(3) { animation-delay: 0.4s; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Sewa Linkedin Zen - Animated Welcome Screen</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
 
-        #gajiModal .modal-content { transform-style: preserve-3d; transform: rotateY(-70deg); }
-        #gajiModal.show .modal-content { transform: rotateY(0); }
-        .gaji-details > * { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease-out forwards; }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+/* --- General Styles --- */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #eef2f5; /* Light blue-gray background */
+    color: #1f2937;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-        @keyframes shine-effect {
-            0% { transform: translateX(-200%) skewX(-25deg); opacity: 0.5; }
-            100% { transform: translateX(200%) skewX(-25deg); opacity: 1; }
-        }
-        .shiny-card { position: relative; overflow: hidden; }
-        .shiny-card::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 70%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shine-effect 3s infinite;
-        }
-        
-        .card-green { background-image: linear-gradient(to bottom right, #15803d, #052e16); }
-        .card-gold { background-image: linear-gradient(to bottom right, #facc15, #b45309); }
-        .card-red { background-image: linear-gradient(to bottom right, #dc2626, #7f1d1d); }
-        .card-default { background-image: linear-gradient(to bottom right, #1f2937, #000000); }
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    flex-shrink: 0;
+}
 
-        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
-        .dollar-sign { position: absolute; top: -10%; color: #fbbF24; font-size: 1.5rem; animation: fall linear infinite; user-select: none; pointer-events: none; }
-        
-        #withdrawModal .modal-content { transform: translateY(100%); }
-        #withdrawModal.show .modal-content { transform: translateY(0); }
-        .form-group { position: relative; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease-out forwards; }
-        .form-input { width: 100%; border: 1px solid #d1d5db; border-radius: 0.5rem; outline: 0; font-size: 1rem; color: #111827; padding: 1rem 1rem 1rem 2.75rem; background-color: #f9fafb; transition: border-color 0.2s; }
-        .form-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4); }
-        .form-label { position: absolute; left: 2.75rem; top: 50%; transform: translateY(-50%); display: block; transition: all 0.2s ease-in-out; font-size: 1rem; color: #6b7280; pointer-events: none; }
-        .form-input:focus ~ .form-label, .form-input:not(:placeholder-shown) ~ .form-label { top: 0.5rem; transform: translateY(0); font-size: 0.75rem; color: #3b82f6; }
-        .form-icon { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: #9ca3af; transition: color 0.2s; }
-        .form-input:focus ~ .form-icon { color: #3b82f6; }
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .ticker-wrap {
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 20; padding: 0.75rem 0;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
-            backdrop-filter: blur(4px);
-            border-bottom: 1px solid #e5e7eb;
-            overflow: hidden;
-        }
-        .ticker-content { display: flex; white-space: nowrap; animation: scroll 30s linear infinite; }
-        .ticker-item { display: flex; align-items: center; padding: 0.25rem 0.75rem; margin-right: 1rem; background-color: #ffffff; border-radius: 9999px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); font-size: 0.8rem; }
-    </style>
+/* --- LinkedIn Colors & Branding --- */
+.linkedin-blue {
+    background-color: #0a66c2;
+}
+
+.text-linkedin-blue {
+    color: #0a66c2;
+}
+
+/* Fix Focus Ring using Tailwind's ring utilities directly */
+.input-field:focus {
+    outline: none; /* Remove default outline */
+    border-color: #0a66c2; /* Darker blue border on focus */
+    box-shadow: 0 0 0 4px rgba(10, 102, 194, 0.25); /* Softer, wider shadow for focus ring */
+}
+
+/* --- Floating Label Styles (Symmetric Fix) --- */
+.input-group {
+    position: relative;
+    margin-bottom: 1.75rem; /* More space between inputs */
+}
+
+/* Input Lift Effect (Modern Minimal) */
+.input-field {
+    padding: 1.15rem 1.25rem 0.65rem 1.25rem !important; /* Adjusted padding */
+    border-radius: 1rem; /* More rounded */
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #fcfcfc;
+    border: 1px solid #e5e7eb; /* Border lebih tipis */
+    color: #1f2937;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Bayangan soft lift */
+    transition: all 0.2s ease-out;
+}
+
+.input-field:focus {
+    box-shadow: 0 4px 8px rgba(10, 102, 194, 0.1), 0 0 0 4px rgba(10, 102, 194, 0.25);
+}
+
+/* Specific style for Readonly Input Fields */
+.input-field[readonly] {
+    background-color: #f0f4f7;
+    color: #6b7280;
+    border-color: #e5e7eb;
+    box-shadow: none;
+}
+
+
+.floating-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1.25rem;
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+    color: #9ca3af;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+}
+
+/* When input is focused or has content, move label up */
+.input-field:focus + .floating-label,
+.input-field:not(:placeholder-shown):valid + .floating-label {
+    top: 0;
+    left: 1rem;
+    font-size: 0.75rem;
+    background-color: #ffffff; 
+    padding: 0 0.25rem;
+    color: #0a66c2;
+    font-weight: 600;
+    transform: translateY(-50%);
+}
+
+/* Specific style for Readonly Floating Labels when content is shown */
+.input-field[readonly]:not(:placeholder-shown) + .floating-label {
+    color: #6b7280;
+    background-color: #f0f4f7; 
+}
+
+
+/* Ensure icon in floating label also transitions */
+.floating-label .material-icons-round {
+    font-size: 1.15rem;
+    margin-right: 0.25rem;
+}
+
+/* --- Gradient Button (Primary Action - Blue) --- */
+.btn-primary-gradient {
+    background: linear-gradient(135deg, #0a66c2 0%, #084c98 100%);
+    box-shadow: 0 10px 20px rgba(10, 102, 194, 0.4);
+    transition: all 0.3s ease;
+    border-radius: 1rem;
+}
+
+.btn-primary-gradient:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(10, 102, 194, 0.6);
+}
+
+/* --- MODERN MINIMAL GREEN BUTTON (Withdraw) --- */
+.btn-minimal-green {
+    background-color: #10b981; /* Tailwind Green 500 */
+    color: white;
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3); /* Softer shadow */
+    transition: all 0.2s ease;
+    border-radius: 9999px; /* Full pill shape */
+    font-weight: 600; /* Semibold */
+}
+
+.btn-minimal-green:hover {
+    background-color: #059669; /* Darker Green 600 */
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+}
+
+
+/* --- Reward Card Styles (Hyper Minimalist) --- */
+.premium-card {
+    height: auto;
+    padding: 0;
+    margin-bottom: 2rem !important;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: none;
+}
+
+.result-amount-text {
+    font-size: 3rem !important;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-top: 0.25rem;
+    color: #1f2937;
+}
+
+/* Warna Aksen untuk ikon minimalis */
+.text-minimal-red { color: #E63946; }
+.text-minimal-orange { color: #FF8C00; }
+.text-minimal-green { color: #35A79C; }
+
+/* --- Footer text spacing --- */
+.footer-note {
+    margin-top: 2.5rem;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 1.5rem;
+}
+
+/* --- INFO CARDS STYLE --- */
+.info-card {
+    background-color: #f8fafc; /* Sangat terang */
+    border: 1px solid #f0f4f7;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    min-height: 80px; /* Biar tetap konsisten tingginya */
+}
+
+.info-icon {
+    font-size: 2.25rem; /* Icon besar */
+    margin-right: 1rem;
+    color: #6b7280; /* Abu-abu netral */
+}
+
+.info-text {
+    font-weight: 600;
+    font-size: 0.875rem; /* Teks kecil */
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+/* --- Admin Tab Styling --- */
+.tab-button {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem 0.5rem 0 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+.tab-button:hover {
+    background-color: #f3f4f6;
+}
+.tab-button.active {
+    background-color: white;
+    color: #0a66c2;
+    border-bottom: 2px solid #0a66c2;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+}
+.tab-content {
+    padding-top: 1rem;
+}
+
+/* --- WELCOME SCREEN SPECIFIC --- */
+.welcome-logo {
+    animation: bounce-in 1s ease-out;
+}
+@keyframes bounce-in {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* --- NEW: Button Arrow Animation --- */
+@keyframes pulse-forward {
+    0%, 100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(3px) scale(1.05);
+        opacity: 0.9;
+    }
+}
+.animate-pulse-forward {
+    animation: pulse-forward 1.5s infinite ease-in-out;
+}
+/* ----------------------------------- */
+
+
+/* ... (Animations, Admin Panel styles unchanged) ... */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spin-slow {
+    animation: spin-slow 15s linear infinite;
+}
+
+@keyframes counting {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-counting {
+    animation: counting 0.8s ease-out forwards;
+}
+</style>
 </head>
-<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+<body class="min-h-screen bg-[#eef2f5] p-6">
 
-    <div id="dollarRainContainer" class="fixed inset-0 z-40 pointer-events-none overflow-hidden hidden"></div>
-
-    <div id="withdrawalTicker" class="ticker-wrap"><div id="tickerContent" class="ticker-content"></div></div>
-
-    <div id="app" class="min-h-screen flex flex-col items-center justify-center p-4">
+<div class="flex justify-center items-center min-h-[calc(100vh-3rem)] w-full">
+    <div id="main-app" class="w-full max-w-lg card p-8 rounded-3xl mx-auto">
         
-        <div class="fixed top-4 right-4 z-30"><button id="infoBtn" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-gray-600 hover:bg-gray-100 transition-transform duration-150 active:scale-90"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button></div>
-
-        <div id="loginView" class="w-full max-w-md"><div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200"><div class="text-center mb-8"><h1 class="text-3xl font-bold text-gray-900">Payment Zen</h1><p class="text-gray-500 mt-2">Masuk dengan akun WhatsApp yang sama saat pertama kali setor Acc.</p></div><form id="loginForm" class="space-y-6"><div><label for="email" class="block text-sm font-medium text-gray-700">Email</label><input type="email" id="email" name="email" required class="mt-1 block w-full px-4 py-3 bg-gray-100 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="anda@email.com"></div><div><label for="whatsapp" class="block text-sm font-medium text-gray-700">Nomor WhatsApp</label><input type="text" id="whatsapp" name="whatsapp" required class="mt-1 block w-full px-4 py-3 bg-gray-100 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="081234567890"></div><div><button type="submit" class="w-full flex justify-center py-3 px-4 border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform duration-150 active:scale-95">Log In</button></div></form></div></div>
-
-        <div id="adminView" class="hidden w-full max-w-6xl"><div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200"> <div class="flex flex-wrap justify-between items-center mb-6 gap-4"><div><h2 class="text-2xl font-bold">Admin Dashboard</h2><p class="text-gray-500">Manajemen data pengguna.</p></div><div class="flex items-center space-x-4"><button id="bulkAddBtn" class="bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-150">Tambah Masal</button><button id="logoutBtn" class="text-sm font-medium text-blue-600 hover:text-blue-800">Logout</button></div></div> <form id="adminForm" class="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200"> <h3 id="formTitle" class="text-lg font-semibold mb-4">Tambah Pengguna Baru</h3> <div class="grid grid-cols-1 md:grid-cols-4 gap-4"> <input type="hidden" id="userId"><input id="formEmail" type="email" placeholder="Email" class="w-full px-4 py-2 bg-white rounded-lg" required><input id="formWhatsapp" type="text" placeholder="Nomor WhatsApp" class="w-full px-4 py-2 bg-white rounded-lg" required> <select id="formStatus" class="w-full px-4 py-2 bg-white rounded-lg" required><option value="New Acc">New Acc</option><option value="Restricted">Restricted</option><option value="Unrestricted">Unrestricted</option><option value="Old Acc">Old Acc</option></select> <div class="flex items-center space-x-2"><button type="submit" id="saveBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">Simpan</button><button type="button" id="cancelBtn" class="w-full hidden bg-gray-200 text-gray-700 py-2 px-4 rounded-lg">Batal</button></div> </div> </form> <div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">WhatsApp</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Claimed</th><th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th></tr></thead><tbody id="userTableBody" class="bg-white divide-y divide-gray-200"></tbody></table></div></div></div>
-
-        <div class="fixed bottom-4 left-4 z-40"><button id="adminAccessBtn" class="w-10 h-10 bg-gray-800 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-900 focus:outline-none"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd" /></svg></button></div>
-    </div>
-    
-    <!-- MODALS -->
-    <div id="loader" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden"><div class="flex space-x-2"><div class="w-4 h-4 bg-white rounded-full animate-pulse-dot"></div><div class="w-4 h-4 bg-white rounded-full animate-pulse-dot"></div><div class="w-4 h-4 bg-white rounded-full animate-pulse-dot"></div></div></div>
-    <div id="adminModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden"><div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm modal-content transform opacity-0 scale-95"><h3 class="text-xl font-bold text-center mb-4 text-gray-900">Akses Admin</h3><p class="text-gray-500 text-center mb-6">Masukkan kode.</p><form id="adminCodeForm"><input type="password" id="adminCodeInput" class="w-full text-center tracking-widest text-lg px-4 py-3 bg-gray-100 rounded-lg" autofocus><p id="adminError" class="text-red-500 text-xs text-center mt-2 h-4"></p><button type="submit" class="w-full mt-4 py-3 px-4 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">Masuk</button></form></div></div>
-    <div id="confirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden"><div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm modal-content transform opacity-0 scale-95"><h3 class="text-lg font-semibold text-gray-900">Konfirmasi Tindakan</h3><p id="confirmMessage" class="text-sm text-gray-600 mt-2 mb-6">Apakah Anda yakin?</p><div class="flex justify-end space-x-3"><button id="confirmCancelBtn" class="px-4 py-2 text-sm font-medium bg-gray-200 rounded-lg hover:bg-gray-300">Batal</button><button id="confirmOkBtn" class="px-4 py-2 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700">Ya, Hapus</button></div></div></div>
-    <div id="gajiModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden" style="perspective: 1000px;"><div class="w-full max-w-md p-6 rounded-2xl shadow-2xl text-white modal-content shiny-card card-default transform opacity-0 scale-95" style="z-index: 51; position: relative;"><div class="flex justify-between items-start"><h3 class="text-xl font-bold text-yellow-300">PAYMENT ZEN</h3><div class="w-12 h-8 bg-black bg-opacity-25 rounded-md flex items-center justify-center"><div class="w-10 h-6 bg-gray-700 rounded-sm"></div></div></div><div class="mt-8 mb-10 text-center gaji-details"><p class="text-gray-300 text-sm" style="animation-delay: 0.3s;">Estimasi Pendapatan</p><p class="text-5xl font-bold mt-2" style="font-family: 'Space Mono', monospace; animation-delay: 0.5s;" id="gajiAmount">$0</p><p class="text-gray-300 text-xs mt-1" style="animation-delay: 0.7s;" id="gajiStatus">Status: -</p></div><div class="flex space-x-3"><button id="gajiLaterBtn" class="w-1/3 bg-gray-600 hover:bg-gray-700 font-bold py-2 px-4 rounded-lg transition-transform duration-150 active:scale-95">Nanti Saja</button><button id="withdrawBtn" class="w-2/3 bg-blue-600 hover:bg-blue-700 font-bold py-2 px-4 rounded-lg transition-transform duration-150 active:scale-95">Withdraw</button></div></div></div>
-    <div id="withdrawModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden p-4"><div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg modal-content transform opacity-0"><h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Formulir Withdraw</h3><form id="withdrawForm" class="space-y-8"><div class="form-group relative" style="animation-delay: 0.1s;"><input type="text" id="wdFullName" class="form-input peer" placeholder=" " required><label for="wdFullName" class="form-label">Atas Nama</label><div class="form-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></div></div><div class="form-group relative" style="animation-delay: 0.2s;"><input type="number" id="wdAccountNumber" class="form-input peer" placeholder=" " required><label for="wdAccountNumber" class="form-label">Nomor Rekening</label><div class="form-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg></div></div><div class="form-group relative" style="animation-delay: 0.3s;"><input type="text" id="wdBankName" class="form-input peer" placeholder=" " required><label for="wdBankName" class="form-label">Nama Bank</label><div class="form-icon"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div></div><div class="flex space-x-3 pt-6 form-group" style="animation-delay: 0.4s;"><button type="button" id="withdrawCancelBtn" class="w-1/3 bg-gray-200 hover:bg-gray-300 font-bold py-3 px-4 rounded-lg transition-transform duration-150 active:scale-95">Batal</button><button type="submit" class="w-2/3 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-transform duration-150 active:scale-95">Ajukan Withdraw</button></div></form></div></div>
-    <div id="infoModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden p-4"><div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg modal-content transform opacity-0 scale-95"><h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Informasi Rate</h3><div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status Akun</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rate Pembayaran</th></tr></thead><tbody class="bg-white divide-y divide-gray-200"><tr><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">New Acc & Old Acc</td><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$10</td></tr><tr><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Unrestricted</td><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$15</td></tr><tr><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Restricted</td><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$1</td></tr></tbody></table></div><button id="infoCloseBtn" class="w-full mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-transform duration-150 active:scale-95">Tutup</button></div></div>
-    <div id="claimedModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden p-4"><div class="w-full max-w-sm bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-2xl shadow-lg text-white text-center modal-content transform opacity-0 scale-95"><div class="mx-auto bg-red-500/20 rounded-full h-16 w-16 flex items-center justify-center mb-6"><svg class="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg></div><h3 class="text-2xl font-bold uppercase mb-3">Sudah di Claim</h3><p class="text-gray-400 text-sm mb-8">Jika Anda merasa belum claim, segera hubungi admin.</p><button id="claimedCloseBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-transform duration-150 active:scale-95">Mengerti</button></div></div>
-    
-    <div id="bulkAddModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden p-4">
-        <div class="w-full max-w-lg bg-white p-8 rounded-2xl shadow-lg modal-content transform opacity-0 scale-95">
-            <h3 class="text-2xl font-bold text-gray-900 mb-4">Tambah Pengguna Secara Masal</h3>
-            <p class="text-sm text-gray-500 mb-6">Masukkan data dengan format: <code class="bg-gray-100 text-gray-700 px-1 py-0.5 rounded">email@contoh.com 08123456789</code>, satu entri per baris.</p>
-            <form id="bulkAddForm">
-                <textarea id="bulkData" rows="10" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Tempel data di sini..."></textarea>
-                <div class="mt-4">
-                    <label for="bulkStatus" class="block text-sm font-medium text-gray-700">Pilih Status untuk Semua</label>
-                    <select id="bulkStatus" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="New Acc">New Acc</option>
-                        <option value="Restricted">Restricted</option>
-                        <option value="Unrestricted">Unrestricted</option>
-                        <option value="Old Acc">Old Acc</option>
-                    </select>
+        <!-- ========================================= -->
+        <!-- NEW: VIEW WELCOME -->
+        <!-- ========================================= -->
+        <div id="view-welcome" class="text-center">
+            <header class="mb-10 pt-10">
+                <div class="inline-flex items-center justify-center p-6 rounded-full bg-linkedin-blue bg-opacity-10 mb-6 welcome-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Zen Logo" class="w-12 h-12">
                 </div>
-                <div class="flex space-x-3 mt-8">
-                    <button type="button" id="bulkAddCancelBtn" class="w-1/3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg">Batal</button>
-                    <button type="submit" class="w-2/3 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg">Proses & Simpan</button>
+                <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Selamat Datang</h1>
+                <p class="text-lg text-gray-500 max-w-xs mx-auto">
+                    Akses Payment Sewa Akun Zen Anda di sini.
+                </p>
+            </header>
+            
+            <div class="mb-16">
+                <span class="material-icons-round text-6xl text-linkedin-blue opacity-50">waving_hand</span>
+            </div>
+
+            <!-- Tombol Lanjutkan dengan animasi panah -->
+            <button onclick="startApp()" class="btn-primary-gradient w-full text-white font-bold py-4 rounded-xl shadow-xl flex items-center justify-center">
+                <span class="material-icons-round text-xl mr-2 animate-pulse-forward">arrow_forward</span> Lanjutkan
+            </button>
+        </div>
+        
+        <!-- ========================================= -->
+        <!-- OLD: VIEW HOME -->
+        <!-- ========================================= -->
+        <div id="view-home" class="hidden">
+            <header class="mb-10 text-center">
+                <div class="inline-flex items-center justify-center p-4 rounded-full bg-linkedin-blue bg-opacity-10 mb-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Zen Logo" class="w-8 h-8">
                 </div>
+                <h1 class="text-3xl font-extrabold text-gray-800 mb-2">Payment Sewa Akun Zen</h1>
+                <p class="text-md text-gray-500 flex items-center justify-center whitespace-normal leading-tight mb-8">
+                    <span class="material-icons-round text-lg mr-1 text-linkedin-blue">verified_user</span> Masuk untuk lihat Payment Anda.
+                </p>
+            </header>
+
+            <form id="user-form" onsubmit="handleUserSubmit(event)">
+                <div class="input-group">
+                    <input type="email" id="input-email" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
+                    <label for="input-email" class="floating-label">
+                        <span class="material-icons-round text-lg mr-1">mail</span> Email Linkedin
+                    </label>
+                </div>
+                
+                <div class="input-group mb-8">
+                    <input type="text" id="input-whatsapp" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
+                    <label for="input-whatsapp" class="floating-label">
+                        <span class="material-icons-round text-lg mr-1">phone_android</span> No WhatsApp (e.g., 62812xxxx)
+                    </label>
+                </div>
+                
+                <button type="submit" id="submit-button" class="btn-primary-gradient w-full text-white font-bold py-4 rounded-xl shadow-xl flex items-center justify-center">
+                    <span class="material-icons-round text-xl mr-2">login</span> Cek Reward Sekarang
+                </button>
             </form>
+
+            <div id="message-area" class="mt-8 p-4 rounded-xl text-left hidden transition duration-300 ease-in-out border-l-4"></div>
+
+            <!-- --- INFO CARDS SECTION --- -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                <!-- Card 1: Fast Payment -->
+                <div class="info-card">
+                    <span class="material-icons-round info-icon text-green-500">timer</span>
+                    <p class="info-text">Fast Payment</p>
+                </div>
+
+                <!-- Card 2: Eligible Accounts -->
+                <div class="info-card">
+                    <span class="material-icons-round info-icon text-red-500">description</span>
+                    <p class="info-text">Hanya akun yang Eligible yang menerima Payment</p>
+                </div>
+            </div>
+            <!-- --- END INFO CARDS SECTION --- -->
+
+
+            <p class="text-xs text-gray-400 text-center footer-note">
+                <span class="material-icons-round text-sm mr-1 align-middle">info</span> Hubungi admin untuk penggabungan Payment.
+            </p>
+        </div>
+
+        <!-- OLD: VIEW RESULT -->
+        <div id="view-result" class="hidden text-center">
+            <header class="mb-8">
+                <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Hasil Pengecekan Reward</h2>
+                <p class="text-sm text-gray-500 flex items-center justify-center">
+                    <span class="material-icons-round text-lg mr-1 text-linkedin-blue">redeem</span> Detail reward akun Anda.
+                </p>
+            </header>
+
+            <!-- HYPER MINIMALIST REWARD CARD -->
+            <div id="counting-animation" class="premium-card relative overflow-hidden">
+                <p class="text-md font-medium result-text text-gray-500 flex items-center">
+                    <span id="result-icon" class="material-icons-round text-xl mr-2 text-gray-400">monetization_on</span> Reward Payment Anda:
+                </p>
+                <div class="flex justify-center items-center h-auto w-full">
+                    <div id="result-amount" class="text-gray-900 font-extrabold opacity-0 result-amount-text"></div>
+                    <div id="loader-animation" class="text-3xl text-gray-900"></div>
+                </div>
+            </div>
+            <!-- END HYPER MINIMALIST REWARD CARD -->
+            
+            <div class="mb-10"></div> 
+
+            <div class="flex space-x-4 justify-center" id="result-buttons">
+                <!-- Tombol Withdraw menggunakan gaya Modern Minimalis Green -->
+                <button id="withdraw-button" onclick="setView('withdraw')" class="w-1/2 btn-minimal-green flex items-center justify-center text-white py-3.5 px-6 transition duration-200">
+                    <span class="material-icons-round text-lg mr-2">account_balance_wallet</span> Withdraw
+                </button>
+                <button onclick="setView('home')" class="w-1/2 bg-gray-200 text-gray-700 font-bold py-3.5 px-6 rounded-xl shadow-md hover:bg-gray-300 transition duration-200 flex items-center justify-center">
+                    <span class="material-icons-round text-lg mr-2">home</span> Kembali
+                </button>
+            </div>
+        </div>
+
+        <!-- OLD: VIEW WITHDRAW -->
+        <div id="view-withdraw" class="hidden">
+            <header class="mb-8 text-center">
+                <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Formulir Penarikan Reward</h2>
+                <p class="text-sm text-gray-500 flex items-center justify-center mt-2.5">
+                    <span class="material-icons-round text-base mr-1 text-linkedin-blue">credit_score</span> Isi detail rekening bank Anda.
+                </p>
+            </header>
+            <div class="mb-8"></div> <!-- Replaced h-px line with just margin -->
+
+            <form id="withdraw-form" onsubmit="handleWithdrawSubmit(event)">
+                <div class="input-group">
+                    <input type="text" id="withdraw-nama" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
+                    <label for="withdraw-nama" class="floating-label">
+                        <span class="material-icons-round text-lg mr-1">person</span> Atas Nama
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="withdraw-rekening" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
+                    <label for="withdraw-rekening" class="floating-label">
+                        <span class="material-icons-round text-lg mr-1">credit_card</span> Nomor Rekening
+                    </label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="withdraw-bank" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
+                    <label for="withdraw-bank" class="floating-label">
+                        <span class="material-icons-round text-lg mr-1">corporate_fare</span> Nama Bank
+                    </label>
+                </div>
+
+                <div class="input-group mb-4">
+                    <input type="email" id="withdraw-email" class="input-field w-full bg-gray-100 border border-gray-300 text-gray-900 transition duration-200" placeholder=" " readonly>
+                    <label for="withdraw-email" class="floating-label">
+                        <span class="material-icons-round text-lg mr-1">mail</span> Email (Otomatis Terisi)
+                    </label>
+                </div>
+
+                <div class="input-group mb-10">
+                    <input type="text" id="withdraw-whatsapp" class="input-field w-full bg-gray-100 border border-gray-300 text-gray-900 transition duration-200" placeholder=" " readonly>
+                    <label for="withdraw-whatsapp" class="floating-label">
+                        <span class="material-icons-round text-lg mr-1">phone_android</span> No WhatsApp (Otomatis Terisi)
+                    </label>
+                </div>
+
+                <!-- Tombol Withdraw menggunakan gaya Modern Minimalis Green -->
+                <button type="submit" class="w-full font-bold py-4 flex items-center justify-center btn-minimal-green">
+                    <span class="material-icons-round text-lg mr-2">send</span> Kirim Permintaan Withdraw
+                </button>
+            </form>
+
+            <button onclick="setView('result')" class="w-full mt-6 text-linkedin-blue hover:text-blue-700 font-bold py-2.5 rounded-xl transition duration-200 flex items-center justify-center bg-transparent">
+                <span class="material-icons-round text-lg mr-2">arrow_back</span> Kembali ke Hasil
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<button id="admin-toggle-btn" class="fixed bottom-4 left-4 p-3 rounded-full bg-white text-gray-500 shadow-xl hover:bg-gray-100 hover:text-linkedin-blue transition duration-200 z-10" onclick="toggleAdminPanel()" title="Mode Admin">
+    <span class="material-icons-round text-xl spin-slow">settings</span>
+</button>
+
+<div id="admin-panel" class="hidden fixed inset-0 flex justify-end z-50">
+    <div class="fixed inset-0 bg-black/40" onclick="document.getElementById('admin-panel').classList.add('hidden');"></div>
+
+    <div class="w-full max-w-sm bg-white p-6 shadow-2xl z-50 overflow-y-auto rounded-l-2xl">
+        <header class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+            <h2 class="text-2xl font-bold text-red-600">Panel Admin</h2>
+            <button class="text-gray-400 hover:text-gray-600 transition" onclick="document.getElementById('admin-panel').classList.add('hidden');">
+                <span class="material-icons-round text-2xl">close</span>
+            </button>
+        </header>
+
+        <p class="text-sm text-gray-500 mb-6">Kelola data akun dan reward yang ditentukan.</p>
+
+        <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="mb-6 space-y-4 p-4 bg-gray-50 rounded-lg">
+            <!-- Input Password -->
+            <label for="admin-password" class="block text-sm font-semibold text-gray-700">Password Admin</label>
+            <input type="password" id="admin-password" class="w-full p-3 rounded-lg bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-900" placeholder="Masukan Password" required>
+            
+            <!-- Checkbox Ingat Sandi -->
+            <div class="flex items-center">
+                <input type="checkbox" id="remember-admin-password" class="form-checkbox text-red-600 h-4 w-4 rounded border-gray-300 focus:ring-red-500">
+                <label for="remember-admin-password" class="ml-2 block text-sm text-gray-900">
+                    Ingat Sandi
+                </label>
+            </div>
+
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition shadow-md">
+                Login
+            </button>
+        </form>
+
+        <div id="admin-content" class="hidden">
+            <!-- Admin Tabs -->
+            <div class="flex border-b border-gray-200">
+                <button id="tab-single" class="tab-button active flex items-center" onclick="showAdminTab('single')">
+                    <span class="material-icons-round text-lg mr-1">person_add</span> Akun Tunggal
+                </button>
+                <button id="tab-mass" class="tab-button flex items-center" onclick="showAdminTab('mass')">
+                    <span class="material-icons-round text-lg mr-1">group_add</span> Akun Massal
+                </button>
+            </div>
+
+            <!-- TAB 1: SINGLE ACCOUNT INPUT -->
+            <div id="admin-form-single" class="tab-content">
+                <h3 class="xl font-bold text-gray-800 mb-4 mt-4">Tambah/Update Akun Tunggal</h3>
+                <form id="admin-form" onsubmit="handleAdminSubmit(event)" class="space-y-4 mb-8 p-4 border border-linkedin-blue/20 rounded-lg">
+                    
+                    <div class="input-group">
+                        <input type="email" id="admin-email" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required>
+                        <label for="admin-email" class="floating-label text-gray-500">Email Linkedin</label>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="text" id="admin-whatsapp" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required>
+                        <label for="admin-whatsapp" class="floating-label text-gray-500">No WhatsApp</label>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="number" id="admin-payment" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required min="0">
+                        <label for="admin-payment" class="floating-label text-gray-500">Payment Reward (IDR)</label>
+                    </div>
+
+                    <button type="submit" id="admin-submit-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition shadow-md">
+                        <span class="material-icons-round text-lg mr-1">save</span> Simpan Data Akun
+                    </button>
+                </form>
+            </div>
+            
+            <!-- TAB 2: MASS ACCOUNT INPUT -->
+            <div id="admin-form-mass" class="tab-content hidden">
+                <h3 class="xl font-bold text-gray-800 mb-4 mt-4">Tambah Akun Massal (Satu WA, Banyak Email)</h3>
+                <form id="admin-mass-form" onsubmit="handleAdminMassSubmit(event)" class="space-y-4 mb-8 p-4 border border-red-500/20 rounded-lg">
+                    <div class="input-group">
+                        <textarea id="mass-emails" class="w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500" rows="5" placeholder="Masukkan Email, pisahkan dengan baris baru (Enter)" required></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="text" id="mass-whatsapp" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required>
+                        <label for="mass-whatsapp" class="floating-label text-gray-500">No WhatsApp Tunggal</label>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="number" id="mass-payment" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required min="0">
+                        <label for="mass-payment" class="floating-label text-gray-500">Payment Reward Tunggal (IDR)</label>
+                    </div>
+                    
+                    <button type="submit" id="admin-mass-submit-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition shadow-md">
+                        <span class="material-icons-round text-lg mr-1">group_add</span> Simpan Akun Massal
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Account List -->
+            <h3 class="text-xl font-bold text-gray-800 mt-6 mb-4 border-b border-gray-100 pb-2">Data Akun Tersimpan</h3>
+            <button onclick="pollData()" class="text-sm font-medium text-linkedin-blue hover:text-blue-700 mb-4 flex items-center transition">
+                <span class="material-icons-round text-lg mr-1">refresh</span> Refresh Data Manual
+            </button>
+            <div id="account-list" class="space-y-3">
+                <p class="text-gray-500">Memuat data...</p>
+            </div>
         </div>
     </div>
-    
-    <div id="toast" class="toast"></div>
+</div>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const BIN_ID = '68d6119843b1c97be9506c0c', API_KEY = '$2a$10$CyEgkHrw6xtwHt.RE3ZqEulgvcK5yzSmlYJmn.aRA23csA9a8u/.2', API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`, ADMIN_CODE = '121', ADMIN_WHATSAPP = '62859106914815', SALARIES = {'New Acc':10,'Old Acc':10,'Restricted':1,'Unrestricted':15};
-        let users = [], confirmCallback = null, currentUser = null;
-        const allModals = {loader:document.getElementById('loader'), toast:document.getElementById('toast'), admin:document.getElementById('adminModal'), confirm:document.getElementById('confirmModal'), gaji:document.getElementById('gajiModal'), withdraw:document.getElementById('withdrawModal'), info:document.getElementById('infoModal'), claimed: document.getElementById('claimedModal'), bulkAdd: document.getElementById('bulkAddModal')};
-        const dollarRainContainer = document.getElementById('dollarRainContainer');
-        const fetchData=async()=>{try{const r=await fetch(`${API_URL}/latest`,{headers:{'X-Master-Key':API_KEY}});if(!r.ok)throw new Error;const d=await r.json();return users=d.record.users||[]}catch(e){return console.error(e),showToast("Gagal memuat data.","error"),[]}};const updateData=async d=>{try{const r=await fetch(API_URL,{method:"PUT",headers:{"Content-Type":"application/json","X-Master-Key":API_KEY},body:JSON.stringify({users:d})});if(!r.ok)throw new Error;return users=d,renderTable(),!0}catch(e){return console.error(e),showToast("Gagal update data.","error"),!1}};const showView=v=>{document.getElementById("loginView").classList.toggle("hidden","login"!==v),document.getElementById("adminView").classList.toggle("hidden","admin"!==v); const adminAccessBtn = document.getElementById("adminAccessBtn"); if(adminAccessBtn) adminAccessBtn.parentElement.classList.toggle("hidden","admin"===v); document.getElementById("withdrawalTicker").classList.toggle("hidden", "admin"===v)};const showToast=(m,t="success")=>{allModals.toast.textContent=m,allModals.toast.className=`toast show ${"success"===t?"bg-green-500":"bg-red-500"}`,setTimeout(()=>{allModals.toast.className=allModals.toast.className.replace("show","")},3e3)};const showLoader=s=>allModals.loader.classList.toggle("hidden",!s);const renderTable=()=>{const e=document.getElementById("userTableBody");if(e.innerHTML="",0===users.length)return void(e.innerHTML='<tr><td colspan="5" class="text-center py-4 text-gray-500">Tidak ada data.</td></tr>');users.forEach(t=>{const s=document.createElement("tr");s.innerHTML=`<td class="px-6 py-4 text-sm text-gray-900">${t.email}</td><td class="px-6 py-4 text-sm text-gray-500">${t.whatsapp}</td><td class="px-6 py-4"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(t.status)}">${t.status}</span></td><td class="px-6 py-4 text-sm"><label class="flex items-center cursor-pointer"><div class="relative"><input type="checkbox" class="sr-only toggle-claim" data-id="${t.id}" ${t.claimed?"checked":""}> <div class="block bg-gray-200 w-10 h-6 rounded-full"></div><div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div></div></label></td><td class="px-6 py-4 text-right text-sm font-medium"><button class="edit-btn text-blue-600 hover:text-blue-900 mr-4" data-id="${t.id}">Edit</button><button class="delete-btn text-red-600 hover:text-red-900" data-id="${t.id}">Hapus</button></td>`,e.appendChild(s)})};const getStatusColor=s=>({"New Acc":"bg-blue-100 text-blue-800",Restricted:"bg-yellow-100 text-yellow-800",Unrestricted:"bg-green-100 text-green-800","Old Acc":"bg-gray-100 text-gray-800"})[s]||"bg-gray-100 text-gray-800";const resetAdminForm=()=>{document.getElementById("adminForm").reset(),document.getElementById("userId").value="",document.getElementById("formTitle").textContent="Tambah Pengguna Baru",document.getElementById("saveBtn").textContent="Simpan",document.getElementById("cancelBtn").classList.add("hidden")};
-        const openModal=(m)=>{m.classList.remove("hidden"),setTimeout(()=>{m.classList.add("show"),m.querySelector(".modal-content").classList.remove("opacity-0","scale-95"),"withdrawModal"===m.id&&m.querySelector(".modal-content").classList.remove("translate-y-full")},10)};const closeModal=m=>{m.classList.remove("show");const e=m.querySelector(".modal-content");e.classList.add("opacity-0"),"withdrawModal"===m.id?e.classList.add("translate-y-full"):e.classList.add("scale-95"),"gajiModal"===m.id&&(dollarRainContainer.classList.add("hidden"),dollarRainContainer.innerHTML=""),setTimeout(()=>m.classList.add("hidden"),300)};
-        const showConfirmModal=(m,c)=>{document.getElementById("confirmMessage").textContent=m,confirmCallback=c,openModal(allModals.confirm)};const createDollarRain=()=>{dollarRainContainer.innerHTML="",dollarRainContainer.classList.remove("hidden");for(let e=0;e<40;e++){const t=document.createElement("div");t.classList.add("dollar-sign"),t.textContent="$",t.style.left=100*Math.random()+"vw",t.style.animationDuration=2*Math.random()+3+"s",t.style.animationDelay=4*Math.random()+"s",t.style.fontSize=1*Math.random()+.8+"rem",t.style.opacity=.5*Math.random()+.5,dollarRainContainer.appendChild(t)}};
-        const generateTicker=()=>{const e=["Hansinozhaki@gmail.com","Jexecaa@gmail.com","Bukalapaakk@gmail.com","Gerryanvd@gmail.com","UserTest@email.com","PaymentPro@mail.com"],t=[1,10,15],a=document.getElementById("tickerContent"),l=e=>`<div class="ticker-item"><svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span class="text-gray-600">${e.split("@")[0]}... baru saja withdraw <strong class="text-gray-800 ml-1">$${t[Math.floor(Math.random()*t.length)]}</strong></span></div>`,d=e.map(l).join("");a.innerHTML=d+d};
+<!-- Audio element (Hidden by default) -->
+<audio id="background-music" loop src="Musik.mp3"></audio>
+
+
+<script>
+    // **********************************************
+    // JANGAN LUPA GANTI BIN_ID DAN SECRET_KEY ANDA
+    // **********************************************
+    const BIN_ID = "68d6119843b1c97be9506c0c"; 
+    const SECRET_KEY = "$2a$10$CyEgkHrw6xtwHt.RE3ZqEulgvcK5yzSmlYJmn.aRA23csA9a8u/.2"; 
+    const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+    const ADMIN_SECRET = '2003'; // Password Admin
+    const WHATSAPP_ADMIN_NUMBER = '6289513304878'; 
+    const LOCAL_STORAGE_KEY = 'adminPass'; // Key for storing password
+    let isAdminLoggedIn = false;
+    let currentEditId = null;
+    let currentAccount = {};
+    let music = null; // Variable for the audio element
+
+    // --- NEW: Function to start the app and play music ---
+    window.startApp = () => {
+        if (music) {
+            music.play().catch(error => {
+                console.warn("Autoplay was prevented:", error);
+                // Optionally show a message asking user to enable audio
+            });
+        }
+        window.setView('home');
+    };
+    // --------------------------------------------------------
+
+
+    window.sanitizeWhatsapp = (num) => num.replace(/[^0-9]/g, '');
+
+    window.formatPayment = (amount) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(amount);
+    };
+
+    window.alertUser = (message, type) => {
+        console.log(`[ALERT - ${type.toUpperCase()}]: ${message}`);
+        const tempAlert = document.createElement('div');
+        tempAlert.className = `fixed top-5 right-5 p-3 rounded-lg text-white z-[100] ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} shadow-xl font-medium transition duration-300 transform translate-y-0 opacity-100`;
+        tempAlert.textContent = message;
+        document.body.appendChild(tempAlert);
+        setTimeout(() => tempAlert.remove(), 3000);
+    };
+
+    async function fetchAccounts() {
+        try {
+            const headers = {'X-Master-Key': SECRET_KEY, 'X-Bin-Meta': false};
+            const response = await fetch(API_URL, {method: 'GET', headers: headers});
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const result = await response.json();
+            return result.accounts || [];
+        } catch (error) {
+            console.error("Error fetching data from JSONBin:", error);
+            return [];
+        }
+    }
+
+    async function updateBin(accountsData) {
+        try {
+            const updateHeaders = {'Content-Type': 'application/json', 'X-Master-Key': SECRET_KEY};
+            const payload = {accounts: accountsData};
+            const response = await fetch(API_URL, {method: 'PUT', headers: updateHeaders, body: JSON.stringify(payload)});
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return true;
+        } catch (error) {
+            console.error("Error updating JSONBin:", error);
+            return false;
+        }
+    }
+
+    // --- Admin Tab Logic ---
+    window.showAdminTab = (tabName) => {
+        document.getElementById('tab-single').classList.remove('active');
+        document.getElementById('tab-mass').classList.remove('active');
+        document.getElementById('admin-form-single').classList.add('hidden');
+        document.getElementById('admin-form-mass').classList.add('hidden');
+
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+        document.getElementById(`admin-form-${tabName}`).classList.remove('hidden');
+    };
+
+
+    window.setView = (viewName) => {
+        // Hiding all views first, including the welcome screen
+        document.getElementById('view-welcome').classList.add('hidden');
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-result').classList.add('hidden');
+        document.getElementById('view-withdraw').classList.add('hidden');
+        document.getElementById(`view-${viewName}`).classList.remove('hidden');
         
-        generateTicker();
-        document.getElementById('loginForm').addEventListener('submit', async(e)=>{e.preventDefault();const t=e.target,a=t.email.value,l=t.whatsapp.value;showLoader(!0),await fetchData();const d=users.find(e=>e.email?.trim().toLowerCase()===a.trim().toLowerCase()&&e.whatsapp?.trim().toLowerCase()===l.trim().toLowerCase());d?d.claimed?setTimeout(()=>{showLoader(!1),openModal(allModals.claimed),t.reset()},500):(currentUser=d,setTimeout(()=>{showLoader(!1),createDollarRain();const e=SALARIES[d.status]||0,a=document.querySelector("#gajiModal .modal-content");a.className="w-full max-w-md p-6 rounded-2xl shadow-2xl text-white modal-content shiny-card transform opacity-0 scale-95";const l={"New Acc":"card-green","Old Acc":"card-green",Unrestricted:"card-gold",Restricted:"card-red"}[d.status]||"card-default";a.classList.add(l),document.getElementById("gajiAmount").textContent=`$${e}`,document.getElementById("gajiStatus").textContent=`Status: ${d.status}`,openModal(allModals.gaji),t.reset()},1500)):(showLoader(!1),showToast("Email atau Nomor WhatsApp tidak ditemukan.","error"))});
-        document.getElementById('withdrawBtn').addEventListener('click', () => { closeModal(allModals.gaji); if (currentUser) { setTimeout(() => { openModal(allModals.withdraw); }, 300);}});
-        document.getElementById('withdrawForm').addEventListener('submit', (e) => { e.preventDefault(); const t=document.getElementById("wdFullName").value,a=document.getElementById("wdAccountNumber").value,l=document.getElementById("wdBankName").value,d=SALARIES[currentUser.status]||0;const o=`*-- PENGAJUAN WITHDRAW BARU --*\n\n*💰 JUMLAH: $${d}*\n\nHalo Admin Payment Zen, Saya ingin mengajukan penarikan dana:\n\n*👤 DETAIL KLIEN:*\n*Email:* ${currentUser.email}\n*WhatsApp:* ${currentUser.whatsapp}\n*Status Akun:* ${currentUser.status}\n\n*🏦 DETAIL PEMBAYARAN:*\n*Bank:* ${l}\n*No. Rekening:* ${a}\n*Atas Nama:* ${t}\n\nMohon untuk segera diproses. Terima kasih!`;window.open(`https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(o)}`,"_blank"),closeModal(allModals.withdraw),showToast("Pengajuan Anda dialihkan ke WhatsApp...","success"),document.getElementById("withdrawForm").reset()});
-        document.getElementById('infoBtn').addEventListener('click', () => openModal(allModals.info));
-        document.getElementById('bulkAddBtn').addEventListener('click', () => openModal(allModals.bulkAdd));
-        document.getElementById('bulkAddForm').addEventListener('submit', async (e) => { e.preventDefault(); const bulkData = document.getElementById('bulkData').value; const bulkStatus = document.getElementById('bulkStatus').value; const lines = bulkData.split('\n').filter(line => line.trim() !== ''); const newUsers = lines.map((line, index) => { const parts = line.trim().split(/\s+/); if (parts.length < 2) return null; return { id: `${Date.now()}-${index}`, email: parts[0], whatsapp: parts[1], status: bulkStatus, claimed: false }; }).filter(Boolean); if (newUsers.length === 0) { showToast('Tidak ada data valid untuk ditambahkan.', 'error'); return; } const updatedUsers = [...users, ...newUsers]; if (await updateData(updatedUsers)) { showToast(`${newUsers.length} pengguna berhasil ditambahkan.`, 'success'); closeModal(allModals.bulkAdd); e.target.reset(); }});
-        Object.values(allModals).forEach(m=>{if(!m.id.includes("toast")&&!m.id.includes("loader")){const e=m.id.replace("Modal",""),t=document.getElementById(`${e}CloseBtn`)||document.getElementById(`${e}CancelBtn`)||document.getElementById(`${e}LaterBtn`);m.addEventListener("click",e=>e.target===m&&closeModal(m)),t&&t.addEventListener("click",()=>closeModal(m))}});
-        document.getElementById('adminAccessBtn').addEventListener('click', () => openModal(allModals.admin)); document.getElementById('adminCodeForm').addEventListener('submit', (e) => { e.preventDefault(); const i=document.getElementById('adminCodeInput'); if(i.value===ADMIN_CODE){closeModal(allModals.admin);showView('admin');fetchData().then(renderTable)}else{document.getElementById('adminError').textContent='Kode salah.'; i.value='';}});
-        document.getElementById('confirmOkBtn').addEventListener('click', () => { if(confirmCallback) confirmCallback(); closeModal(allModals.confirm); }); document.getElementById('logoutBtn').addEventListener('click', () => showView('login'));
-        document.getElementById('adminForm').addEventListener('submit', async(e)=>{e.preventDefault();const t=document.getElementById("userId").value,a={email:document.getElementById("formEmail").value,whatsapp:document.getElementById("formWhatsapp").value,status:document.getElementById("formStatus").value},l=t?users.map(e=>e.id===t?{...e,...a}:e):[...users,{...a,id:Date.now().toString(),claimed:!1}];await updateData(l)&&(showToast(`Data berhasil ${t?"diperbarui":"ditambahkan"}.`),resetAdminForm())});
-        document.getElementById('cancelBtn').addEventListener('click', resetAdminForm);
-        document.getElementById('userTableBody').addEventListener('click',async(e)=>{const t=e.target,a=t.dataset.id||t.closest("[data-id]")?.dataset.id;if(a){if(t.classList.contains("edit-btn")){const e=users.find(e=>e.id===a);e&&(document.getElementById("userId").value=e.id,document.getElementById("formEmail").value=e.email,document.getElementById("formWhatsapp").value=e.whatsapp,document.getElementById("formStatus").value=e.status,document.getElementById("formTitle").textContent="Edit Pengguna",document.getElementById("saveBtn").textContent="Update",document.getElementById("cancelBtn").classList.remove("hidden"),window.scrollTo(0,0))}if(t.classList.contains("delete-btn"))showConfirmModal("Yakin ingin hapus pengguna ini?",async()=>{await updateData(users.filter(e=>e.id!==a))&&showToast("Pengguna dihapus.")});if(t.classList.contains("toggle-claim")){const e=users.map(e=>e.id===a?{...e,claimed:t.checked}:e);await updateData(e)||!t.checked}}});
-    });
-    </script>
+        if (viewName === 'withdraw') {
+            // Populate withdraw form fields
+            document.getElementById('withdraw-email').value = currentAccount.email;
+            document.getElementById('withdraw-whatsapp').value = currentAccount.whatsapp;
+
+            // Prevent opening withdraw form if already claimed
+            if (currentAccount.status === 'Claimed') {
+                alertUser('Reward sudah diklaim dan tidak dapat ditarik kembali.', 'error');
+                setView('result'); // Stay on result view
+            }
+        }
+    };
+
+    window.handleUserSubmit = async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('input-email').value.trim().toLowerCase();
+        const whatsapp = sanitizeWhatsapp(document.getElementById('input-whatsapp').value.trim());
+        const msgArea = document.getElementById('message-area');
+        const submitBtn = document.getElementById('submit-button');
+
+        msgArea.className = 'mt-8 p-4 rounded-xl text-left border-l-4 border-gray-400 bg-gray-50 text-gray-700 flex items-center transition duration-300';
+        msgArea.innerHTML = `<span class="material-icons-round animate-spin text-lg mr-3">cached</span> Sedang memproses...`;
+        submitBtn.disabled = true;
+
+        try {
+            const accounts = await fetchAccounts();
+            const matchedAccount = accounts.find(acc => acc.email === email && acc.whatsapp === whatsapp);
+
+            if (!matchedAccount) {
+                msgArea.className = 'mt-8 p-4 rounded-xl text-left border-l-4 border-red-500 bg-red-50 text-red-800 flex items-start transition duration-300';
+                msgArea.innerHTML = `<span class="material-icons-round text-2xl mr-3 mt-0.5 flex-shrink-0">cancel</span><div><p class="text-lg font-bold">Data Akun Tidak Ditemukan!</p><p class="text-sm mt-1">Pastikan Email dan No. WhatsApp sudah sesuai.</p></div>`;
+            } else {
+                currentAccount = matchedAccount;
+                setView('result');
+                showResultView(matchedAccount);
+                msgArea.classList.add('hidden'); // Hide message area on success
+            }
+        } catch (error) {
+            console.error("Error checking account:", error);
+            msgArea.className = 'mt-8 p-4 rounded-xl text-left border-l-4 border-red-500 bg-red-50 text-red-800 flex items-center transition duration-300';
+            msgArea.innerHTML = `<span class="material-icons-round text-2xl mr-3">warning</span> Terjadi Kesalahan Server.`;
+        } finally {
+            submitBtn.disabled = false;
+            if (!document.getElementById('view-result').classList.contains('hidden')) {
+                msgArea.classList.add('hidden');
+            } else {
+                 msgArea.classList.remove('hidden');
+            }
+        }
+    };
+
+    function showResultView(account) {
+        const amountDiv = document.getElementById('result-amount');
+        const loaderDiv = document.getElementById('loader-animation');
+        const cardElement = document.getElementById('counting-animation');
+        const withdrawButton = document.getElementById('withdraw-button');
+        const backButton = document.querySelector('#result-buttons button:last-child'); // Tombol kembali
+        const resultIcon = document.getElementById('result-icon');
+
+        // Reset button classes for safety
+        backButton.classList.remove('w-full');
+        backButton.classList.add('w-1/2');
+
+        loaderDiv.classList.add('hidden');
+        amountDiv.classList.remove('animate-counting');
+        amountDiv.classList.add('opacity-0');
+        
+        // Ensure card class is minimal/transparent
+        cardElement.className = 'premium-card relative overflow-hidden';
+        
+        const payment = account.payment || 0;
+        let iconClass = 'text-gray-400';
+        let iconName = 'monetization_on'; // Default icon
+
+        // Warna ikon didasarkan pada jumlah reward (walau minimalis, tetap ada aksen)
+        if (payment <= 50000) {
+            iconClass = 'text-minimal-red';
+        } else if (payment <= 100000) {
+            iconClass = 'text-minimal-orange';
+        } else {
+            iconClass = 'text-minimal-green';
+        }
+        
+        // Hanya tambahkan class warna aksen ke ikon
+        resultIcon.className = `material-icons-round text-xl mr-2 ${iconClass}`;
+        resultIcon.textContent = iconName;
+
+
+        const paymentAmount = formatPayment(payment);
+
+        if (account.status === 'Claimed') {
+            // Sembunyikan tombol withdraw jika sudah diklaim
+            withdrawButton.classList.add('hidden');
+            // Jadikan tombol kembali mengambil lebar penuh
+            backButton.classList.remove('w-1/2');
+            backButton.classList.add('w-full');
+
+        } else if (account.status === 'Not Claimed') {
+            // Tampilkan tombol withdraw jika belum diklaim
+            withdrawButton.classList.remove('hidden');
+            // Tombol kembali tetap 1/2
+            backButton.classList.add('w-1/2');
+            backButton.classList.remove('w-full');
+        }
+
+        const finalPayment = payment;
+        const duration = 1500;
+        const startTime = Date.now();
+        const countingInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            if (elapsed >= duration) {
+                clearInterval(countingInterval);
+                amountDiv.textContent = paymentAmount;
+                loaderDiv.classList.add('hidden');
+                amountDiv.classList.add('animate-counting');
+                amountDiv.classList.remove('opacity-0');
+            } else {
+                const progress = elapsed / duration;
+                let randomValue = Math.min(finalPayment, finalPayment * progress + (Math.random() * finalPayment * (1 - progress) * 0.5));
+                amountDiv.textContent = formatPayment(Math.floor(randomValue));
+                amountDiv.classList.remove('opacity-0');
+                loaderDiv.classList.add('hidden');
+            }
+        }, 50);
+    }
+
+    window.handleWithdrawSubmit = async (event) => {
+        event.preventDefault();
+
+        // Cek status saat ini sebelum memproses
+        if (currentAccount.status === 'Claimed') {
+            return alertUser('Reward sudah diklaim dan tidak dapat ditarik kembali.', 'error');
+        }
+
+        const atasNama = document.getElementById('withdraw-nama').value.trim();
+        const noRekening = document.getElementById('withdraw-rekening').value.trim();
+        const namaBank = document.getElementById('withdraw-bank').value.trim();
+        const email = currentAccount.email;
+        const whatsapp = currentAccount.whatsapp;
+        const payment = formatPayment(currentAccount.payment);
+
+        const message = 
+            `*PERMINTAAN WITHDRAW REWARD LIN Zen*\n\n` +
+            `*Email Akun:* ${email}\n` +
+            `*No WhatsApp:* ${whatsapp}\n` +
+            `*Reward Payment:* ${payment}\n\n` +
+            `*DETAIL REKENING PENCAIRAN:*\n` +
+            `*Atas Nama:* ${atasNama}\n` +
+            `*No. Rekening:* ${noRekening}\n` +
+            `*Nama Bank:* ${namaBank}\n\n` +
+            `Mohon diproses segera. Terima kasih.`;
+        
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${WHATSAPP_ADMIN_NUMBER}?text=${encodedMessage}`;
+
+        window.open(whatsappUrl, '_blank');
+        
+        // --- LOGIKA PENGUBAHAN STATUS MENJADI 'Claimed' ---
+        try {
+            let accounts = await fetchAccounts();
+            const accountIndex = accounts.findIndex(acc => acc.id === currentAccount.id);
+
+            if (accountIndex !== -1) {
+                // Update status dan waktu di data lokal dan remote
+                accounts[accountIndex].status = 'Claimed';
+                accounts[accountIndex].updatedAt = new Date().toISOString();
+                
+                const success = await updateBin(accounts);
+
+                if (success) {
+                    // Perbarui currentAccount agar tampilan result sesuai
+                    currentAccount = accounts[accountIndex];
+                    alertUser('Permintaan Withdraw telah dibuat dan dikirim ke Admin WhatsApp! Status akun diubah menjadi Claimed.', 'success');
+                } else {
+                    alertUser('Gagal menyimpan status Claimed ke database. Coba lagi atau hubungi admin.', 'error');
+                }
+            }
+        } catch(e) {
+            console.error("Error updating status after withdraw:", e);
+            alertUser(`Gagal mengubah status: ${e.message}`, 'error');
+        }
+        // --- END LOGIKA ---
+
+        setView('result'); // Kembali ke tampilan hasil
+    };
+
+    window.toggleAdminPanel = () => {
+        const panel = document.getElementById('admin-panel');
+        panel.classList.toggle('hidden');
+        if (!panel.classList.contains('hidden') && isAdminLoggedIn) {
+            pollData();
+            showAdminTab('single'); // Default ke tab tunggal saat panel dibuka
+        }
+    };
+
+    window.handleAdminLogin = (event) => {
+        event.preventDefault();
+        const passwordField = document.getElementById('admin-password');
+        const rememberCheckbox = document.getElementById('remember-admin-password');
+        const password = passwordField.value;
+
+        if (password === ADMIN_SECRET) {
+            isAdminLoggedIn = true;
+            
+            // NEW: Handle Remember Password
+            if (rememberCheckbox.checked) {
+                localStorage.setItem(LOCAL_STORAGE_KEY, password);
+            } else {
+                localStorage.removeItem(LOCAL_STORAGE_KEY);
+            }
+
+            document.getElementById('admin-login-form').classList.add('hidden');
+            document.getElementById('admin-content').classList.remove('hidden');
+            alertUser('Login Admin Berhasil!','success');
+            pollData();
+            showAdminTab('single'); 
+        } else {
+            alertUser('Password salah!','error');
+            localStorage.removeItem(LOCAL_STORAGE_KEY); // Clear if login fails
+            rememberCheckbox.checked = false;
+        }
+    };
+
+    // --- LOGIC FOR SINGLE ACCOUNT SUBMIT (UNCHANGED) ---
+    window.handleAdminSubmit = async(event)=>{
+        event.preventDefault();
+        if(!isAdminLoggedIn)return alertUser('Anda harus login admin terlebih dahulu.','error');
+        const emailField=document.getElementById('admin-email');
+        const whatsappField=document.getElementById('admin-whatsapp');
+        const email=emailField.value.trim().toLowerCase();
+        const whatsapp=sanitizeWhatsapp(whatsappField.value.trim());
+        const payment=parseInt(document.getElementById('admin-payment').value,10);
+        
+        if(!email||!whatsapp||isNaN(payment)){return alertUser('Semua kolom wajib diisi dan Payment harus angka.','error')}
+        
+        try{
+            let accounts=await fetchAccounts();
+            const uniqueId=`${email}_${whatsapp}`;
+            const newAccount={id:uniqueId,email:email,whatsapp:whatsapp,payment:payment,status:'Not Claimed',updatedAt:new Date().toISOString()};
+            const existingIndex=accounts.findIndex(acc=>acc.id===uniqueId);
+            
+            if(existingIndex!==-1){
+                newAccount.status=accounts[existingIndex].status;
+                accounts[existingIndex]=newAccount;
+            }else{
+                accounts.push(newAccount);
+            }
+            currentEditId=null;
+            emailField.disabled=false;
+            whatsappField.disabled=false;
+            document.getElementById('admin-submit-btn').innerHTML='<span class="material-icons-round text-lg mr-1">save</span> Simpan Data Akun';
+            
+            const success=await updateBin(accounts);
+            if(success){
+                alertUser('Data Akun berhasil disimpan/diupdate!','success');
+                document.getElementById('admin-form').reset();
+                pollData();
+            }else{
+                alertUser('Gagal menyimpan data ke JSONBin.io.','error');
+            }
+        }catch(e){
+            console.error("Error adding document: ",e);
+            alertUser(`Gagal menyimpan data: ${e.message}`,'error');
+        }
+    };
+    // --- END LOGIC FOR SINGLE ACCOUNT SUBMIT ---
+
+    // --- LOGIC FOR MASS ACCOUNT SUBMIT (NEW) ---
+    window.handleAdminMassSubmit = async(event)=>{
+        event.preventDefault();
+        if(!isAdminLoggedIn) return alertUser('Anda harus login admin terlebih dahulu.','error');
+
+        const emailText = document.getElementById('mass-emails').value.trim();
+        const whatsapp = sanitizeWhatsapp(document.getElementById('mass-whatsapp').value.trim());
+        const payment = parseInt(document.getElementById('mass-payment').value, 10);
+
+        if(!emailText || !whatsapp || isNaN(payment)){
+            return alertUser('Semua kolom wajib diisi, termasuk daftar email dan Payment harus angka.','error');
+        }
+
+        // Clean and validate emails
+        const emails = emailText.split('\n')
+                                .map(e => e.trim().toLowerCase())
+                                .filter(e => e.length > 0 && e.includes('@'));
+
+        if (emails.length === 0) {
+            return alertUser('Daftar email tidak valid atau kosong.','error');
+        }
+
+        try{
+            let accounts = await fetchAccounts();
+            const accountsToAdd = [];
+            let updatedCount = 0;
+            let addedCount = 0;
+
+            emails.forEach(email => {
+                const uniqueId = `${email}_${whatsapp}`;
+                const newAccount = {
+                    id: uniqueId,
+                    email: email,
+                    whatsapp: whatsapp,
+                    payment: payment,
+                    status: 'Not Claimed',
+                    updatedAt: new Date().toISOString()
+                };
+
+                const existingIndex = accounts.findIndex(acc => acc.id === uniqueId);
+
+                if (existingIndex !== -1) {
+                    // Update existing account
+                    newAccount.status = accounts[existingIndex].status; // Preserve current status
+                    accounts[existingIndex] = newAccount;
+                    updatedCount++;
+                } else {
+                    // Add new account
+                    accounts.push(newAccount);
+                    addedCount++;
+                }
+            });
+
+            const success = await updateBin(accounts);
+
+            if(success){
+                alertUser(`Data massal berhasil disimpan! Ditambahkan: ${addedCount}, Diperbarui: ${updatedCount}.`,'success');
+                document.getElementById('admin-mass-form').reset();
+                pollData();
+            } else {
+                alertUser('Gagal menyimpan data massal ke JSONBin.io.','error');
+            }
+        } catch(e) {
+            console.error("Error adding mass document: ", e);
+            alertUser(`Gagal menyimpan data massal: ${e.message}`,'error');
+        }
+    };
+    // --- END LOGIC FOR MASS ACCOUNT SUBMIT ---
+
+
+    window.editAccount=async(id)=>{
+        const accounts=await fetchAccounts();
+        const accountToEdit=accounts.find(acc=>acc.id===id);
+        if(accountToEdit){
+            // Ensure single tab is active for editing
+            showAdminTab('single'); 
+            
+            document.getElementById('admin-email').value=accountToEdit.email;
+            document.getElementById('admin-whatsapp').value=accountToEdit.whatsapp;
+            document.getElementById('admin-payment').value=accountToEdit.payment;
+            document.getElementById('admin-submit-btn').innerHTML='<span class="material-icons-round text-lg mr-1">update</span> Update Data Akun';
+            currentEditId=id;
+            document.getElementById('admin-email').disabled=true;
+            document.getElementById('admin-whatsapp').disabled=true;
+            alertUser('Data dimuat untuk diubah. Email/WA tidak dapat diubah saat mode Edit.','success');
+        }else{
+            alertUser('Akun tidak ditemukan.','error');
+        }
+    };
+
+    window.deleteAccount=async(id)=>{
+        try{
+            const accounts=await fetchAccounts();
+            const newAccounts=accounts.filter(acc=>acc.id!==id);
+            const success=await updateBin(newAccounts);
+            if(success){
+                alertUser('Akun berhasil dihapus!','success');
+                pollData();
+            }else{
+                alertUser('Gagal menghapus data dari JSONBin.io.','error');
+            }
+        }catch(e){
+            console.error("Error deleting document: ",e);
+            alertUser(`Gagal menghapus data: ${e.message}`,'error');
+        }
+    };
+
+    window.toggleClaimStatus=async(id,currentStatus)=>{
+        try{
+            const accounts=await fetchAccounts();
+            const accountIndex=accounts.findIndex(acc=>acc.id===id);
+            if(accountIndex!==-1){
+                const newStatus=currentStatus==='Claimed'?'Not Claimed':'Claimed';
+                accounts[accountIndex].status=newStatus;
+                accounts[accountIndex].updatedAt=new Date().toISOString();
+                const success=await updateBin(accounts);
+                if(success){
+                    alertUser(`Status diubah menjadi: ${newStatus}`,'success');
+                    pollData();
+                }else{
+                    alertUser('Gagal mengubah status.','error');
+                }
+            }else{
+                alertUser('Akun tidak ditemukan.','error');
+            }
+        }catch(e){
+            console.error("Error toggling status: ",e);
+            alertUser(`Gagal mengubah status: ${e.message}`,'error');
+        }
+    };
+
+    function renderAccountList(accounts){
+        const accountListDiv=document.getElementById('account-list');
+        let html='';
+        if(accounts.length===0){
+            html='<p class="text-gray-500 italic p-3 bg-gray-100 rounded-lg">Belum ada akun yang tersimpan.</p>';
+        }else{
+            accounts.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            accounts.forEach((data)=>{
+                const paymentFormatted=formatPayment(data.payment);
+                const isClaimed=data.status==='Claimed';
+                const statusBg=isClaimed?'bg-green-100 text-green-700':'bg-red-100 text-red-700';
+                const statusIcon=isClaimed?'check_circle':'warning';
+                const statusTooltip=isClaimed?'Klik untuk mengubah status menjadi "Not Claimed"':'Klik untuk mengubah status menjadi "Claimed"';
+                html+=`<div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm transition hover:shadow-md flex justify-between items-center"><div class="flex-grow min-w-0 mr-4"><p class="text-sm font-medium text-gray-500 truncate"><span class="material-icons-round text-linkedin-blue text-sm mr-1 align-bottom">mail</span> ${data.email}</p><p class="text-lg font-bold text-gray-800 mt-1">${paymentFormatted}</p><p class="text-xs text-gray-400 mt-1">WA: ${data.whatsapp}</p></div><div class="flex flex-col items-end space-y-2 flex-shrink-0"><button onclick="toggleClaimStatus('${data.id}','${data.status}')" class="text-xs font-semibold py-1 px-2 rounded-full ${statusBg} flex items-center transition hover:opacity-80" title="${statusTooltip}"><span class="material-icons-round text-sm mr-1">${statusIcon}</span> ${data.status}</button><div class="flex space-x-2"><button onclick="editAccount('${data.id}')" class="text-linkedin-blue hover:text-blue-700 transition" title="Edit"><span class="material-icons-round text-xl">edit</span></button><button onclick="deleteAccountConfirmation('${data.id}')" class="text-red-600 hover:text-red-800 transition" title="Hapus"><span class="material-icons-round text-xl">delete</span></button></div></div></div>`});
+        }
+        accountListDiv.innerHTML=html;
+    }
+
+    async function pollData(){
+        const accountListDiv=document.getElementById('account-list');
+        accountListDiv.innerHTML='<p class="text-gray-500 flex items-center"><span class="material-icons-round animate-spin text-lg mr-2">cached</span> Memuat data...</p>';
+        const accounts=await fetchAccounts();
+        renderAccountList(accounts);
+    }
+    
+    // --- Initialization & Modal Handlers moved to window.onload/DOM ready ---
+    window.onload = () => {
+        // Initialize music variable
+        music = document.getElementById('background-music');
+        
+        // --- NEW: Auto-fill admin password from localStorage ---
+        const storedPassword = localStorage.getItem(LOCAL_STORAGE_KEY);
+        const passwordField = document.getElementById('admin-password');
+        const rememberCheckbox = document.getElementById('remember-admin-password');
+        
+        if (storedPassword) {
+            passwordField.value = storedPassword;
+            rememberCheckbox.checked = true;
+        }
+        // --- END NEW ---
+
+        // Initial view is always Welcome Screen
+        window.setView('welcome'); 
+        pollData();
+
+        // 1. Get elements for Modal Handlers
+        let accountToDeleteId = null;
+        const deleteConfirmationModal = document.getElementById('delete-confirmation-modal');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+
+        // 2. Attach Handlers
+        // Function to show the modal (kept globally accessible as it's called from renderAccountList)
+        window.deleteAccountConfirmation = (id) => {
+            accountToDeleteId = id;
+            deleteConfirmationModal.classList.remove('hidden');
+        };
+
+        // Cancel button handler
+        cancelDeleteBtn.onclick = () => {
+            deleteConfirmationModal.classList.add('hidden');
+        };
+
+        // Confirm button handler
+        confirmDeleteBtn.onclick = () => {
+            if (accountToDeleteId) {
+                // Call the delete function and hide modal on completion
+                window.deleteAccount(accountToDeleteId).then(() => { deleteConfirmationModal.classList.add('hidden'); });
+                accountToDeleteId = null;
+            }
+        };
+    };
+    // End of Initialization & Modal Handlers
+</script>
+
+<div id="delete-confirmation-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/50">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm">
+        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="material-icons-round text-red-500 mr-2">delete_forever</span> Konfirmasi Hapus</h3>
+        <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus akun ini? Tindakan ini tidak dapat dibatalkan.</p>
+        <div class="flex justify-end space-x-3">
+            <button id="cancel-delete-btn" class="px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition">Batal</button>
+            <button id="confirm-delete-btn" class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition">Hapus</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
-
