@@ -1,1163 +1,1440 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment Sewa Linkedin Zen - Animated Welcome Screen</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
-
-/* --- General Styles --- */
-body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #eef2f5; /* Light blue-gray background */
-    color: #1f2937;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-.card {
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Softer shadow */
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    flex-shrink: 0;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-}
-
-/* --- LinkedIn Colors & Branding --- */
-.linkedin-blue {
-    background-color: #0a66c2;
-}
-
-.text-linkedin-blue {
-    color: #0a66c2;
-}
-
-/* Fix Focus Ring using Tailwind's ring utilities directly */
-.input-field:focus {
-    outline: none; /* Remove default outline */
-    border-color: #0a66c2; /* Darker blue border on focus */
-    box-shadow: 0 0 0 4px rgba(10, 102, 194, 0.25); /* Softer, wider shadow for focus ring */
-}
-
-/* --- Floating Label Styles (Symmetric Fix) --- */
-.input-group {
-    position: relative;
-    margin-bottom: 1.75rem; /* More space between inputs */
-}
-
-/* Input Lift Effect (Modern Minimal) */
-.input-field {
-    padding: 1.15rem 1.25rem 0.65rem 1.25rem !important; /* Adjusted padding */
-    border-radius: 1rem; /* More rounded */
-    font-size: 1rem;
-    line-height: 1.5;
-    background-color: #fcfcfc;
-    border: 1px solid #e5e7eb; /* Border lebih tipis */
-    color: #1f2937;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Bayangan soft lift */
-    transition: all 0.2s ease-out;
-}
-
-.input-field:focus {
-    box-shadow: 0 4px 8px rgba(10, 102, 194, 0.1), 0 0 0 4px rgba(10, 102, 194, 0.25);
-}
-
-/* Specific style for Readonly Input Fields */
-.input-field[readonly] {
-    background-color: #f0f4f7;
-    color: #6b7280;
-    border-color: #e5e7eb;
-    box-shadow: none;
-}
-
-
-.floating-label {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 1.25rem;
-    transition: all 0.2s ease-out;
-    pointer-events: none;
-    color: #9ca3af;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-}
-
-/* When input is focused or has content, move label up */
-.input-field:focus + .floating-label,
-.input-field:not(:placeholder-shown):valid + .floating-label {
-    top: 0;
-    left: 1rem;
-    font-size: 0.75rem;
-    background-color: #ffffff; 
-    padding: 0 0.25rem;
-    color: #0a66c2;
-    font-weight: 600;
-    transform: translateY(-50%);
-}
-
-/* Specific style for Readonly Floating Labels when content is shown */
-.input-field[readonly]:not(:placeholder-shown) + .floating-label {
-    color: #6b7280;
-    background-color: #f0f4f7; 
-}
-
-
-/* Ensure icon in floating label also transitions */
-.floating-label .material-icons-round {
-    font-size: 1.15rem;
-    margin-right: 0.25rem;
-}
-
-/* --- Gradient Button (Primary Action - Blue) --- */
-.btn-primary-gradient {
-    background: linear-gradient(135deg, #0a66c2 0%, #084c98 100%);
-    box-shadow: 0 10px 20px rgba(10, 102, 194, 0.4);
-    transition: all 0.3s ease;
-    border-radius: 1rem;
-}
-
-.btn-primary-gradient:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(10, 102, 194, 0.6);
-}
-
-/* --- MODERN MINIMAL GREEN BUTTON (Withdraw) --- */
-.btn-minimal-green {
-    background-color: #10b981; /* Tailwind Green 500 */
-    color: white;
-    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3); /* Softer shadow */
-    transition: all 0.2s ease;
-    border-radius: 9999px; /* Full pill shape */
-    font-weight: 600; /* Semibold */
-}
-
-.btn-minimal-green:hover {
-    background-color: #059669; /* Darker Green 600 */
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
-}
-
-
-/* --- Reward Card Styles (Hyper Minimalist) --- */
-.premium-card {
-    height: auto;
-    padding: 0;
-    margin-bottom: 2rem !important;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-    background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: none;
-}
-
-.result-amount-text {
-    font-size: 3rem !important;
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin-top: 0.25rem;
-    color: #1f2937;
-}
-
-/* Warna Aksen untuk ikon minimalis */
-.text-minimal-red { color: #E63946; }
-.text-minimal-orange { color: #FF8C00; }
-.text-minimal-green { color: #35A79C; }
-
-/* --- Footer text spacing --- */
-.footer-note {
-    margin-top: 2.5rem;
-    border-top: 1px solid #e0e0e0;
-    padding-top: 1.5rem;
-}
-
-/* --- INFO CARDS STYLE --- */
-.info-card {
-    background-color: #f8fafc; /* Sangat terang */
-    border: 1px solid #f0f4f7;
-    border-radius: 0.75rem;
-    padding: 1rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    min-height: 80px; /* Biar tetap konsisten tingginya */
-}
-
-.info-icon {
-    font-size: 2.25rem; /* Icon besar */
-    margin-right: 1rem;
-    color: #6b7280; /* Abu-abu netral */
-}
-
-.info-text {
-    font-weight: 600;
-    font-size: 0.875rem; /* Teks kecil */
-    color: #4b5563;
-    line-height: 1.4;
-}
-
-/* --- Admin Tab Styling --- */
-.tab-button {
-    padding: 0.75rem 1rem;
-    font-weight: 600;
-    border-radius: 0.5rem 0.5rem 0 0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-bottom: 2px solid transparent;
-}
-.tab-button:hover {
-    background-color: #f3f4f6;
-}
-.tab-button.active {
-    background-color: white;
-    color: #0a66c2;
-    border-bottom: 2px solid #0a66c2;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
-}
-.tab-content {
-    padding-top: 1rem;
-}
-
-/* --- WELCOME SCREEN SPECIFIC --- */
-.welcome-logo {
-    animation: bounce-in 1s ease-out;
-}
-@keyframes bounce-in {
-    0% { transform: scale(0.5); opacity: 0; }
-    50% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); }
-}
-
-/* --- NEW: Button Arrow Animation --- */
-@keyframes pulse-forward {
-    0%, 100% {
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: translateX(3px) scale(1.05);
-        opacity: 0.9;
-    }
-}
-.animate-pulse-forward {
-    animation: pulse-forward 1.5s infinite ease-in-out;
-}
-/* ----------------------------------- */
-
-
-/* ... (Animations, Admin Panel styles unchanged) ... */
-@keyframes spin-slow {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.spin-slow {
-    animation: spin-slow 15s linear infinite;
-}
-
-@keyframes counting {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-counting {
-    animation: counting 0.8s ease-out forwards;
-}
-</style>
-</head>
-<body class="min-h-screen bg-[#eef2f5] p-6">
-
-<div class="flex justify-center items-center min-h-[calc(100vh-3rem)] w-full">
-    <div id="main-app" class="w-full max-w-lg card p-8 rounded-3xl mx-auto">
-        
-        <!-- ========================================= -->
-        <!-- NEW: VIEW WELCOME -->
-        <!-- ========================================= -->
-        <div id="view-welcome" class="text-center">
-            <header class="mb-10 pt-10">
-                <div class="inline-flex items-center justify-center p-6 rounded-full bg-linkedin-blue bg-opacity-10 mb-6 welcome-logo">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Zen Logo" class="w-12 h-12">
-                </div>
-                <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Selamat Datang</h1>
-                <p class="text-lg text-gray-500 max-w-xs mx-auto">
-                    Akses Payment Sewa Akun Zen Anda di sini.
-                </p>
-            </header>
-            
-            <div class="mb-16">
-                <span class="material-icons-round text-6xl text-linkedin-blue opacity-50">waving_hand</span>
-            </div>
-
-            <!-- Tombol Lanjutkan dengan animasi panah -->
-            <button onclick="startApp()" class="btn-primary-gradient w-full text-white font-bold py-4 rounded-xl shadow-xl flex items-center justify-center">
-                <span class="material-icons-round text-xl mr-2 animate-pulse-forward">arrow_forward</span> Lanjutkan
-            </button>
-        </div>
-        
-        <!-- ========================================= -->
-        <!-- OLD: VIEW HOME -->
-        <!-- ========================================= -->
-        <div id="view-home" class="hidden">
-            <header class="mb-10 text-center">
-                <div class="inline-flex items-center justify-center p-4 rounded-full bg-linkedin-blue bg-opacity-10 mb-4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Zen Logo" class="w-8 h-8">
-                </div>
-                <h1 class="text-3xl font-extrabold text-gray-800 mb-2">Payment Sewa Akun Zen</h1>
-                <p class="text-md text-gray-500 flex items-center justify-center whitespace-normal leading-tight mb-8">
-                    <span class="material-icons-round text-lg mr-1 text-linkedin-blue">verified_user</span> Masuk untuk lihat Payment Anda.
-                </p>
-            </header>
-
-            <form id="user-form" onsubmit="handleUserSubmit(event)">
-                <div class="input-group">
-                    <input type="email" id="input-email" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
-                    <label for="input-email" class="floating-label">
-                        <span class="material-icons-round text-lg mr-1">mail</span> Email Linkedin
-                    </label>
-                </div>
-                
-                <div class="input-group mb-8">
-                    <input type="text" id="input-whatsapp" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
-                    <label for="input-whatsapp" class="floating-label">
-                        <span class="material-icons-round text-lg mr-1">phone_android</span> No WhatsApp (e.g., 62812xxxx)
-                    </label>
-                </div>
-                
-                <button type="submit" id="submit-button" class="btn-primary-gradient w-full text-white font-bold py-4 rounded-xl shadow-xl flex items-center justify-center">
-                    <span class="material-icons-round text-xl mr-2">login</span> Cek Reward Sekarang
-                </button>
-            </form>
-
-            <div id="message-area" class="mt-8 p-4 rounded-xl text-left hidden transition duration-300 ease-in-out border-l-4"></div>
-
-            <!-- --- INFO CARDS SECTION --- -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                <!-- Card 1: Fast Payment -->
-                <div class="info-card">
-                    <span class="material-icons-round info-icon text-green-500">timer</span>
-                    <p class="info-text">Fast Payment</p>
-                </div>
-
-                <!-- Card 2: Eligible Accounts -->
-                <div class="info-card">
-                    <span class="material-icons-round info-icon text-red-500">description</span>
-                    <p class="info-text">Hanya akun yang Eligible yang menerima Payment</p>
-                </div>
-            </div>
-            <!-- --- END INFO CARDS SECTION --- -->
-
-
-            <p class="text-xs text-gray-400 text-center footer-note">
-                <span class="material-icons-round text-sm mr-1 align-middle">info</span> Hubungi admin untuk penggabungan Payment.
-            </p>
-        </div>
-
-        <!-- OLD: VIEW RESULT -->
-        <div id="view-result" class="hidden text-center">
-            <header class="mb-8">
-                <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Hasil Pengecekan Reward</h2>
-                <p class="text-sm text-gray-500 flex items-center justify-center">
-                    <span class="material-icons-round text-lg mr-1 text-linkedin-blue">redeem</span> Detail reward akun Anda.
-                </p>
-            </header>
-
-            <!-- HYPER MINIMALIST REWARD CARD -->
-            <div id="counting-animation" class="premium-card relative overflow-hidden">
-                <p class="text-md font-medium result-text text-gray-500 flex items-center">
-                    <span id="result-icon" class="material-icons-round text-xl mr-2 text-gray-400">monetization_on</span> Reward Payment Anda:
-                </p>
-                <div class="flex justify-center items-center h-auto w-full">
-                    <div id="result-amount" class="text-gray-900 font-extrabold opacity-0 result-amount-text"></div>
-                    <div id="loader-animation" class="text-3xl text-gray-900"></div>
-                </div>
-            </div>
-            <!-- END HYPER MINIMALIST REWARD CARD -->
-            
-            <div class="mb-10"></div> 
-
-            <div class="flex space-x-4 justify-center" id="result-buttons">
-                <!-- Tombol Withdraw menggunakan gaya Modern Minimalis Green -->
-                <button id="withdraw-button" onclick="setView('withdraw')" class="w-1/2 btn-minimal-green flex items-center justify-center text-white py-3.5 px-6 transition duration-200">
-                    <span class="material-icons-round text-lg mr-2">account_balance_wallet</span> Withdraw
-                </button>
-                <button onclick="setView('home')" class="w-1/2 bg-gray-200 text-gray-700 font-bold py-3.5 px-6 rounded-xl shadow-md hover:bg-gray-300 transition duration-200 flex items-center justify-center">
-                    <span class="material-icons-round text-lg mr-2">home</span> Kembali
-                </button>
-            </div>
-        </div>
-
-        <!-- OLD: VIEW WITHDRAW -->
-        <div id="view-withdraw" class="hidden">
-            <header class="mb-8 text-center">
-                <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Formulir Penarikan Reward</h2>
-                <p class="text-sm text-gray-500 flex items-center justify-center mt-2.5">
-                    <span class="material-icons-round text-base mr-1 text-linkedin-blue">credit_score</span> Isi detail rekening bank Anda.
-                </p>
-            </header>
-            <div class="mb-8"></div> <!-- Replaced h-px line with just margin -->
-
-            <form id="withdraw-form" onsubmit="handleWithdrawSubmit(event)">
-                <div class="input-group">
-                    <input type="text" id="withdraw-nama" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
-                    <label for="withdraw-nama" class="floating-label">
-                        <span class="material-icons-round text-lg mr-1">person</span> Atas Nama
-                    </label>
-                </div>
-                <div class="input-group">
-                    <input type="text" id="withdraw-rekening" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
-                    <label for="withdraw-rekening" class="floating-label">
-                        <span class="material-icons-round text-lg mr-1">credit_card</span> Nomor Rekening
-                    </label>
-                </div>
-                <div class="input-group">
-                    <input type="text" id="withdraw-bank" class="input-field w-full text-gray-900 transition duration-200" placeholder=" " required>
-                    <label for="withdraw-bank" class="floating-label">
-                        <span class="material-icons-round text-lg mr-1">corporate_fare</span> Nama Bank
-                    </label>
-                </div>
-
-                <div class="input-group mb-4">
-                    <input type="email" id="withdraw-email" class="input-field w-full bg-gray-100 border border-gray-300 text-gray-900 transition duration-200" placeholder=" " readonly>
-                    <label for="withdraw-email" class="floating-label">
-                        <span class="material-icons-round text-lg mr-1">mail</span> Email (Otomatis Terisi)
-                    </label>
-                </div>
-
-                <div class="input-group mb-10">
-                    <input type="text" id="withdraw-whatsapp" class="input-field w-full bg-gray-100 border border-gray-300 text-gray-900 transition duration-200" placeholder=" " readonly>
-                    <label for="withdraw-whatsapp" class="floating-label">
-                        <span class="material-icons-round text-lg mr-1">phone_android</span> No WhatsApp (Otomatis Terisi)
-                    </label>
-                </div>
-
-                <!-- Tombol Withdraw menggunakan gaya Modern Minimalis Green -->
-                <button type="submit" class="w-full font-bold py-4 flex items-center justify-center btn-minimal-green">
-                    <span class="material-icons-round text-lg mr-2">send</span> Kirim Permintaan Withdraw
-                </button>
-            </form>
-
-            <button onclick="setView('result')" class="w-full mt-6 text-linkedin-blue hover:text-blue-700 font-bold py-2.5 rounded-xl transition duration-200 flex items-center justify-center bg-transparent">
-                <span class="material-icons-round text-lg mr-2">arrow_back</span> Kembali ke Hasil
-            </button>
-        </div>
-
-    </div>
-</div>
-
-<button id="admin-toggle-btn" class="fixed bottom-4 left-4 p-3 rounded-full bg-white text-gray-500 shadow-xl hover:bg-gray-100 hover:text-linkedin-blue transition duration-200 z-10" onclick="toggleAdminPanel()" title="Mode Admin">
-    <span class="material-icons-round text-xl spin-slow">settings</span>
-</button>
-
-<div id="admin-panel" class="hidden fixed inset-0 flex justify-end z-50">
-    <div class="fixed inset-0 bg-black/40" onclick="document.getElementById('admin-panel').classList.add('hidden');"></div>
-
-    <div class="w-full max-w-sm bg-white p-6 shadow-2xl z-50 overflow-y-auto rounded-l-2xl">
-        <header class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
-            <h2 class="text-2xl font-bold text-red-600">Panel Admin</h2>
-            <button class="text-gray-400 hover:text-gray-600 transition" onclick="document.getElementById('admin-panel').classList.add('hidden');">
-                <span class="material-icons-round text-2xl">close</span>
-            </button>
-        </header>
-
-        <p class="text-sm text-gray-500 mb-6">Kelola data akun dan reward yang ditentukan.</p>
-
-        <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="mb-6 space-y-4 p-4 bg-gray-50 rounded-lg">
-            <!-- Input Password -->
-            <label for="admin-password" class="block text-sm font-semibold text-gray-700">Password Admin</label>
-            <input type="password" id="admin-password" class="w-full p-3 rounded-lg bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-900" placeholder="Masukan Password" required>
-            
-            <!-- Checkbox Ingat Sandi -->
-            <div class="flex items-center">
-                <input type="checkbox" id="remember-admin-password" class="form-checkbox text-red-600 h-4 w-4 rounded border-gray-300 focus:ring-red-500">
-                <label for="remember-admin-password" class="ml-2 block text-sm text-gray-900">
-                    Ingat Sandi
-                </label>
-            </div>
-
-            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition shadow-md">
-                Login
-            </button>
-        </form>
-
-        <div id="admin-content" class="hidden">
-            <!-- Admin Tabs -->
-            <div class="flex border-b border-gray-200">
-                <button id="tab-single" class="tab-button active flex items-center" onclick="showAdminTab('single')">
-                    <span class="material-icons-round text-lg mr-1">person_add</span> Akun Tunggal
-                </button>
-                <button id="tab-mass" class="tab-button flex items-center" onclick="showAdminTab('mass')">
-                    <span class="material-icons-round text-lg mr-1">group_add</span> Akun Massal
-                </button>
-            </div>
-
-            <!-- TAB 1: SINGLE ACCOUNT INPUT -->
-            <div id="admin-form-single" class="tab-content">
-                <h3 class="xl font-bold text-gray-800 mb-4 mt-4">Tambah/Update Akun Tunggal</h3>
-                <form id="admin-form" onsubmit="handleAdminSubmit(event)" class="space-y-4 mb-8 p-4 border border-linkedin-blue/20 rounded-lg">
-                    
-                    <div class="input-group">
-                        <input type="email" id="admin-email" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required>
-                        <label for="admin-email" class="floating-label text-gray-500">Email Linkedin</label>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="text" id="admin-whatsapp" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required>
-                        <label for="admin-whatsapp" class="floating-label text-gray-500">No WhatsApp</label>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="number" id="admin-payment" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required min="0">
-                        <label for="admin-payment" class="floating-label text-gray-500">Payment Reward (IDR)</label>
-                    </div>
-
-                    <button type="submit" id="admin-submit-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition shadow-md">
-                        <span class="material-icons-round text-lg mr-1">save</span> Simpan Data Akun
-                    </button>
-                </form>
-            </div>
-            
-            <!-- TAB 2: MASS ACCOUNT INPUT -->
-            <div id="admin-form-mass" class="tab-content hidden">
-                <h3 class="xl font-bold text-gray-800 mb-4 mt-4">Tambah Akun Massal (Satu WA, Banyak Email)</h3>
-                <form id="admin-mass-form" onsubmit="handleAdminMassSubmit(event)" class="space-y-4 mb-8 p-4 border border-red-500/20 rounded-lg">
-                    <div class="input-group">
-                        <textarea id="mass-emails" class="w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500" rows="5" placeholder="Masukkan Email, pisahkan dengan baris baru (Enter)" required></textarea>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="text" id="mass-whatsapp" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required>
-                        <label for="mass-whatsapp" class="floating-label text-gray-500">No WhatsApp Tunggal</label>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="number" id="mass-payment" class="input-field w-full p-3 rounded-lg bg-white border border-gray-300 text-gray-900 transition duration-200" placeholder=" " required min="0">
-                        <label for="mass-payment" class="floating-label text-gray-500">Payment Reward Tunggal (IDR)</label>
-                    </div>
-                    
-                    <button type="submit" id="admin-mass-submit-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition shadow-md">
-                        <span class="material-icons-round text-lg mr-1">group_add</span> Simpan Akun Massal
-                    </button>
-                </form>
-            </div>
-            
-            <!-- Account List -->
-            <h3 class="text-xl font-bold text-gray-800 mt-6 mb-4 border-b border-gray-100 pb-2">Data Akun Tersimpan</h3>
-            <button onclick="pollData()" class="text-sm font-medium text-linkedin-blue hover:text-blue-700 mb-4 flex items-center transition">
-                <span class="material-icons-round text-lg mr-1">refresh</span> Refresh Data Manual
-            </button>
-            <div id="account-list" class="space-y-3">
-                <p class="text-gray-500">Memuat data...</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Audio element (Hidden by default) -->
-<audio id="background-music" loop src="Musik.mp3"></audio>
-
-
-<script>
-    // **********************************************
-    // JANGAN LUPA GANTI BIN_ID DAN SECRET_KEY ANDA
-    // **********************************************
-    const BIN_ID = "68d6119843b1c97be9506c0c"; 
-    const SECRET_KEY = "$2a$10$CyEgkHrw6xtwHt.RE3ZqEulgvcK5yzSmlYJmn.aRA23csA9a8u/.2"; 
-    const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-    const ADMIN_SECRET = '2003'; // Password Admin
-    const WHATSAPP_ADMIN_NUMBER = '6289513304878'; 
-    const LOCAL_STORAGE_KEY = 'adminPass'; // Key for storing password
-    let isAdminLoggedIn = false;
-    let currentEditId = null;
-    let currentAccount = {};
-    let music = null; // Variable for the audio element
-
-    // --- NEW: Function to start the app and play music ---
-    window.startApp = () => {
-        if (music) {
-            music.play().catch(error => {
-                console.warn("Autoplay was prevented:", error);
-                // Optionally show a message asking user to enable audio
-            });
-        }
-        window.setView('home');
-    };
-    // --------------------------------------------------------
-
-
-    window.sanitizeWhatsapp = (num) => num.replace(/[^0-9]/g, '');
-
-    window.formatPayment = (amount) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(amount);
-    };
-
-    window.alertUser = (message, type) => {
-        console.log(`[ALERT - ${type.toUpperCase()}]: ${message}`);
-        const tempAlert = document.createElement('div');
-        tempAlert.className = `fixed top-5 right-5 p-3 rounded-lg text-white z-[100] ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} shadow-xl font-medium transition duration-300 transform translate-y-0 opacity-100`;
-        tempAlert.textContent = message;
-        document.body.appendChild(tempAlert);
-        setTimeout(() => tempAlert.remove(), 3000);
-    };
-
-    async function fetchAccounts() {
-        try {
-            const headers = {'X-Master-Key': SECRET_KEY, 'X-Bin-Meta': false};
-            const response = await fetch(API_URL, {method: 'GET', headers: headers});
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const result = await response.json();
-            return result.accounts || [];
-        } catch (error) {
-            console.error("Error fetching data from JSONBin:", error);
-            return [];
-        }
-    }
-
-    async function updateBin(accountsData) {
-        try {
-            const updateHeaders = {'Content-Type': 'application/json', 'X-Master-Key': SECRET_KEY};
-            const payload = {accounts: accountsData};
-            const response = await fetch(API_URL, {method: 'PUT', headers: updateHeaders, body: JSON.stringify(payload)});
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return true;
-        } catch (error) {
-            console.error("Error updating JSONBin:", error);
-            return false;
-        }
-    }
-
-    // --- Admin Tab Logic ---
-    window.showAdminTab = (tabName) => {
-        document.getElementById('tab-single').classList.remove('active');
-        document.getElementById('tab-mass').classList.remove('active');
-        document.getElementById('admin-form-single').classList.add('hidden');
-        document.getElementById('admin-form-mass').classList.add('hidden');
-
-        document.getElementById(`tab-${tabName}`).classList.add('active');
-        document.getElementById(`admin-form-${tabName}`).classList.remove('hidden');
-    };
-
-
-    window.setView = (viewName) => {
-        // Hiding all views first, including the welcome screen
-        document.getElementById('view-welcome').classList.add('hidden');
-        document.getElementById('view-home').classList.add('hidden');
-        document.getElementById('view-result').classList.add('hidden');
-        document.getElementById('view-withdraw').classList.add('hidden');
-        document.getElementById(`view-${viewName}`).classList.remove('hidden');
-        
-        if (viewName === 'withdraw') {
-            // Populate withdraw form fields
-            document.getElementById('withdraw-email').value = currentAccount.email;
-            document.getElementById('withdraw-whatsapp').value = currentAccount.whatsapp;
-
-            // Prevent opening withdraw form if already claimed
-            if (currentAccount.status === 'Claimed') {
-                alertUser('Reward sudah diklaim dan tidak dapat ditarik kembali.', 'error');
-                setView('result'); // Stay on result view
-            }
-        }
-    };
-
-    window.handleUserSubmit = async (event) => {
-        event.preventDefault();
-        const email = document.getElementById('input-email').value.trim().toLowerCase();
-        const whatsapp = sanitizeWhatsapp(document.getElementById('input-whatsapp').value.trim());
-        const msgArea = document.getElementById('message-area');
-        const submitBtn = document.getElementById('submit-button');
-
-        msgArea.className = 'mt-8 p-4 rounded-xl text-left border-l-4 border-gray-400 bg-gray-50 text-gray-700 flex items-center transition duration-300';
-        msgArea.innerHTML = `<span class="material-icons-round animate-spin text-lg mr-3">cached</span> Sedang memproses...`;
-        submitBtn.disabled = true;
-
-        try {
-            const accounts = await fetchAccounts();
-            const matchedAccount = accounts.find(acc => acc.email === email && acc.whatsapp === whatsapp);
-
-            if (!matchedAccount) {
-                msgArea.className = 'mt-8 p-4 rounded-xl text-left border-l-4 border-red-500 bg-red-50 text-red-800 flex items-start transition duration-300';
-                msgArea.innerHTML = `<span class="material-icons-round text-2xl mr-3 mt-0.5 flex-shrink-0">cancel</span><div><p class="text-lg font-bold">Data Akun Tidak Ditemukan!</p><p class="text-sm mt-1">Pastikan Email dan No. WhatsApp sudah sesuai.</p></div>`;
-            } else {
-                currentAccount = matchedAccount;
-                setView('result');
-                showResultView(matchedAccount);
-                msgArea.classList.add('hidden'); // Hide message area on success
-            }
-        } catch (error) {
-            console.error("Error checking account:", error);
-            msgArea.className = 'mt-8 p-4 rounded-xl text-left border-l-4 border-red-500 bg-red-50 text-red-800 flex items-center transition duration-300';
-            msgArea.innerHTML = `<span class="material-icons-round text-2xl mr-3">warning</span> Terjadi Kesalahan Server.`;
-        } finally {
-            submitBtn.disabled = false;
-            if (!document.getElementById('view-result').classList.contains('hidden')) {
-                msgArea.classList.add('hidden');
-            } else {
-                 msgArea.classList.remove('hidden');
-            }
-        }
-    };
-
-    function showResultView(account) {
-        const amountDiv = document.getElementById('result-amount');
-        const loaderDiv = document.getElementById('loader-animation');
-        const cardElement = document.getElementById('counting-animation');
-        const withdrawButton = document.getElementById('withdraw-button');
-        const backButton = document.querySelector('#result-buttons button:last-child'); // Tombol kembali
-        const resultIcon = document.getElementById('result-icon');
-
-        // Reset button classes for safety
-        backButton.classList.remove('w-full');
-        backButton.classList.add('w-1/2');
-
-        loaderDiv.classList.add('hidden');
-        amountDiv.classList.remove('animate-counting');
-        amountDiv.classList.add('opacity-0');
-        
-        // Ensure card class is minimal/transparent
-        cardElement.className = 'premium-card relative overflow-hidden';
-        
-        const payment = account.payment || 0;
-        let iconClass = 'text-gray-400';
-        let iconName = 'monetization_on'; // Default icon
-
-        // Warna ikon didasarkan pada jumlah reward (walau minimalis, tetap ada aksen)
-        if (payment <= 50000) {
-            iconClass = 'text-minimal-red';
-        } else if (payment <= 100000) {
-            iconClass = 'text-minimal-orange';
-        } else {
-            iconClass = 'text-minimal-green';
-        }
-        
-        // Hanya tambahkan class warna aksen ke ikon
-        resultIcon.className = `material-icons-round text-xl mr-2 ${iconClass}`;
-        resultIcon.textContent = iconName;
-
-
-        const paymentAmount = formatPayment(payment);
-
-        if (account.status === 'Claimed') {
-            // Sembunyikan tombol withdraw jika sudah diklaim
-            withdrawButton.classList.add('hidden');
-            // Jadikan tombol kembali mengambil lebar penuh
-            backButton.classList.remove('w-1/2');
-            backButton.classList.add('w-full');
-
-        } else if (account.status === 'Not Claimed') {
-            // Tampilkan tombol withdraw jika belum diklaim
-            withdrawButton.classList.remove('hidden');
-            // Tombol kembali tetap 1/2
-            backButton.classList.add('w-1/2');
-            backButton.classList.remove('w-full');
-        }
-
-        const finalPayment = payment;
-        const duration = 1500;
-        const startTime = Date.now();
-        const countingInterval = setInterval(() => {
-            const elapsed = Date.now() - startTime;
-            if (elapsed >= duration) {
-                clearInterval(countingInterval);
-                amountDiv.textContent = paymentAmount;
-                loaderDiv.classList.add('hidden');
-                amountDiv.classList.add('animate-counting');
-                amountDiv.classList.remove('opacity-0');
-            } else {
-                const progress = elapsed / duration;
-                let randomValue = Math.min(finalPayment, finalPayment * progress + (Math.random() * finalPayment * (1 - progress) * 0.5));
-                amountDiv.textContent = formatPayment(Math.floor(randomValue));
-                amountDiv.classList.remove('opacity-0');
-                loaderDiv.classList.add('hidden');
-            }
-        }, 50);
-    }
-
-    window.handleWithdrawSubmit = async (event) => {
-        event.preventDefault();
-
-        // Cek status saat ini sebelum memproses
-        if (currentAccount.status === 'Claimed') {
-            return alertUser('Reward sudah diklaim dan tidak dapat ditarik kembali.', 'error');
-        }
-
-        const atasNama = document.getElementById('withdraw-nama').value.trim();
-        const noRekening = document.getElementById('withdraw-rekening').value.trim();
-        const namaBank = document.getElementById('withdraw-bank').value.trim();
-        const email = currentAccount.email;
-        const whatsapp = currentAccount.whatsapp;
-        const payment = formatPayment(currentAccount.payment);
-
-        const message = 
-            `*PERMINTAAN WITHDRAW REWARD LIN Zen*\n\n` +
-            `*Email Akun:* ${email}\n` +
-            `*No WhatsApp:* ${whatsapp}\n` +
-            `*Reward Payment:* ${payment}\n\n` +
-            `*DETAIL REKENING PENCAIRAN:*\n` +
-            `*Atas Nama:* ${atasNama}\n` +
-            `*No. Rekening:* ${noRekening}\n` +
-            `*Nama Bank:* ${namaBank}\n\n` +
-            `Mohon diproses segera. Terima kasih.`;
-        
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${WHATSAPP_ADMIN_NUMBER}?text=${encodedMessage}`;
-
-        window.open(whatsappUrl, '_blank');
-        
-        // --- LOGIKA PENGUBAHAN STATUS MENJADI 'Claimed' ---
-        try {
-            let accounts = await fetchAccounts();
-            const accountIndex = accounts.findIndex(acc => acc.id === currentAccount.id);
-
-            if (accountIndex !== -1) {
-                // Update status dan waktu di data lokal dan remote
-                accounts[accountIndex].status = 'Claimed';
-                accounts[accountIndex].updatedAt = new Date().toISOString();
-                
-                const success = await updateBin(accounts);
-
-                if (success) {
-                    // Perbarui currentAccount agar tampilan result sesuai
-                    currentAccount = accounts[accountIndex];
-                    alertUser('Permintaan Withdraw telah dibuat dan dikirim ke Admin WhatsApp! Status akun diubah menjadi Claimed.', 'success');
-                } else {
-                    alertUser('Gagal menyimpan status Claimed ke database. Coba lagi atau hubungi admin.', 'error');
-                }
-            }
-        } catch(e) {
-            console.error("Error updating status after withdraw:", e);
-            alertUser(`Gagal mengubah status: ${e.message}`, 'error');
-        }
-        // --- END LOGIKA ---
-
-        setView('result'); // Kembali ke tampilan hasil
-    };
-
-    window.toggleAdminPanel = () => {
-        const panel = document.getElementById('admin-panel');
-        panel.classList.toggle('hidden');
-        if (!panel.classList.contains('hidden') && isAdminLoggedIn) {
-            pollData();
-            showAdminTab('single'); // Default ke tab tunggal saat panel dibuka
-        }
-    };
-
-    window.handleAdminLogin = (event) => {
-        event.preventDefault();
-        const passwordField = document.getElementById('admin-password');
-        const rememberCheckbox = document.getElementById('remember-admin-password');
-        const password = passwordField.value;
-
-        if (password === ADMIN_SECRET) {
-            isAdminLoggedIn = true;
-            
-            // NEW: Handle Remember Password
-            if (rememberCheckbox.checked) {
-                localStorage.setItem(LOCAL_STORAGE_KEY, password);
-            } else {
-                localStorage.removeItem(LOCAL_STORAGE_KEY);
-            }
-
-            document.getElementById('admin-login-form').classList.add('hidden');
-            document.getElementById('admin-content').classList.remove('hidden');
-            alertUser('Login Admin Berhasil!','success');
-            pollData();
-            showAdminTab('single'); 
-        } else {
-            alertUser('Password salah!','error');
-            localStorage.removeItem(LOCAL_STORAGE_KEY); // Clear if login fails
-            rememberCheckbox.checked = false;
-        }
-    };
-
-    // --- LOGIC FOR SINGLE ACCOUNT SUBMIT (UNCHANGED) ---
-    window.handleAdminSubmit = async(event)=>{
-        event.preventDefault();
-        if(!isAdminLoggedIn)return alertUser('Anda harus login admin terlebih dahulu.','error');
-        const emailField=document.getElementById('admin-email');
-        const whatsappField=document.getElementById('admin-whatsapp');
-        const email=emailField.value.trim().toLowerCase();
-        const whatsapp=sanitizeWhatsapp(whatsappField.value.trim());
-        const payment=parseInt(document.getElementById('admin-payment').value,10);
-        
-        if(!email||!whatsapp||isNaN(payment)){return alertUser('Semua kolom wajib diisi dan Payment harus angka.','error')}
-        
-        try{
-            let accounts=await fetchAccounts();
-            const uniqueId=`${email}_${whatsapp}`;
-            const newAccount={id:uniqueId,email:email,whatsapp:whatsapp,payment:payment,status:'Not Claimed',updatedAt:new Date().toISOString()};
-            const existingIndex=accounts.findIndex(acc=>acc.id===uniqueId);
-            
-            if(existingIndex!==-1){
-                newAccount.status=accounts[existingIndex].status;
-                accounts[existingIndex]=newAccount;
-            }else{
-                accounts.push(newAccount);
-            }
-            currentEditId=null;
-            emailField.disabled=false;
-            whatsappField.disabled=false;
-            document.getElementById('admin-submit-btn').innerHTML='<span class="material-icons-round text-lg mr-1">save</span> Simpan Data Akun';
-            
-            const success=await updateBin(accounts);
-            if(success){
-                alertUser('Data Akun berhasil disimpan/diupdate!','success');
-                document.getElementById('admin-form').reset();
-                pollData();
-            }else{
-                alertUser('Gagal menyimpan data ke JSONBin.io.','error');
-            }
-        }catch(e){
-            console.error("Error adding document: ",e);
-            alertUser(`Gagal menyimpan data: ${e.message}`,'error');
-        }
-    };
-    // --- END LOGIC FOR SINGLE ACCOUNT SUBMIT ---
-
-    // --- LOGIC FOR MASS ACCOUNT SUBMIT (NEW) ---
-    window.handleAdminMassSubmit = async(event)=>{
-        event.preventDefault();
-        if(!isAdminLoggedIn) return alertUser('Anda harus login admin terlebih dahulu.','error');
-
-        const emailText = document.getElementById('mass-emails').value.trim();
-        const whatsapp = sanitizeWhatsapp(document.getElementById('mass-whatsapp').value.trim());
-        const payment = parseInt(document.getElementById('mass-payment').value, 10);
-
-        if(!emailText || !whatsapp || isNaN(payment)){
-            return alertUser('Semua kolom wajib diisi, termasuk daftar email dan Payment harus angka.','error');
-        }
-
-        // Clean and validate emails
-        const emails = emailText.split('\n')
-                                .map(e => e.trim().toLowerCase())
-                                .filter(e => e.length > 0 && e.includes('@'));
-
-        if (emails.length === 0) {
-            return alertUser('Daftar email tidak valid atau kosong.','error');
-        }
-
-        try{
-            let accounts = await fetchAccounts();
-            const accountsToAdd = [];
-            let updatedCount = 0;
-            let addedCount = 0;
-
-            emails.forEach(email => {
-                const uniqueId = `${email}_${whatsapp}`;
-                const newAccount = {
-                    id: uniqueId,
-                    email: email,
-                    whatsapp: whatsapp,
-                    payment: payment,
-                    status: 'Not Claimed',
-                    updatedAt: new Date().toISOString()
-                };
-
-                const existingIndex = accounts.findIndex(acc => acc.id === uniqueId);
-
-                if (existingIndex !== -1) {
-                    // Update existing account
-                    newAccount.status = accounts[existingIndex].status; // Preserve current status
-                    accounts[existingIndex] = newAccount;
-                    updatedCount++;
-                } else {
-                    // Add new account
-                    accounts.push(newAccount);
-                    addedCount++;
-                }
-            });
-
-            const success = await updateBin(accounts);
-
-            if(success){
-                alertUser(`Data massal berhasil disimpan! Ditambahkan: ${addedCount}, Diperbarui: ${updatedCount}.`,'success');
-                document.getElementById('admin-mass-form').reset();
-                pollData();
-            } else {
-                alertUser('Gagal menyimpan data massal ke JSONBin.io.','error');
-            }
-        } catch(e) {
-            console.error("Error adding mass document: ", e);
-            alertUser(`Gagal menyimpan data massal: ${e.message}`,'error');
-        }
-    };
-    // --- END LOGIC FOR MASS ACCOUNT SUBMIT ---
-
-
-    window.editAccount=async(id)=>{
-        const accounts=await fetchAccounts();
-        const accountToEdit=accounts.find(acc=>acc.id===id);
-        if(accountToEdit){
-            // Ensure single tab is active for editing
-            showAdminTab('single'); 
-            
-            document.getElementById('admin-email').value=accountToEdit.email;
-            document.getElementById('admin-whatsapp').value=accountToEdit.whatsapp;
-            document.getElementById('admin-payment').value=accountToEdit.payment;
-            document.getElementById('admin-submit-btn').innerHTML='<span class="material-icons-round text-lg mr-1">update</span> Update Data Akun';
-            currentEditId=id;
-            document.getElementById('admin-email').disabled=true;
-            document.getElementById('admin-whatsapp').disabled=true;
-            alertUser('Data dimuat untuk diubah. Email/WA tidak dapat diubah saat mode Edit.','success');
-        }else{
-            alertUser('Akun tidak ditemukan.','error');
-        }
-    };
-
-    window.deleteAccount=async(id)=>{
-        try{
-            const accounts=await fetchAccounts();
-            const newAccounts=accounts.filter(acc=>acc.id!==id);
-            const success=await updateBin(newAccounts);
-            if(success){
-                alertUser('Akun berhasil dihapus!','success');
-                pollData();
-            }else{
-                alertUser('Gagal menghapus data dari JSONBin.io.','error');
-            }
-        }catch(e){
-            console.error("Error deleting document: ",e);
-            alertUser(`Gagal menghapus data: ${e.message}`,'error');
-        }
-    };
-
-    window.toggleClaimStatus=async(id,currentStatus)=>{
-        try{
-            const accounts=await fetchAccounts();
-            const accountIndex=accounts.findIndex(acc=>acc.id===id);
-            if(accountIndex!==-1){
-                const newStatus=currentStatus==='Claimed'?'Not Claimed':'Claimed';
-                accounts[accountIndex].status=newStatus;
-                accounts[accountIndex].updatedAt=new Date().toISOString();
-                const success=await updateBin(accounts);
-                if(success){
-                    alertUser(`Status diubah menjadi: ${newStatus}`,'success');
-                    pollData();
-                }else{
-                    alertUser('Gagal mengubah status.','error');
-                }
-            }else{
-                alertUser('Akun tidak ditemukan.','error');
-            }
-        }catch(e){
-            console.error("Error toggling status: ",e);
-            alertUser(`Gagal mengubah status: ${e.message}`,'error');
-        }
-    };
-
-    function renderAccountList(accounts){
-        const accountListDiv=document.getElementById('account-list');
-        let html='';
-        if(accounts.length===0){
-            html='<p class="text-gray-500 italic p-3 bg-gray-100 rounded-lg">Belum ada akun yang tersimpan.</p>';
-        }else{
-            accounts.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
-            accounts.forEach((data)=>{
-                const paymentFormatted=formatPayment(data.payment);
-                const isClaimed=data.status==='Claimed';
-                const statusBg=isClaimed?'bg-green-100 text-green-700':'bg-red-100 text-red-700';
-                const statusIcon=isClaimed?'check_circle':'warning';
-                const statusTooltip=isClaimed?'Klik untuk mengubah status menjadi "Not Claimed"':'Klik untuk mengubah status menjadi "Claimed"';
-                html+=`<div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm transition hover:shadow-md flex justify-between items-center"><div class="flex-grow min-w-0 mr-4"><p class="text-sm font-medium text-gray-500 truncate"><span class="material-icons-round text-linkedin-blue text-sm mr-1 align-bottom">mail</span> ${data.email}</p><p class="text-lg font-bold text-gray-800 mt-1">${paymentFormatted}</p><p class="text-xs text-gray-400 mt-1">WA: ${data.whatsapp}</p></div><div class="flex flex-col items-end space-y-2 flex-shrink-0"><button onclick="toggleClaimStatus('${data.id}','${data.status}')" class="text-xs font-semibold py-1 px-2 rounded-full ${statusBg} flex items-center transition hover:opacity-80" title="${statusTooltip}"><span class="material-icons-round text-sm mr-1">${statusIcon}</span> ${data.status}</button><div class="flex space-x-2"><button onclick="editAccount('${data.id}')" class="text-linkedin-blue hover:text-blue-700 transition" title="Edit"><span class="material-icons-round text-xl">edit</span></button><button onclick="deleteAccountConfirmation('${data.id}')" class="text-red-600 hover:text-red-800 transition" title="Hapus"><span class="material-icons-round text-xl">delete</span></button></div></div></div>`});
-        }
-        accountListDiv.innerHTML=html;
-    }
-
-    async function pollData(){
-        const accountListDiv=document.getElementById('account-list');
-        accountListDiv.innerHTML='<p class="text-gray-500 flex items-center"><span class="material-icons-round animate-spin text-lg mr-2">cached</span> Memuat data...</p>';
-        const accounts=await fetchAccounts();
-        renderAccountList(accounts);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent By Zen</title>
     
-    // --- Initialization & Modal Handlers moved to window.onload/DOM ready ---
-    window.onload = () => {
-        // Initialize music variable
-        music = document.getElementById('background-music');
-        
-        // --- NEW: Auto-fill admin password from localStorage ---
-        const storedPassword = localStorage.getItem(LOCAL_STORAGE_KEY);
-        const passwordField = document.getElementById('admin-password');
-        const rememberCheckbox = document.getElementById('remember-admin-password');
-        
-        if (storedPassword) {
-            passwordField.value = storedPassword;
-            rememberCheckbox.checked = true;
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Reset dan Pengaturan Dasar Halaman */
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0; 
+            box-sizing: border-box;
+            overflow: hidden;
         }
-        // --- END NEW ---
+        /* "Bingkai HP" */
+        .app-container {
+            width: 100%;
+            height: 100svh; 
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            position: relative;
+        }
 
-        // Initial view is always Welcome Screen
-        window.setView('welcome'); 
-        pollData();
+        /* --- KEYFRAMES ANIMASI BARU --- */
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInSlideUpCard {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes cardBounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        /* --- AKHIR KEYFRAMES --- */
 
-        // 1. Get elements for Modal Handlers
-        let accountToDeleteId = null;
-        const deleteConfirmationModal = document.getElementById('delete-confirmation-modal');
-        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
-        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
-        // 2. Attach Handlers
-        // Function to show the modal (kept globally accessible as it's called from renderAccountList)
-        window.deleteAccountConfirmation = (id) => {
-            accountToDeleteId = id;
-            deleteConfirmationModal.classList.remove('hidden');
-        };
+        /* Gaya Umum untuk setiap "Layar" */
+        .screen {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            /* DIUBAH: Transisi layar halus */
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .screen.hidden { 
+            /* DIUBAH: Ganti display:none dengan opacity & transform */
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            z-index: -1; /* Pindah ke belakang */
+        } 
+        .screen.grey-bg { background-color: #f0f2f5; }
+        .screen.dark-overlay { background-color: rgba(0, 0, 0, 0.5); }
+        .screen.gradient-bg { background: linear-gradient(135deg, #7c4dff, #4477f8); }
 
-        // Cancel button handler
-        cancelDeleteBtn.onclick = () => {
-            deleteConfirmationModal.classList.add('hidden');
-        };
+        /* --- Layar 1: Splash Screen --- */
+        .splash-screen {
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 42px;
+            font-weight: 800;
+            z-index: 2;
+            padding: 20px;
+        }
+        /* ANIMASI BARU: Teks muncul */
+        .splash-screen h1 { 
+            margin: 0; 
+            text-align: center; 
+            font-size: 42px; 
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
+        }
+        /* ANIMASI BARU: Tombol muncul */
+        #continue-btn { 
+            background-color: #ffffff; 
+            color: #4477f8; 
+            border: none; 
+            padding: 16px 50px; 
+            border-radius: 50px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 80px; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.6s ease-out 1s forwards;
+            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+        }
+        /* EFEK BARU: Tombol tekan */
+        #continue-btn:active {
+            transform: translateY(20px) scale(0.98); /* Perhitungkan transform awal */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
 
-        // Confirm button handler
-        confirmDeleteBtn.onclick = () => {
-            if (accountToDeleteId) {
-                // Call the delete function and hide modal on completion
-                window.deleteAccount(accountToDeleteId).then(() => { deleteConfirmationModal.classList.add('hidden'); });
-                accountToDeleteId = null;
-            }
-        };
-    };
-    // End of Initialization & Modal Handlers
-</script>
+        /* --- Layar 2: Login Screen --- */
+        .login-screen {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+            overflow-y: auto;
+        }
+        .linkedin-logo { margin-top: 20px; margin-bottom: 30px; }
+        .login-screen .welcome-title { font-size: 32px; font-weight: 800; color: #000; margin-top: 10px; margin-bottom: 40px; }
+        .login-screen .welcome-title .by-zen { color: #4477f8; }
+        .login-form { width: 100%; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { font-size: 14px; color: #333; display: block; margin-bottom: 10px; font-weight: 600; }
+        .input-group { position: relative; }
+        .input-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888; font-size: 22px; }
+        .input-field { width: 100%; border: 1px solid #e0e0e0; background-color: #f7f7f7; border-radius: 10px; padding: 16px 50px; font-size: 16px; color: #333; box-sizing: border-box; font-family: 'Nunito', sans-serif; }
+        .input-field[readonly] { background-color: #ebebeb; color: #555; border-color: #ddd; }
+        
+        /* EFEK BARU: Tombol tekan */
+        .sign-in-btn { 
+            width: 100%; 
+            background-color: #4477f8; 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 10px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            box-shadow: 0 4px 15px rgba(68, 119, 248, 0.3); 
+            transition: all 0.15s ease-out;
+            position: relative; /* Untuk spinner loading */
+            overflow: hidden; /* Sembunyikan spinner */
+        }
+        .sign-in-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(68, 119, 248, 0.4);
+        }
+        .sign-in-btn:disabled { background-color: #aaa; cursor: not-allowed; }
 
-<div id="delete-confirmation-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/50">
-    <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm">
-        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="material-icons-round text-red-500 mr-2">delete_forever</span> Konfirmasi Hapus</h3>
-        <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus akun ini? Tindakan ini tidak dapat dibatalkan.</p>
-        <div class="flex justify-end space-x-3">
-            <button id="cancel-delete-btn" class="px-4 py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 transition">Batal</button>
-            <button id="confirm-delete-btn" class="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition">Hapus</button>
+        /* EFEK BARU: Spinner Loading Tombol */
+        .btn-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .sign-in-btn.loading .btn-spinner {
+            opacity: 1;
+        }
+        .sign-in-btn.loading span { /* Sembunyikan teks saat loading */
+            opacity: 0;
+        }
+
+        .illustration-placeholder { width: 100%; margin-top: auto; min-height: 50px; padding-bottom: 20px; }
+        .admin-fab { position: absolute; bottom: 30px; left: 30px; width: 50px; height: 50px; background-color: #4477f8; color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); cursor: pointer; z-index: 10; }
+        .admin-fab .material-symbols-outlined { font-size: 24px; color: white; }
+        
+        /* --- Layar 3: Loading Screen --- */
+        #loading-screen { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            background: rgba(255, 255, 255, 0.9); 
+            color: #333; z-index: 3; 
+            font-size: 18px; 
+            font-weight: 600; 
+        }
+        .spinner { width: 50px; height: 50px; border: 5px solid #f0f0f0; border-top: 5px solid #4477f8; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* --- Layar 4: Reward Screen --- */
+        @keyframes shine-pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes holographic-shine {
+            0% { color: #ffc107; }
+            20% { color: #e6a2d8; }
+            40% { color: #a2d8e6; }
+            60% { color: #a2e6b8; }
+            80% { color: #e6d8a2; }
+            100% { color: #ffc107; }
+        }
+        #reward-screen { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 4; 
+            padding: 30px;
+            /* Dihapus: opacity, pointer-events, transition (diatur oleh .screen) */
+            position: relative;
+        }
+        #reward-screen.show { opacity: 1; pointer-events: auto; } /* .show masih dipakai untuk trigger animasi */
+        #confetti-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        
+        .reward-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 300px;
+            position: relative;
+            z-index: 2;
+            /* DIUBAH: Hapus transform & transition, ganti dengan opacity 0 */
+            opacity: 0; 
+        }
+        /* ANIMASI BARU: Card bounce-in */
+        #reward-screen.show .reward-card { 
+            animation: cardBounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        /* ANIMASI BARU: Pop-up sandi admin juga pakai bounce */
+        #admin-prompt-screen.show .reward-card {
+            opacity: 0; /* Pastikan state awal 0 */
+            animation: cardBounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .icon-background {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 193, 7, 0.4), rgba(255, 193, 7, 0.1) 50%, transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: shine-pulse 2s infinite 0.5s;
+        }
+        .reward-icon { font-size: 60px; color: #ffc107; }
+        .reward-card h2 { margin-top: 0; color: #4477f8; font-size: 24px; font-weight: 800; }
+        .reward-card p { font-size: 16px; color: #333; margin-bottom: 20px; }
+        .reward-voucher-card {
+            background: linear-gradient(to right, #bdbdbd, #fafafa, #bdbdbd);
+            border-radius: 12px;
+            padding: 20px;
+            color: #222;
+            text-align: left;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            position: relative;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .card-chip {
+            font-size: 36px;
+            color: #ffc107;
+            opacity: 0.8;
+            animation: holographic-shine 4s infinite linear;
+        }
+        .card-amount {
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: 10px;
+            color: #222;
+        }
+        .card-amount span {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #222;
+            text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.7);
+        }
+        .card-label {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #333;
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+        #withdraw-btn { background-color: #4477f8; color: white; border: none; padding: 16px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 15px; width: 100%; transition: transform 0.1s ease, box-shadow 0.1s ease; }
+        #withdraw-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(68, 119, 248, 0.4);
+        }
+        #close-reward-link { display: inline-block; margin-top: 15px; color: #888; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; }
+        
+
+        /* --- LAYAR 5: ADMIN SCREEN (GAYA MODERN) --- */
+        .admin-screen {
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .admin-header { 
+            background-color: #ffffff; 
+            color: #333; 
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08); 
+            position: relative; 
+            flex-shrink: 0; 
+        }
+        .admin-header h2 { margin: 0; font-size: 20px; text-align: center; flex-grow: 1; font-weight: 700; }
+        .admin-back-btn { 
+            background: none; 
+            border: none; 
+            color: #333; 
+            font-size: 28px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            padding: 0 10px; 
+            position: absolute; 
+            left: 10px; 
+        }
+        .admin-body { padding: 20px; overflow-y: auto; flex-grow: 1; }
+        .admin-controls { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+            padding: 20px; 
+            background: #fff; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+        }
+        .admin-controls label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #555; }
+        
+        .admin-controls select, .admin-controls input[type="text"] {
+            width: 100%;
+            padding: 12px 15px; 
+            border: 2px solid transparent; 
+            border-radius: 8px; 
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f2f5; 
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .admin-controls select:focus, .admin-controls input[type="text"]:focus {
+            background-color: #fff;
+            border-color: #4477f8; 
+        }
+
+        #bulk-save-btn { width: 100%; padding: 12px; margin-top: 5px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
+        #bulk-save-btn:disabled { background: #aaa; cursor: not-allowed; }
+        #admin-data-container { background: none; border: none; max-height: none; overflow-y: visible; }
+        
+        .user-card { 
+            background: #fff; 
+            border: none; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            /* ANIMASI BARU: Staggered load */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUpCard 0.4s ease-out forwards;
+        }
+        .user-card h3 { 
+            margin-top: 0; 
+            margin-bottom: 15px; 
+            color: #111; 
+            font-size: 18px; 
+            word-break: break-all; 
+            font-weight: 700; 
+        }
+        .user-card-item { 
+            margin-bottom: 8px; 
+            font-size: 14px; 
+            display: flex; 
+            align-items: center; 
+        }
+        .user-card-item strong { 
+            color: #666; 
+            width: 90px; 
+            min-width: 90px; 
+            display: inline-block; 
+            font-weight: 600; 
+        }
+        .user-card-item span { 
+            word-break: break-all; 
+            font-weight: 500; 
+            color: #111; 
+        }
+
+        .claim-status {
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .claim-status.claimed {
+            background-color: #e0f2f1; 
+            color: #00796b; 
+        }
+        .claim-status.not-claimed {
+            background-color: #f1f1f1; 
+            color: #555; 
+        }
+
+        .toggle-claim-btn {
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+            margin-left: auto; 
+        }
+        .toggle-claim-btn.success {
+            background-color: #28a745; 
+        }
+        .toggle-claim-btn.success:hover {
+            background-color: #218838;
+        }
+        .toggle-claim-btn.danger {
+            background-color: #dc3545; 
+        }
+        .toggle-claim-btn.danger:hover {
+            background-color: #c82333;
+        }
+        .toggle-claim-btn:disabled {
+            background-color: #aaa;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+
+        .reward-input-group { 
+            margin-top: 15px; 
+            border-top: 1px solid #eee; 
+            padding-top: 15px; 
+            display: flex; 
+            gap: 10px; 
+        }
+        .reward-input { 
+            flex-grow: 1; 
+            border: 1px solid #ddd; 
+            padding: 8px 12px; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            font-family: 'Nunito', sans-serif; 
+            background: #f0f2f5; 
+        }
+        .save-reward-btn { 
+            padding: 8px 12px; 
+            background: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 14px; 
+            font-weight: 700; 
+            transition: background-color 0.2s;
+        }
+        .save-reward-btn:hover:not(:disabled) {
+            background: #218838;
+        }
+        .save-reward-btn:disabled { background: #aaa; }
+
+
+        /* --- LAYAR 6: WITHDRAW SCREEN (GAYA DIPERBARUI) --- */
+        .withdraw-screen {
+            z-index: 6;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .withdraw-screen .admin-body {
+            padding-bottom: 120px; 
+        }
+        
+        #withdraw-form { padding: 0; }
+        
+        .withdraw-screen .admin-header {
+            background-color: #fff; 
+            color: #000; 
+        }
+        .withdraw-screen .admin-back-btn {
+            color: #000; 
+        }
+        
+        .form-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 5px 25px 20px 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .form-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #4477f8;
+            margin-bottom: 25px;
+        }
+        
+        .withdraw-screen .input-group {
+            margin-bottom: 25px;
+        }
+        .withdraw-screen .input-icon {
+            left: 0; 
+            font-size: 20px;
+        }
+        .withdraw-screen .input-field {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            border-radius: 0;
+            padding-left: 35px; 
+            padding-right: 0;
+            padding-bottom: 10px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .withdraw-screen .input-field:focus {
+            border-bottom-color: #4477f8;
+        }
+        .withdraw-screen .form-group label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        .info-item span { 
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+        }
+        .info-item strong { 
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .withdraw-cta-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 30px;
+            background: #fff;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            border-top: 1px solid #f0f0f0;
+            box-sizing: border-box;
+        }
+        #withdraw-submit-btn { 
+            width: 100%; 
+            background-color: #28a745; 
+            color: white; border: none; 
+            padding: 16px; 
+            border-radius: 10px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 0; 
+            transition: all 0.15s ease-out;
+            position: relative; /* Untuk spinner */
+            overflow: hidden; /* Sembunyikan spinner */
+        }
+        #withdraw-submit-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4);
+        }
+        /* EFEK BARU: Spinner di tombol Withdraw */
+        #withdraw-submit-btn.loading .btn-spinner {
+            opacity: 1;
+        }
+        #withdraw-submit-btn.loading span { /* Sembunyikan teks */
+            opacity: 0;
+        }
+
+        /* --- GAYA TOAST/POP UP --- */
+        #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .toast-message { padding: 12px 20px; color: white; font-weight: 600; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); opacity: 0; transform: translateY(-30px); animation: slideIn 0.3s ease-out forwards; }
+        .toast-message.error { background-color: #d9534f; }
+        .toast-message.success { background-color: #28a745; }
+        @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
+        .toast-message.hide { animation: fadeOut 0.5s ease-in forwards; }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+        
+        /* --- TAMBAHAN CSS: Input Sandi Admin --- */
+        .admin-pass-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #f0f2f5;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f2f5;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .admin-pass-input:focus {
+            background-color: #fff;
+            border-color: #4477f8;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div id="toast-container"></div>
+        <div id="splash-screen" class="screen gradient-bg splash-screen">
+            <h1>Yoo... PAYMENT DAY!!!</h1>
+            <button id="continue-btn">Lanjutkan</button>
+        </div>
+        <div id="login-screen" class="screen login-screen hidden">
+            <svg class="linkedin-logo" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+                <rect width="60" height="60" rx="12" fill="#0A66C2"/>
+                <path d="M50.1 49.5H41.6V35.6C41.6 32 41.5 27.5 36.6 27.5C31.6 27.5 30.9 31.4 30.9 35.4V49.5H22.4V23H30.6V26.4H30.7C31.8 24.4 34.6 22.5 39.8 22.5C48.4 22.5 50.1 28.5 50.1 34.2V49.5Z" fill="white"/>
+                <path d="M18.1 49.5H9.6V23H18.1V49.5Z" fill="white"/>
+                <path d="M13.8 19C11.1 19 9 16.9 9 14.2C9 11.5 11.1 9.4 13.8 9.4C16.5 9.4 18.6 11.5 18.6 14.2C18.6 16.9 16.5 19 13.8 19Z" fill="white"/>
+            </svg>
+            <h1 class="welcome-title">Rent <span class="by-zen">By Zen</span></h1>
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Linkedin</label>
+                    <div class="input-group">
+                        <span class="input-icon material-symbols-outlined">mail</span>
+                        <input type="email" id="email" class="input-field" placeholder="Masukkan email Linkedin Anda" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="whatsapp">No WhatsApp</label>
+                    <div class="input-group">
+                        <span class="input-icon material-symbols-outlined">call</span>
+                        <input type="tel" id="whatsapp" class="input-field" placeholder="Masukkan No WhatsApp Anda" required>
+                    </div>
+                </div>
+                <button type="submit" class="sign-in-btn" id="sign-in-btn">
+                    <span>Masuk</span>
+                    <div class="btn-spinner"></div> </button>
+            </form>
+            <div class="illustration-placeholder"></div>
+            <button id="admin-btn" class="admin-fab">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+        </div>
+
+        <div id="admin-prompt-screen" class="screen dark-overlay hidden">
+            <div class="reward-card"> 
+                <h2 style="color: #4477f8;">Mode Admin</h2>
+                <p>Silakan masukkan sandi untuk melanjutkan.</p>
+                <form id="admin-pass-form">
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <input type="password" id="admin-pass-input" class="admin-pass-input" required placeholder="Sandi...">
+                    </div>
+                    <button type="submit" class="sign-in-btn" style="margin-top: 0; width: 100%;">
+                        <span>Masuk</span>
+                        <div class="btn-spinner"></div>
+                    </button>
+                    <a id="admin-pass-cancel" style="display: block; margin-top: 15px; color: #888; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none;">Batal</a>
+                </form>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="screen hidden">
+            <div class="spinner"></div>
+            <p>Menghitung Reward...</p>
+        </div>
+        <div id="reward-screen" class="screen dark-overlay hidden">
+            <canvas id="confetti-canvas"></canvas>
+            <div class="reward-card">
+                <div class="icon-background">
+                    <span class="material-symbols-outlined reward-icon">
+                        workspace_premium
+                    </span>
+                </div>
+                <h2>Reward Anda!</h2>
+                <p>Selamat, Anda mendapatkan:</p>
+                <div class="reward-voucher-card">
+                    <span class="material-symbols-outlined card-chip">sim_card</span>
+                    <div class="card-amount">
+                        Rp <span id="reward-amount-span">0</span>
+                    </div>
+                    <div class="card-label">Platinum Reward</div>
+                </div>
+                <button id="withdraw-btn">Withdraw</button>
+                <a id="close-reward-link">Tutup</a>
+            </div>
+        </div>
+        
+        <div id="admin-screen" class="screen grey-bg admin-screen hidden">
+            <div class="admin-header">
+                <button id="admin-back-btn" class="admin-back-btn">&lt;</button>
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="admin-body">
+                <div class="admin-controls">
+                    <div class="filter-group">
+                        <label for="status-filter">Filter Status:</label>
+                        <select id="status-filter">
+                            <option value="all">Semua Status</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="search-email-input">Cari Email:</label>
+                        <input type="text" id="search-email-input" placeholder="Ketik email untuk mencari...">
+                    </div>
+                    
+                    <div class="bulk-reward-group">
+                        <label for="bulk-reward-input">Bulk Reward (untuk status terfilter):</label>
+                        <input type="text" id="bulk-reward-input" placeholder="Set reward...">
+                        <button id="bulk-save-btn" disabled>Simpan untuk Status Terfilter</button>
+                    </div>
+                </div>
+                <div id="admin-data-container">Memuat data...</div>
+            </div>
+        </div>
+        <div id="withdraw-screen" class="screen grey-bg withdraw-screen hidden">
+            <div class="admin-header"> <button id="withdraw-back-btn" class="admin-back-btn">&lt;</button>
+                <h2>Penarikan</h2>
+            </div>
+            
+            <div class="admin-body"> <form id="withdraw-form">
+                
+                <div class="form-group" style="display: none;">
+                    <input type="text" id="wd-total" class="input-field" readonly>
+                    <input type="tel" id="wd-whatsapp" class="input-field" readonly>
+                    <input type="email" id="wd-email" class="input-field" readonly>
+                </div>
+                
+                <div class="form-card">
+                    <h3>Tujuan Transfer</h3>
+                    
+                    <div class="form-group">
+                        <label for="wd-nama">Atas Nama</label>
+                        <div class="input-group">
+                            <span class="input-icon material-symbols-outlined">person</span>
+                            <input type="text" id="wd-nama" class="input-field" placeholder="Mis: Budi Santoso" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="wd-bank">Nama Bank</label>
+                        <div class="input-group">
+                            <span class="input-icon material-symbols-outlined">account_balance</span>
+                            <input type="text" id="wd-bank" class="input-field" placeholder="Mis: BCA / Mandiri" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="wd-rekening">No. Rekening</label>
+                         <div class="input-group">
+                            <span class="input-icon material-symbols-outlined">pin</span>
+                            <input type="number" id="wd-rekening" class="input-field" placeholder="0123456789" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-card">
+                    <h3>Detail Reward</h3>
+                    <div class="info-item">
+                        <span>Total Reward</span>
+                        <strong id="wd-total-display">Rp 0</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>Email</span>
+                        <strong id="wd-email-display">-</strong>
+                    </div>
+                    <div class="info-item">
+                        <span>No. WhatsApp</span>
+                        <strong id="wd-wa-display">-</strong>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+            
+            <div class="withdraw-cta-container">
+                <button type="submit" id="withdraw-submit-btn" form="withdraw-form">
+                    <span>Ajukan Withdraw</span>
+                    <div class="btn-spinner"></div> </button>
+            </div>
         </div>
     </div>
-</div>
+    
+    <script>
+        // --- KONFIGURASI JSONBIN ---
+        const BIN_ID = '6905803fae596e708f3baa25';
+        const API_KEY = '$2a$10$ziNrwiYaAO5/AfgfNP218OKOtjLxTV6c7Zau9vLmygY35FQ36jlci';
+        const API_URL_READ = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+        const API_URL_WRITE = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        let globalBinRecord = null;
+        let currentUser = null;
+        
+        // --- Seleksi Elemen ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // (Layar Utama)
+            const splash = document.getElementById('splash-screen');
+            const login = document.getElementById('login-screen');
+            const continueBtn = document.getElementById('continue-btn');
+            const loginForm = document.getElementById('login-form');
+            const emailInput = document.getElementById('email');
+            const whatsappInput = document.getElementById('whatsapp');
+            const signInBtn = document.getElementById('sign-in-btn');
+            const loadingScreen = document.getElementById('loading-screen');
+            const toastContainer = document.getElementById('toast-container');
+            
+            // (Layar Reward)
+            const rewardScreen = document.getElementById('reward-screen');
+            const rewardAmountSpan = document.getElementById('reward-amount-span');
+            const withdrawBtn = document.getElementById('withdraw-btn');
+            const closeRewardLink = document.getElementById('close-reward-link');
+            
+            // (Layar Admin)
+            const adminBtn = document.getElementById('admin-btn');
+            const adminScreen = document.getElementById('admin-screen');
+            const adminBackBtn = document.getElementById('admin-back-btn');
+            const adminDataContainer = document.getElementById('admin-data-container');
+            const statusFilter = document.getElementById('status-filter');
+            const bulkRewardInput = document.getElementById('bulk-reward-input');
+            const bulkSaveBtn = document.getElementById('bulk-save-btn');
+            const searchEmailInput = document.getElementById('search-email-input');
+            
+            const adminPromptScreen = document.getElementById('admin-prompt-screen');
+            const adminPassForm = document.getElementById('admin-pass-form');
+            const adminPassInput = document.getElementById('admin-pass-input');
+            const adminPassCancel = document.getElementById('admin-pass-cancel');
+            
+            // (Layar Withdraw)
+            const withdrawScreen = document.getElementById('withdraw-screen');
+            const withdrawBackBtn = document.getElementById('withdraw-back-btn');
+            const withdrawForm = document.getElementById('withdraw-form');
+            const withdrawSubmitBtn = document.getElementById('withdraw-submit-btn'); // Selektor baru
+            const wdTotalDisplay = document.getElementById('wd-total-display');
+            const wdEmailDisplay = document.getElementById('wd-email-display');
+            const wdWaDisplay = document.getElementById('wd-wa-display');
+            
+            // --- Logika Confetti ---
+            const confettiCanvas = document.getElementById('confetti-canvas');
+            const myConfetti = confetti.create(confettiCanvas, {
+                resize: true,
+                useWorker: true
+            });
+            function fireConfetti() {
+                const count = 200;
+                const defaults = { origin: { y: 0.7 } };
+                function fire(particleRatio, opts) {
+                    myConfetti(Object.assign({}, defaults, opts, {
+                        particleCount: Math.floor(count * particleRatio)
+                    }));
+                }
+                fire(0.25, { spread: 26, startVelocity: 55 });
+                fire(0.2, { spread: 60 });
+                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+                fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+                fire(0.1, { spread: 120, startVelocity: 45 });
+            }
+            // --- Navigasi Splash ke Login ---
+            continueBtn.addEventListener('click', function() {
+                splash.classList.add('hidden');
+                login.classList.remove('hidden');
+            });
+            // --- Normalisasi Nomor Telepon ---
+            function normalizePhone(phoneStr) {
+                if (!phoneStr) return "";
+                let normalized = phoneStr.trim().replace(/\s/g, '');
+                if (normalized.startsWith('+62')) { return '0' + normalized.substring(3); }
+                if (normalized.startsWith('62')) { return '0' + normalized.substring(2); }
+                return normalized;
+            }
+            // --- Fungsi untuk MEMBACA data dari JSONBin ---
+            async function fetchJsonBinData(containerForLoading) {
+                if (containerForLoading === 'login') {
+                    setLoading(true); // Dihapus: Teks (diatur di setLoading)
+                } else if (containerForLoading === 'admin') {
+                    adminDataContainer.innerHTML = 'Memuat data...';
+                }
+                
+                try {
+                    const response = await fetch(API_URL_READ, { headers: { 'X-Master-Key': API_KEY } });
+                    if (!response.ok) throw new Error(`Gagal mengambil data: ${response.statusText}`);
+                    const data = await response.json();
+                    globalBinRecord = data.record;
+                    return globalBinRecord;
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    if (containerForLoading === 'login') { showMessage(error.message, 'error'); }
+                    else if (containerForLoading === 'admin') { adminDataContainer.innerHTML = 'Gagal memuat data.'; }
+                    return null;
+                } finally {
+                    if (containerForLoading === 'login') { setLoading(false); }
+                }
+            }
+            
+            // --- FUNGSI UNTUK MENULIS data ke JSONBin ---
+            async function updateJsonBinData(fullRecordData) {
+                try {
+                    const response = await fetch(API_URL_WRITE, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+                        body: JSON.stringify(fullRecordData)
+                    });
+                    if (!response.ok) throw new Error(`Gagal menyimpan data: ${response.statusText}`);
+                    globalBinRecord = fullRecordData;
+                    return true;
+                } catch (error) {
+                    console.error('Error updating data:', error);
+                    alert(`Error: ${error.message}`);
+                    return false;
+                }
+            }
+            
+            // --- Logika Login (DIPERBARUI) ---
+            loginForm.addEventListener('submit', async function(event) {
+                event.preventDefault(); 
+                const email = emailInput.value.toLowerCase();
+                const inputPhone = normalizePhone(whatsappInput.value);
+                const data = await fetchJsonBinData('login');
+                
+                if (!data || !data.users) {
+                    showMessage('Gagal memuat data pengguna.', 'error');
+                    return;
+                }
+                
+                const foundUser = data.users.find(user => {
+                    const dbPhone = normalizePhone(user.telepon);
+                    return user.email.toLowerCase() === email && dbPhone === inputPhone; 
+                });
+                
+                if (foundUser) {
+
+                    if (foundUser.claim_status && foundUser.claim_status === 'claimed') {
+                        showMessage('Sudah di Claim!', 'error');
+                        setLoading(false); 
+                        return; 
+                    }
+
+                    const rewardValue = foundUser.reward;
+                    if (rewardValue && rewardValue.trim() !== "") {
+                        currentUser = foundUser; 
+                        
+                        login.classList.add('hidden');
+                        loadingScreen.classList.remove('hidden');
+                        
+                        // --- ANIMASI BARU: Panggil count-up ---
+                        animateCountUp(rewardAmountSpan, parseFloat(rewardValue), 1000);
+
+                        setTimeout(() => {
+                            loadingScreen.classList.add('hidden');
+                            
+                            const formattedReward = new Intl.NumberFormat('id-ID').format(rewardValue);
+                            
+                            // Hapus: rewardAmountSpan.textContent (sudah di-handle count-up)
+                            
+                            document.getElementById('wd-total').value = `Rp ${formattedReward}`;
+                            document.getElementById('wd-whatsapp').value = currentUser.telepon;
+                            document.getElementById('wd-email').value = currentUser.email;
+                            
+                            wdTotalDisplay.textContent = `Rp ${formattedReward}`;
+                            wdEmailDisplay.textContent = currentUser.email;
+                            wdWaDisplay.textContent = currentUser.telepon;
+                            
+                            rewardScreen.classList.remove('hidden');
+                            setTimeout(() => {
+                                rewardScreen.classList.add('show');
+                                fireConfetti();
+                            }, 10);
+                            
+                        }, 2500);
+                        
+                    } else {
+                        showMessage('Email anda tidak masuk dalam List Payment', 'error');
+                    }
+                    
+                } else {
+                    showMessage('Email atau No WhatsApp salah.', 'error');
+                }
+            });
+            
+            // --- Tombol di Layar Reward ---
+            closeRewardLink.addEventListener('click', function() {
+                rewardScreen.classList.remove('show');
+                rewardScreen.classList.add('hidden'); // Jalankan animasi keluar
+                login.classList.remove('hidden'); // Jalankan animasi masuk
+                
+                // Reset form di 'hidden' state
+                setTimeout(() => {
+                    emailInput.value = '';
+                    whatsappInput.value = '';
+                    signInBtn.disabled = false;
+                }, 400); // 400ms = durasi transisi
+            });
+            
+            withdrawBtn.addEventListener('click', function() {
+                rewardScreen.classList.remove('show');
+                rewardScreen.classList.add('hidden');
+                withdrawScreen.classList.remove('hidden');
+            });
+
+            // --- Tombol di Layar Withdraw ---
+            withdrawBackBtn.addEventListener('click', function() {
+                withdrawScreen.classList.add('hidden');
+                rewardScreen.classList.remove('hidden');
+                setTimeout(() => {
+                    rewardScreen.classList.add('show');
+                }, 10);
+            });
+            
+            withdrawForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                // EFEK BARU: Tampilkan loading
+                withdrawSubmitBtn.disabled = true;
+                withdrawSubmitBtn.classList.add('loading');
+
+                try {
+                    if (!currentUser || !globalBinRecord || !globalBinRecord.users) {
+                        throw new Error('Data pengguna tidak ditemukan. Silakan login ulang.');
+                    }
+                    
+                    const userIndex = globalBinRecord.users.findIndex(u => u.id === currentUser.id);
+                    if (userIndex === -1) {
+                        throw new Error('Gagal menemukan data user di record global.');
+                    }
+                    
+                    globalBinRecord.users[userIndex].claim_status = 'claimed';
+                    
+                    const updateSuccess = await updateJsonBinData(globalBinRecord);
+                    
+                    if (!updateSuccess) {
+                        throw new Error('Gagal menyimpan status claim ke server.');
+                    }
+
+                    const nama = document.getElementById('wd-nama').value;
+                    const bank = document.getElementById('wd-bank').value;
+                    const rekening = document.getElementById('wd-rekening').value;
+                    const total = document.getElementById('wd-total').value;
+                    const whatsapp = document.getElementById('wd-whatsapp').value;
+                    const email = document.getElementById('wd-email').value;
+                    
+                    const message = `Halo, saya ingin mengajukan permintaan Withdraw.
+*Detail Akun:*
+Email: ${email}
+No. WA: ${whatsapp}
+Total Reward: ${total}
+*Tujuan Transfer:*
+Atas Nama: ${nama}
+Nama Bank: ${bank}
+No. Rekening: ${rekening}
+Terima kasih.`;
+                    
+                    const encodedMessage = encodeURIComponent(message);
+                    const waURL = `https://wa.me/6289513304878?text=${encodedMessage}`;
+                    
+                    window.open(waURL, '_blank');
+                    
+                    withdrawScreen.classList.add('hidden');
+                    login.classList.remove('hidden');
+                    
+                    // Reset form di 'hidden' state
+                    setTimeout(() => {
+                        emailInput.value = '';
+                        whatsappInput.value = '';
+                        document.getElementById('wd-nama').value = '';
+                        document.getElementById('wd-bank').value = '';
+                        document.getElementById('wd-rekening').value = '';
+                    }, 400);
+                    
+                    currentUser = null;
+
+                } catch (error) {
+                    console.error('Error during withdraw submission:', error);
+                    showMessage(error.message || 'Gagal memproses withdraw.', 'error');
+                
+                } finally {
+                    // EFEK BARU: Sembunyikan loading
+                    withdrawSubmitBtn.disabled = false;
+                    withdrawSubmitBtn.classList.remove('loading');
+                }
+            });
+
+            // --- Logika Admin ---
+            
+            adminBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                adminPromptScreen.classList.remove('hidden');
+                setTimeout(() => { // Kasih delay sedikit agar animasi 'show' bekerja
+                    adminPromptScreen.classList.add('show'); 
+                    adminPassInput.focus();
+                }, 10);
+            });
+
+            adminPassCancel.addEventListener('click', function() {
+                adminPromptScreen.classList.remove('show');
+                adminPromptScreen.classList.add('hidden');
+                setTimeout(() => {
+                    adminPassInput.value = ''; 
+                }, 400);
+            });
+
+            adminPassForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const password = adminPassInput.value;
+                const passBtn = adminPassForm.querySelector('.sign-in-btn');
+                
+                if (password === '2003') {
+                    // Tampilkan loading di tombol sandi
+                    passBtn.classList.add('loading');
+                    passBtn.disabled = true;
+
+                    const data = await fetchJsonBinData('admin'); // Pindahkan fetch ke sini
+
+                    // Sembunyikan prompt dan login
+                    adminPromptScreen.classList.remove('show');
+                    adminPromptScreen.classList.add('hidden');
+                    login.classList.add('hidden');
+                    adminScreen.classList.remove('hidden'); // Tampilkan admin
+
+                    // Reset tombol sandi
+                    setTimeout(() => {
+                        adminPassInput.value = '';
+                        passBtn.classList.remove('loading');
+                        passBtn.disabled = false;
+                    }, 400);
+
+                    if (data && data.users) {
+                        populateStatusFilter(data.users);
+                        displayAdminCards(data.users);
+                    }
+                } else {
+                    showMessage('Sandi salah!', 'error');
+                    adminPassInput.value = '';
+                    adminPassInput.focus();
+                }
+            });
+
+            
+            function populateStatusFilter(users) {
+                statusFilter.innerHTML = '<option value="all">Semua Status</option>';
+                const statuses = [...new Set(users.map(u => u.status || 'N/A'))];
+                statuses.sort().forEach(status => {
+                    const option = document.createElement('option');
+                    option.value = status;
+                    option.textContent = status;
+                    statusFilter.appendChild(option);
+                });
+            }
+            
+            function displayAdminCards(users) {
+                adminDataContainer.innerHTML = '';
+                if (!users || users.length === 0) {
+                    adminDataContainer.innerHTML = '<p>Tidak ada data pengguna.</p>';
+                    return;
+                }
+                
+                users.forEach((user, index) => { // Tambahkan 'index'
+                    const card = document.createElement('div');
+                    card.className = 'user-card';
+                    const status = user.status || 'N/A';
+                    card.dataset.status = status;
+                    const catatan = user.catatan || user['catatan '] || 'N/A';
+                    const reward = user.reward || '';
+                    
+                    const isClaimed = user.claim_status === 'claimed';
+                    const claimStatus = isClaimed ? 'claimed' : 'Belum Claim';
+                    const claimClass = isClaimed ? 'claimed' : 'not-claimed';
+                    const buttonText = isClaimed ? 'Batalkan' : 'Tandai Claim';
+                    const buttonClass = isClaimed ? 'toggle-claim-btn danger' : 'toggle-claim-btn success';
+                    
+                    card.innerHTML = `
+                        <h3>${user.email || 'Email tidak ada'}</h3>
+                        <p class="user-card-item"><strong>Telepon:</strong> <span>${user.telepon || 'N/A'}</span></p>
+                        <p class="user-card-item"><strong>Status:</strong> <span>${status}</span></p>
+                        
+                        <p class="user-card-item">
+                            <strong>Claim:</strong> 
+                            <span class="claim-status ${claimClass}">${claimStatus}</span>
+                            <button class="${buttonClass}" data-user-id="${user.id}">${buttonText}</button>
+                        </p>
+
+                        <p class="user-card-item"><strong>Tanggal:</strong> <span>${user.tanggal || 'N/A'}</span></p>
+                        <p class="user-card-item"><strong>Catatan:</strong> <span>${catatan}</span></p>
+                        <div class="reward-input-group">
+                            <input type="text" class="reward-input" placeholder="Set Reward..." value="${reward}" data-user-id="${user.id}">
+                            <button class="save-reward-btn" data-user-id="${user.id}">Save</button>
+                        </div>
+                    `;
+                    
+                    // --- ANIMASI BARU: Terapkan delay per kartu ---
+                    card.style.animationDelay = `${index * 0.05}s`;
+                    
+                    adminDataContainer.appendChild(card);
+                });
+            }
+
+            
+            adminBackBtn.addEventListener('click', function() {
+                adminScreen.classList.add('hidden');
+                login.classList.remove('hidden');
+                setTimeout(() => {
+                    statusFilter.value = 'all';
+                    bulkRewardInput.value = '';
+                    bulkSaveBtn.disabled = true;
+                    searchEmailInput.value = '';
+                }, 400);
+            });
+            
+            function filterAdminView() {
+                const selectedStatus = statusFilter.value;
+                const searchQuery = searchEmailInput.value.toLowerCase().trim();
+                const allCards = adminDataContainer.querySelectorAll('.user-card');
+                
+                bulkSaveBtn.disabled = (selectedStatus === 'all');
+                
+                allCards.forEach(card => {
+                    const cardStatus = card.dataset.status;
+                    const cardEmail = card.querySelector('h3').textContent.toLowerCase();
+                    
+                    const statusMatch = (selectedStatus === 'all' || cardStatus === selectedStatus);
+                    const searchMatch = cardEmail.includes(searchQuery);
+                    
+                    if (statusMatch && searchMatch) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            statusFilter.addEventListener('change', filterAdminView);
+            searchEmailInput.addEventListener('input', filterAdminView);
+            
+            
+            bulkSaveBtn.addEventListener('click', async function() {
+                const statusToUpdate = statusFilter.value;
+                const rewardValue = bulkRewardInput.value;
+                if (statusToUpdate === 'all') { /* ... (validasi) ... */ }
+                if (!rewardValue) { /* ... (validasi) ... */ }
+                
+                const usersToUpdate = globalBinRecord.users.filter(u => (u.status || 'N/A') === statusToUpdate);
+                if (!confirm(`Anda yakin ingin mengatur reward "${rewardValue}" untuk ${usersToUpdate.length} pengguna...?`)) {
+                    return;
+                }
+                
+                this.disabled = true;
+                this.textContent = 'Saving...';
+                
+                globalBinRecord.users.forEach(user => {
+                    if ((user.status || 'N/A') === statusToUpdate) {
+                        user.reward = rewardValue;
+                    }
+                });
+                
+                const success = await updateJsonBinData(globalBinRecord);
+                
+                if (success) {
+                    bulkRewardInput.value = '';
+                    statusFilter.value = 'all';
+                    filterAdminView(); 
+                    displayAdminCards(globalBinRecord.users);
+                    filterAdminView();
+                    
+                    this.textContent = 'Simpan untuk Status Terfilter';
+                    this.disabled = true;
+                } else {
+                    alert('Gagal menyimpan. Cek console.');
+                    this.disabled = false;
+                    this.textContent = 'Simpan untuk Status Terfilter';
+                }
+            });
+            
+            adminDataContainer.addEventListener('click', async function(event) {
+                
+                if (event.target.classList.contains('save-reward-btn')) {
+                    const saveButton = event.target;
+                    const userId = saveButton.dataset.userId;
+                    const inputField = adminDataContainer.querySelector(`.reward-input[data-user-id="${userId}"]`);
+                    const newReward = inputField.value;
+                    
+                    saveButton.disabled = true;
+                    saveButton.textContent = 'Saving...';
+                    
+                    const userToUpdate = globalBinRecord.users.find(u => u.id === userId);
+                    if (userToUpdate) { userToUpdate.reward = newReward; }
+                    
+                    const success = await updateJsonBinData(globalBinRecord);
+                    
+                    if (success) {
+                        saveButton.textContent = 'Saved!';
+                        saveButton.style.backgroundColor = '#17a2b8';
+                        setTimeout(() => {
+                            saveButton.disabled = false;
+                            saveButton.textContent = 'Save';
+                            saveButton.style.backgroundColor = '#28a745';
+                        }, 2000);
+                    } else {
+                        alert('Gagal menyimpan. Cek console.');
+                        saveButton.disabled = false;
+                        saveButton.textContent = 'Save';
+                    }
+                }
+
+                if (event.target.classList.contains('toggle-claim-btn')) {
+                    const toggleButton = event.target;
+                    const userId = toggleButton.dataset.userId;
+
+                    toggleButton.disabled = true;
+                    toggleButton.textContent = '...';
+
+                    try {
+                        const userToUpdate = globalBinRecord.users.find(u => u.id === userId);
+                        if (!userToUpdate) throw new Error('User not found');
+
+                        const wasClaimed = userToUpdate.claim_status === 'claimed';
+                        const newStatus = wasClaimed ? '' : 'claimed'; 
+                        userToUpdate.claim_status = newStatus;
+
+                        const success = await updateJsonBinData(globalBinRecord);
+                        if (!success) throw new Error('Failed to save to server');
+
+                        const card = toggleButton.closest('.user-card');
+                        const statusSpan = card.querySelector('.claim-status');
+                        
+                        if (newStatus === 'claimed') {
+                            statusSpan.textContent = 'claimed';
+                            statusSpan.className = 'claim-status claimed';
+                            toggleButton.textContent = 'Batalkan';
+                            toggleButton.className = 'toggle-claim-btn danger';
+                        } else {
+                            statusSpan.textContent = 'Belum Claim';
+                            statusSpan.className = 'claim-status not-claimed';
+                            toggleButton.textContent = 'Tandai Claim';
+                            toggleButton.className = 'toggle-claim-btn success';
+                        }
+
+                    } catch (error) {
+                        console.error('Error toggling claim status:', error);
+                        showMessage('Gagal update status', 'error');
+                    } finally {
+                        toggleButton.disabled = false;
+                    }
+                }
+            });
+
+            // --- Fungsi Bantuan (Helper) ---
+
+            // --- FUNGSI DIUBAH: setLoading ---
+            function setLoading(isLoading) {
+                signInBtn.disabled = isLoading;
+                if (isLoading) {
+                    signInBtn.classList.add('loading');
+                } else {
+                    signInBtn.classList.remove('loading');
+                }
+            }
+            
+            function showMessage(message, type = 'error') {
+                const toast = document.createElement('div');
+                toast.className = `toast-message ${type}`;
+                toast.textContent = message;
+                
+                toastContainer.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add('hide');
+                }, 3000);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 3500);
+            }
+
+            // --- FUNGSI BARU: Animasi Hitung Angka ---
+            function animateCountUp(el, to, duration = 1500) {
+                let start = 0;
+                const end = to;
+                let startTime = null;
+
+                function animation(currentTime) {
+                    if (startTime === null) startTime = currentTime;
+                    const timeElapsed = currentTime - startTime;
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    
+                    // Fungsi easing (easeOutQuad)
+                    const easedProgress = 1 - Math.pow(1 - progress, 3);
+                    
+                    let currentValue = Math.floor(easedProgress * (end - start) + start);
+                    el.textContent = new Intl.NumberFormat('id-ID').format(currentValue);
+                    
+                    if (timeElapsed < duration) {
+                        requestAnimationFrame(animation);
+                    } else {
+                        el.textContent = new Intl.NumberFormat('id-ID').format(end);
+                    }
+                }
+                
+                requestAnimationFrame(animation);
+            }
+            
+            // --- INISIALISASI ---
+            // (Splash screen sudah diatur di HTML untuk tampil)
+        });
+    </script>
 </body>
 </html>
