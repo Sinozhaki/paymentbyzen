@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     
@@ -32,7 +32,7 @@
             position: relative;
         }
 
-        /* --- KEYFRAMES ANIMASI BARU --- */
+        /* --- KEYFRAMES ANIMASI --- */
         @keyframes fadeInSlideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -46,8 +46,15 @@
             80% { transform: scale(1.05); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
-        /* --- AKHIR KEYFRAMES --- */
-
+        @keyframes shine-text {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(68, 119, 248, 0.7); transform: scale(1); }
+            70% { box-shadow: 0 0 0 15px rgba(68, 119, 248, 0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(68, 119, 248, 0); transform: scale(1); }
+        }
 
         /* Gaya Umum untuk setiap "Layar" */
         .screen {
@@ -58,17 +65,15 @@
             left: 0;
             box-sizing: border-box;
             background-color: #ffffff;
-            /* DIUBAH: Transisi layar halus */
             transition: opacity 0.4s ease, transform 0.4s ease;
             transform: translateY(0);
             opacity: 1;
         }
         .screen.hidden { 
-            /* DIUBAH: Ganti display:none dengan opacity & transform */
             opacity: 0;
             transform: translateY(10px);
             pointer-events: none;
-            z-index: -1; /* Pindah ke belakang */
+            z-index: -1; 
         } 
         .screen.grey-bg { background-color: #f0f2f5; }
         .screen.dark-overlay { background-color: rgba(0, 0, 0, 0.5); }
@@ -86,7 +91,6 @@
             z-index: 2;
             padding: 20px;
         }
-        /* ANIMASI BARU: Teks muncul */
         .splash-screen h1 { 
             margin: 0; 
             text-align: center; 
@@ -95,7 +99,6 @@
             opacity: 0;
             animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
         }
-        /* ANIMASI BARU: Tombol muncul */
         #continue-btn { 
             background-color: #ffffff; 
             color: #4477f8; 
@@ -112,13 +115,12 @@
             animation: fadeInSlideUp 0.6s ease-out 1s forwards;
             transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
         }
-        /* EFEK BARU: Tombol tekan */
         #continue-btn:active {
-            transform: translateY(20px) scale(0.98); /* Perhitungkan transform awal */
+            transform: translateY(20px) scale(0.98); 
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* --- Layar 2: Login Screen --- */
+        /* --- Layar 2: Login Screen (UPDATED) --- */
         .login-screen {
             padding: 40px 30px;
             display: flex;
@@ -126,41 +128,127 @@
             z-index: 1;
             overflow-y: auto;
         }
-        .linkedin-logo { margin-top: 20px; margin-bottom: 30px; }
-        .login-screen .welcome-title { font-size: 32px; font-weight: 800; color: #000; margin-top: 10px; margin-bottom: 40px; }
-        .login-screen .welcome-title .by-zen { color: #4477f8; }
-        .login-form { width: 100%; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { font-size: 14px; color: #333; display: block; margin-bottom: 10px; font-weight: 600; }
-        .input-group { position: relative; }
-        .input-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888; font-size: 22px; }
-        .input-field { width: 100%; border: 1px solid #e0e0e0; background-color: #f7f7f7; border-radius: 10px; padding: 16px 50px; font-size: 16px; color: #333; box-sizing: border-box; font-family: 'Nunito', sans-serif; }
-        .input-field[readonly] { background-color: #ebebeb; color: #555; border-color: #ddd; }
         
-        /* EFEK BARU: Tombol tekan */
+        /* --- LOGO & BANNER CONTAINER BARU --- */
+        .header-logo-container {
+            display: flex;
+            align-items: center; /* Supaya logo dan banner sejajar vertikal */
+            gap: 15px; /* Jarak antara logo dan banner */
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .linkedin-logo { 
+            /* Margin dihapus karena sudah diatur parent container */
+            display: block;
+        }
+        .header-banner-img {
+            height: 50px; /* Sesuaikan tinggi banner biar imbang sama logo */
+            width: auto;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        /* Typography Branding */
+        .login-screen .welcome-title { 
+            font-size: 38px; 
+            font-weight: 900; /* Extra Bold */
+            color: #1a1a1a; 
+            margin-top: 10px; 
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+        .login-screen .welcome-title .by-zen { 
+            color: #4477f8; 
+            font-style: italic;
+            display: inline-block;
+            position: relative;
+        }
+        .login-screen .welcome-title .by-zen::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(68, 119, 248, 0.2);
+            border-radius: 2px;
+        }
+
+        .login-form { width: 100%; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { 
+            font-size: 14px; 
+            color: #555; 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 700; 
+            margin-left: 4px;
+        }
+        
+        .input-group { position: relative; }
+        
+        .input-icon { 
+            position: absolute; 
+            left: 18px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: #9ca3af; 
+            font-size: 22px; 
+            transition: color 0.3s ease;
+            z-index: 2;
+        }
+        .input-group:focus-within .input-icon {
+            color: #4477f8; 
+        }
+
+        .input-field { 
+            width: 100%; 
+            border: 2px solid #f3f4f6; 
+            background-color: #ffffff; 
+            border-radius: 12px; 
+            padding: 16px 16px 16px 55px; 
+            font-size: 16px; 
+            color: #1f2937; 
+            box-sizing: border-box; 
+            font-family: 'Nunito', sans-serif; 
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .input-field:focus {
+            border-color: #4477f8;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(68, 119, 248, 0.15);
+            outline: none;
+        }
+        .input-field::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+        .input-field[readonly] { background-color: #f9fafb; color: #6b7280; border-color: #e5e7eb; }
+        
         .sign-in-btn { 
             width: 100%; 
             background-color: #4477f8; 
             color: white; 
             border: none; 
             padding: 16px; 
-            border-radius: 10px; 
+            border-radius: 12px; 
             font-size: 18px; 
-            font-weight: 700; 
+            font-weight: 800; 
             cursor: pointer; 
             margin-top: 20px; 
-            box-shadow: 0 4px 15px rgba(68, 119, 248, 0.3); 
-            transition: all 0.15s ease-out;
-            position: relative; /* Untuk spinner loading */
-            overflow: hidden; /* Sembunyikan spinner */
+            box-shadow: 0 10px 20px rgba(68, 119, 248, 0.2); 
+            transition: all 0.2s ease-out;
+            position: relative; 
+            overflow: hidden; 
         }
         .sign-in-btn:active {
             transform: scale(0.98);
-            box-shadow: 0 2px 8px rgba(68, 119, 248, 0.4);
+            box-shadow: 0 5px 10px rgba(68, 119, 248, 0.3);
         }
-        .sign-in-btn:disabled { background-color: #aaa; cursor: not-allowed; }
+        .sign-in-btn:disabled { background-color: #aaa; cursor: not-allowed; box-shadow: none; }
 
-        /* EFEK BARU: Spinner Loading Tombol */
         .btn-spinner {
             display: inline-block;
             width: 20px;
@@ -176,12 +264,8 @@
             opacity: 0;
             transition: opacity 0.2s ease;
         }
-        .sign-in-btn.loading .btn-spinner {
-            opacity: 1;
-        }
-        .sign-in-btn.loading span { /* Sembunyikan teks saat loading */
-            opacity: 0;
-        }
+        .sign-in-btn.loading .btn-spinner { opacity: 1; }
+        .sign-in-btn.loading span { opacity: 0; }
 
         .illustration-placeholder { width: 100%; margin-top: auto; min-height: 50px; padding-bottom: 20px; }
         .admin-fab { position: absolute; bottom: 30px; left: 30px; width: 50px; height: 50px; background-color: #4477f8; color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); cursor: pointer; z-index: 10; }
@@ -193,7 +277,7 @@
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            background: rgba(255, 255, 255, 0.9); 
+            background: rgba(255, 255, 255, 0.95); 
             color: #333; z-index: 3; 
             font-size: 18px; 
             font-weight: 600; 
@@ -202,29 +286,15 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         /* --- Layar 4: Reward Screen --- */
-        @keyframes shine-pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        @keyframes holographic-shine {
-            0% { color: #ffc107; }
-            20% { color: #e6a2d8; }
-            40% { color: #a2d8e6; }
-            60% { color: #a2e6b8; }
-            80% { color: #e6d8a2; }
-            100% { color: #ffc107; }
-        }
         #reward-screen { 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             z-index: 4; 
             padding: 30px;
-            /* Dihapus: opacity, pointer-events, transition (diatur oleh .screen) */
             position: relative;
         }
-        #reward-screen.show { opacity: 1; pointer-events: auto; } /* .show masih dipakai untuk trigger animasi */
+        #reward-screen.show { opacity: 1; pointer-events: auto; }
         #confetti-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         
         .reward-card {
@@ -237,16 +307,13 @@
             max-width: 300px;
             position: relative;
             z-index: 2;
-            /* DIUBAH: Hapus transform & transition, ganti dengan opacity 0 */
             opacity: 0; 
         }
-        /* ANIMASI BARU: Card bounce-in */
         #reward-screen.show .reward-card { 
             animation: cardBounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
-        /* ANIMASI BARU: Pop-up sandi admin juga pakai bounce */
         #admin-prompt-screen.show .reward-card {
-            opacity: 0; /* Pastikan state awal 0 */
+            opacity: 0; 
             animation: cardBounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
@@ -264,6 +331,7 @@
         .reward-icon { font-size: 60px; color: #ffc107; }
         .reward-card h2 { margin-top: 0; color: #4477f8; font-size: 24px; font-weight: 800; }
         .reward-card p { font-size: 16px; color: #333; margin-bottom: 20px; }
+        
         .reward-voucher-card {
             background: linear-gradient(to right, #bdbdbd, #fafafa, #bdbdbd);
             border-radius: 12px;
@@ -287,13 +355,21 @@
             margin-top: 10px;
             color: #222;
         }
+        
         .card-amount span {
             font-size: 30px;
-            font-weight: 800;
+            font-weight: 900;
             letter-spacing: 1px;
-            color: #222;
-            text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.7);
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shine-text 3s linear infinite;
+            display: inline-block;
         }
+
         .card-label {
             font-size: 14px;
             font-weight: 700;
@@ -303,15 +379,32 @@
             opacity: 0.7;
             margin-top: 20px;
         }
-        #withdraw-btn { background-color: #4477f8; color: white; border: none; padding: 16px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 15px; width: 100%; transition: transform 0.1s ease, box-shadow 0.1s ease; }
+        
+        #withdraw-btn { 
+            background-color: #4477f8; 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            width: 100%; 
+            transition: transform 0.1s ease; 
+            box-shadow: 0 0 0 0 rgba(68, 119, 248, 0.7);
+            animation: pulse-blue 2s infinite;
+        }
         #withdraw-btn:active {
             transform: scale(0.98);
+            animation: none; 
             box-shadow: 0 2px 8px rgba(68, 119, 248, 0.4);
         }
+        
         #close-reward-link { display: inline-block; margin-top: 15px; color: #888; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; }
         
 
-        /* --- LAYAR 5: ADMIN SCREEN (GAYA MODERN) --- */
+        /* --- LAYAR 5: ADMIN SCREEN --- */
         .admin-screen {
             z-index: 5;
             display: flex;
@@ -368,6 +461,46 @@
             background-color: #fff;
             border-color: #4477f8; 
         }
+        
+        .admin-controls textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f2f5;
+            font-weight: 600;
+            min-height: 100px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+        .admin-controls textarea:focus {
+            background-color: #fff;
+            border-color: #4477f8; 
+        }
+        
+        .mass-action-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-warning { background-color: #ffc107; color: #000; }
+        .btn-danger { background-color: #dc3545; color: white; }
+        .btn-info { background-color: #17a2b8; color: white; }
+        
+        .admin-btn-small {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .admin-btn-small:disabled { background-color: #ccc; color: #666; cursor: not-allowed; }
+
 
         #bulk-save-btn { width: 100%; padding: 12px; margin-top: 5px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; }
         #bulk-save-btn:disabled { background: #aaa; cursor: not-allowed; }
@@ -380,7 +513,6 @@
             padding: 20px; 
             margin-bottom: 15px; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            /* ANIMASI BARU: Staggered load */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInSlideUpCard 0.4s ease-out forwards;
@@ -491,7 +623,7 @@
         .save-reward-btn:disabled { background: #aaa; }
 
 
-        /* --- LAYAR 6: WITHDRAW SCREEN (GAYA DIPERBARUI) --- */
+        /* --- LAYAR 6: WITHDRAW SCREEN --- */
         .withdraw-screen {
             z-index: 6;
             display: flex;
@@ -526,6 +658,45 @@
             margin-bottom: 25px;
         }
         
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .payment-option {
+            border: 2px solid #f0f2f5;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: #fff;
+        }
+        .payment-option:hover {
+            border-color: #d1d9e6;
+        }
+        .payment-option.selected {
+            border-color: #4477f8;
+            background-color: #eef3ff;
+            color: #4477f8;
+        }
+
+        #manual-bank-container {
+            margin-top: 10px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        #manual-bank-container.visible {
+            opacity: 1;
+            max-height: 60px; 
+        }
+
         .withdraw-screen .input-group {
             margin-bottom: 25px;
         }
@@ -543,9 +714,13 @@
             padding-bottom: 10px;
             font-weight: 600;
             font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
         }
         .withdraw-screen .input-field:focus {
             border-bottom-color: #4477f8;
+            outline: none;
         }
         .withdraw-screen .form-group label {
             font-size: 14px;
@@ -649,13 +824,18 @@
             <button id="continue-btn">Lanjutkan</button>
         </div>
         <div id="login-screen" class="screen login-screen hidden">
-            <svg class="linkedin-logo" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
-                <rect width="60" height="60" rx="12" fill="#0A66C2"/>
-                <path d="M50.1 49.5H41.6V35.6C41.6 32 41.5 27.5 36.6 27.5C31.6 27.5 30.9 31.4 30.9 35.4V49.5H22.4V23H30.6V26.4H30.7C31.8 24.4 34.6 22.5 39.8 22.5C48.4 22.5 50.1 28.5 50.1 34.2V49.5Z" fill="white"/>
-                <path d="M18.1 49.5H9.6V23H18.1V49.5Z" fill="white"/>
-                <path d="M13.8 19C11.1 19 9 16.9 9 14.2C9 11.5 11.1 9.4 13.8 9.4C16.5 9.4 18.6 11.5 18.6 14.2C18.6 16.9 16.5 19 13.8 19Z" fill="white"/>
-            </svg>
+            <div class="header-logo-container">
+                <svg class="linkedin-logo" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+                    <rect width="60" height="60" rx="12" fill="#0A66C2"/>
+                    <path d="M50.1 49.5H41.6V35.6C41.6 32 41.5 27.5 36.6 27.5C31.6 27.5 30.9 31.4 30.9 35.4V49.5H22.4V23H30.6V26.4H30.7C31.8 24.4 34.6 22.5 39.8 22.5C48.4 22.5 50.1 28.5 50.1 34.2V49.5Z" fill="white"/>
+                    <path d="M18.1 49.5H9.6V23H18.1V49.5Z" fill="white"/>
+                    <path d="M13.8 19C11.1 19 9 16.9 9 14.2C9 11.5 11.1 9.4 13.8 9.4C16.5 9.4 18.6 11.5 18.6 14.2C18.6 16.9 16.5 19 13.8 19Z" fill="white"/>
+                </svg>
+                <img src="baner.gif" alt="Promo Banner" class="header-banner-img">
+            </div>
+            
             <h1 class="welcome-title">Rent <span class="by-zen">By Zen</span></h1>
+            
             <form class="login-form" id="login-form">
                 <div class="form-group">
                     <label for="email">Email Linkedin</label>
@@ -747,8 +927,40 @@
                         <label for="bulk-reward-input">Bulk Reward (untuk status terfilter):</label>
                         <input type="text" id="bulk-reward-input" placeholder="Set reward...">
                         <button id="bulk-save-btn" disabled>Simpan untuk Status Terfilter</button>
+                        
+                        <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+                            <label style="margin-bottom: 8px; display: block;">Global Actions (Semua User):</label>
+                            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                <button id="reset-all-reward-btn" class="admin-btn-small btn-danger">Reset Reward 0</button>
+                                <button id="global-set-unclaimed-btn" class="admin-btn-small btn-warning">Set Semua "Belum Claim"</button>
+                                <button id="global-set-claimed-btn" class="admin-btn-small btn-info">Set Semua "Claimed"</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+                <div class="admin-controls">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <label style="margin: 0;">Identifikasi Email Massal:</label>
+                        <button id="mass-clear-input-btn" style="background: none; border: none; color: #dc3545; cursor: pointer; font-weight: bold; font-size: 12px; display: flex; align-items: center;">
+                            <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 2px;">close</span> Hapus Input
+                        </button>
+                    </div>
+                    <p style="font-size: 12px; color: #666; margin-top: 0; margin-bottom: 5px;">Paste daftar email (satu per baris) di bawah ini:</p>
+                    <textarea id="mass-email-input" placeholder="email1@gmail.com&#10;email2@gmail.com&#10;..."></textarea>
+                    <button id="mass-check-btn" class="admin-btn-small btn-info" style="width: 100%;">Identifikasi</button>
+                    
+                    <div id="mass-result-info" style="margin-top: 10px; font-size: 13px; font-weight: 600; display: none;">
+                        Ditemukan: <span id="found-count" style="color: green;">0</span> | Tidak ditemukan: <span id="not-found-count" style="color: red;">0</span>
+                    </div>
+
+                    <div class="mass-action-btns">
+                        <button id="mass-set-claimed-btn" class="admin-btn-small btn-warning" disabled>Set Claimed</button>
+                        <button id="mass-set-unclaimed-btn" class="admin-btn-small btn-danger" disabled>Set Belum Claim</button>
+                    </div>
+                </div>
+
                 <div id="admin-data-container">Memuat data...</div>
             </div>
         </div>
@@ -763,6 +975,7 @@
                     <input type="text" id="wd-total" class="input-field" readonly>
                     <input type="tel" id="wd-whatsapp" class="input-field" readonly>
                     <input type="email" id="wd-email" class="input-field" readonly>
+                    <input type="hidden" id="wd-bank-final" required>
                 </div>
                 
                 <div class="form-card">
@@ -775,15 +988,30 @@
                             <input type="text" id="wd-nama" class="input-field" placeholder="Mis: Budi Santoso" required>
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="wd-bank">Nama Bank</label>
-                        <div class="input-group">
-                            <span class="input-icon material-symbols-outlined">account_balance</span>
-                            <input type="text" id="wd-bank" class="input-field" placeholder="Mis: BCA / Mandiri" required>
+                        <label>Metode Transfer</label>
+                        <div class="payment-grid">
+                            <div class="payment-option" data-value="BCA" data-type="bank">BCA</div>
+                            <div class="payment-option" data-value="MANDIRI" data-type="bank">Mandiri</div>
+                            <div class="payment-option" data-value="BRI" data-type="bank">BRI</div>
+                            <div class="payment-option" data-value="BNI" data-type="bank">BNI</div>
+                            
+                            <div class="payment-option" data-value="DANA" data-type="ewallet">DANA</div>
+                            <div class="payment-option" data-value="GOPAY" data-type="ewallet">GoPay</div>
+                            <div class="payment-option" data-value="OVO" data-type="ewallet">OVO</div>
+                            <div class="payment-option" data-value="SHOPEEPAY" data-type="ewallet">ShopeePay</div>
+                            
+                            <div class="payment-option" data-value="LAINNYA" data-type="other" style="grid-column: span 2;">Lainnya</div>
+                        </div>
+                        
+                        <div id="manual-bank-container">
+                            <input type="text" id="wd-bank-manual" class="input-field" placeholder="Ketik Nama Bank/E-Wallet...">
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="wd-rekening">No. Rekening</label>
+                        <label for="wd-rekening" id="label-rekening">No. Rekening</label>
                          <div class="input-group">
                             <span class="input-icon material-symbols-outlined">pin</span>
                             <input type="number" id="wd-rekening" class="input-field" placeholder="0123456789" required>
@@ -821,11 +1049,13 @@
     <script>
         // --- KONFIGURASI JSONBIN ---
         const BIN_ID = '6905803fae596e708f3baa25';
-        const API_KEY = '$2a$10$ziNrwiYaAO5/AfgfNP218OKOtjLxTV6c7Zau9vLmygY35FQ36jlci';
+        const API_KEY = '$2a$10$4v5UzmjJBEf7T6RUlR7CfeJERCrf/waXNcO7pxUk3OYGOzBNLJ7Fy';
+        
         const API_URL_READ = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
         const API_URL_WRITE = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
         let globalBinRecord = null;
         let currentUser = null;
+        let massIdentifiedUsers = []; // Untuk menyimpan user yg ditemukan via mass tool
         
         // --- Seleksi Elemen ---
         document.addEventListener('DOMContentLoaded', function() {
@@ -855,6 +1085,20 @@
             const bulkRewardInput = document.getElementById('bulk-reward-input');
             const bulkSaveBtn = document.getElementById('bulk-save-btn');
             const searchEmailInput = document.getElementById('search-email-input');
+            // Elemen Admin Baru
+            const resetAllRewardBtn = document.getElementById('reset-all-reward-btn');
+            const globalSetUnclaimedBtn = document.getElementById('global-set-unclaimed-btn');
+            const globalSetClaimedBtn = document.getElementById('global-set-claimed-btn');
+
+            const massEmailInput = document.getElementById('mass-email-input');
+            const massCheckBtn = document.getElementById('mass-check-btn');
+            const massResultInfo = document.getElementById('mass-result-info');
+            const foundCountSpan = document.getElementById('found-count');
+            const notFoundCountSpan = document.getElementById('not-found-count');
+            const massSetClaimedBtn = document.getElementById('mass-set-claimed-btn');
+            const massSetUnclaimedBtn = document.getElementById('mass-set-unclaimed-btn');
+            // Elemen Hapus Input
+            const massClearInputBtn = document.getElementById('mass-clear-input-btn');
             
             const adminPromptScreen = document.getElementById('admin-prompt-screen');
             const adminPassForm = document.getElementById('admin-pass-form');
@@ -865,10 +1109,17 @@
             const withdrawScreen = document.getElementById('withdraw-screen');
             const withdrawBackBtn = document.getElementById('withdraw-back-btn');
             const withdrawForm = document.getElementById('withdraw-form');
-            const withdrawSubmitBtn = document.getElementById('withdraw-submit-btn'); // Selektor baru
+            const withdrawSubmitBtn = document.getElementById('withdraw-submit-btn'); 
             const wdTotalDisplay = document.getElementById('wd-total-display');
             const wdEmailDisplay = document.getElementById('wd-email-display');
             const wdWaDisplay = document.getElementById('wd-wa-display');
+            // Elemen Withdraw Baru
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const manualBankContainer = document.getElementById('manual-bank-container');
+            const manualBankInput = document.getElementById('wd-bank-manual');
+            const finalBankInput = document.getElementById('wd-bank-final');
+            const labelRekening = document.getElementById('label-rekening');
+
             
             // --- Logika Confetti ---
             const confettiCanvas = document.getElementById('confetti-canvas');
@@ -906,7 +1157,7 @@
             // --- Fungsi untuk MEMBACA data dari JSONBin ---
             async function fetchJsonBinData(containerForLoading) {
                 if (containerForLoading === 'login') {
-                    setLoading(true); // Dihapus: Teks (diatur di setLoading)
+                    setLoading(true); 
                 } else if (containerForLoading === 'admin') {
                     adminDataContainer.innerHTML = 'Memuat data...';
                 }
@@ -945,7 +1196,7 @@
                 }
             }
             
-            // --- Logika Login (DIPERBARUI) ---
+            // --- Logika Login ---
             loginForm.addEventListener('submit', async function(event) {
                 event.preventDefault(); 
                 const email = emailInput.value.toLowerCase();
@@ -971,21 +1222,18 @@
                     }
 
                     const rewardValue = foundUser.reward;
-                    if (rewardValue && rewardValue.trim() !== "") {
+                    if (rewardValue && rewardValue.trim() !== "" && rewardValue !== "0") {
                         currentUser = foundUser; 
                         
                         login.classList.add('hidden');
                         loadingScreen.classList.remove('hidden');
                         
-                        // --- ANIMASI BARU: Panggil count-up ---
                         animateCountUp(rewardAmountSpan, parseFloat(rewardValue), 1000);
 
                         setTimeout(() => {
                             loadingScreen.classList.add('hidden');
                             
                             const formattedReward = new Intl.NumberFormat('id-ID').format(rewardValue);
-                            
-                            // Hapus: rewardAmountSpan.textContent (sudah di-handle count-up)
                             
                             document.getElementById('wd-total').value = `Rp ${formattedReward}`;
                             document.getElementById('wd-whatsapp').value = currentUser.telepon;
@@ -1004,7 +1252,7 @@
                         }, 2500);
                         
                     } else {
-                        showMessage('Email anda tidak masuk dalam List Payment', 'error');
+                        showMessage('Email anda tidak masuk dalam List Payment atau reward 0', 'error');
                     }
                     
                 } else {
@@ -1018,12 +1266,11 @@
                 rewardScreen.classList.add('hidden'); // Jalankan animasi keluar
                 login.classList.remove('hidden'); // Jalankan animasi masuk
                 
-                // Reset form di 'hidden' state
                 setTimeout(() => {
                     emailInput.value = '';
                     whatsappInput.value = '';
                     signInBtn.disabled = false;
-                }, 400); // 400ms = durasi transisi
+                }, 400); 
             });
             
             withdrawBtn.addEventListener('click', function() {
@@ -1040,11 +1287,61 @@
                     rewardScreen.classList.add('show');
                 }, 10);
             });
+
+            // --- LOGIKA PEMILIHAN BANK (Baru) ---
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // 1. Reset kelas 'selected' dari semua opsi
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // 2. Tambah kelas 'selected' ke yang diklik
+                    this.classList.add('selected');
+                    
+                    const value = this.getAttribute('data-value');
+                    const type = this.getAttribute('data-type');
+                    
+                    // 3. Atur input hidden
+                    if (value === 'LAINNYA') {
+                        manualBankContainer.classList.add('visible');
+                        finalBankInput.value = ""; // Akan diisi dari input manual
+                        labelRekening.textContent = "No. Rekening / E-Wallet";
+                    } else {
+                        manualBankContainer.classList.remove('visible');
+                        manualBankInput.value = ""; // Bersihkan input manual
+                        finalBankInput.value = value;
+                        
+                        // 4. Ubah Label
+                        if (type === 'ewallet') {
+                            labelRekening.textContent = "Nomor HP";
+                        } else {
+                            labelRekening.textContent = "No. Rekening";
+                        }
+                    }
+                });
+            });
             
             withdrawForm.addEventListener('submit', async function(event) {
                 event.preventDefault();
+                
+                // VALIDASI BANK
+                let bankName = finalBankInput.value;
+                
+                // Cek apakah user memilih 'LAINNYA' (cek dari kelas selected)
+                const selectedOption = document.querySelector('.payment-option.selected');
+                if (!selectedOption) {
+                    showMessage('Pilih metode transfer dulu!', 'error');
+                    return;
+                }
+                
+                if (selectedOption.getAttribute('data-value') === 'LAINNYA') {
+                    bankName = manualBankInput.value.trim();
+                    if (!bankName) {
+                        showMessage('Isi nama bank/e-wallet manual!', 'error');
+                        manualBankInput.focus();
+                        return;
+                    }
+                }
 
-                // EFEK BARU: Tampilkan loading
                 withdrawSubmitBtn.disabled = true;
                 withdrawSubmitBtn.classList.add('loading');
 
@@ -1067,7 +1364,7 @@
                     }
 
                     const nama = document.getElementById('wd-nama').value;
-                    const bank = document.getElementById('wd-bank').value;
+                    // Gunakan bankName yang sudah divalidasi di atas
                     const rekening = document.getElementById('wd-rekening').value;
                     const total = document.getElementById('wd-total').value;
                     const whatsapp = document.getElementById('wd-whatsapp').value;
@@ -1080,25 +1377,28 @@ No. WA: ${whatsapp}
 Total Reward: ${total}
 *Tujuan Transfer:*
 Atas Nama: ${nama}
-Nama Bank: ${bank}
-No. Rekening: ${rekening}
+Metode: ${bankName}
+No. Rekening/HP: ${rekening}
 Terima kasih.`;
                     
                     const encodedMessage = encodeURIComponent(message);
-                    const waURL = `https://wa.me/6289513304878?text=${encodedMessage}`;
+                    const waURL = `https://wa.me/6282329106594?text=${encodedMessage}`;
                     
                     window.open(waURL, '_blank');
                     
                     withdrawScreen.classList.add('hidden');
                     login.classList.remove('hidden');
                     
-                    // Reset form di 'hidden' state
                     setTimeout(() => {
                         emailInput.value = '';
                         whatsappInput.value = '';
                         document.getElementById('wd-nama').value = '';
-                        document.getElementById('wd-bank').value = '';
                         document.getElementById('wd-rekening').value = '';
+                        // Reset pilihan bank
+                        paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                        manualBankContainer.classList.remove('visible');
+                        manualBankInput.value = '';
+                        finalBankInput.value = '';
                     }, 400);
                     
                     currentUser = null;
@@ -1108,7 +1408,6 @@ Terima kasih.`;
                     showMessage(error.message || 'Gagal memproses withdraw.', 'error');
                 
                 } finally {
-                    // EFEK BARU: Sembunyikan loading
                     withdrawSubmitBtn.disabled = false;
                     withdrawSubmitBtn.classList.remove('loading');
                 }
@@ -1119,7 +1418,7 @@ Terima kasih.`;
             adminBtn.addEventListener('click', function(event) {
                 event.preventDefault();
                 adminPromptScreen.classList.remove('hidden');
-                setTimeout(() => { // Kasih delay sedikit agar animasi 'show' bekerja
+                setTimeout(() => { 
                     adminPromptScreen.classList.add('show'); 
                     adminPassInput.focus();
                 }, 10);
@@ -1139,19 +1438,16 @@ Terima kasih.`;
                 const passBtn = adminPassForm.querySelector('.sign-in-btn');
                 
                 if (password === '2003') {
-                    // Tampilkan loading di tombol sandi
                     passBtn.classList.add('loading');
                     passBtn.disabled = true;
 
-                    const data = await fetchJsonBinData('admin'); // Pindahkan fetch ke sini
+                    const data = await fetchJsonBinData('admin'); 
 
-                    // Sembunyikan prompt dan login
                     adminPromptScreen.classList.remove('show');
                     adminPromptScreen.classList.add('hidden');
                     login.classList.add('hidden');
-                    adminScreen.classList.remove('hidden'); // Tampilkan admin
+                    adminScreen.classList.remove('hidden'); 
 
-                    // Reset tombol sandi
                     setTimeout(() => {
                         adminPassInput.value = '';
                         passBtn.classList.remove('loading');
@@ -1188,7 +1484,7 @@ Terima kasih.`;
                     return;
                 }
                 
-                users.forEach((user, index) => { // Tambahkan 'index'
+                users.forEach((user, index) => { 
                     const card = document.createElement('div');
                     card.className = 'user-card';
                     const status = user.status || 'N/A';
@@ -1221,7 +1517,6 @@ Terima kasih.`;
                         </div>
                     `;
                     
-                    // --- ANIMASI BARU: Terapkan delay per kartu ---
                     card.style.animationDelay = `${index * 0.05}s`;
                     
                     adminDataContainer.appendChild(card);
@@ -1237,6 +1532,10 @@ Terima kasih.`;
                     bulkRewardInput.value = '';
                     bulkSaveBtn.disabled = true;
                     searchEmailInput.value = '';
+                    massEmailInput.value = '';
+                    massResultInfo.style.display = 'none';
+                    massSetClaimedBtn.disabled = true;
+                    massSetUnclaimedBtn.disabled = true;
                 }, 400);
             });
             
@@ -1265,7 +1564,187 @@ Terima kasih.`;
             statusFilter.addEventListener('change', filterAdminView);
             searchEmailInput.addEventListener('input', filterAdminView);
             
-            
+            // --- FITUR: Reset Semua Reward (Global) ---
+            resetAllRewardBtn.addEventListener('click', async function() {
+                if (!confirm('PERINGATAN: Ini akan menghapus reward SEMUA user (menjadi 0). Apakah Anda yakin?')) {
+                    return;
+                }
+                
+                this.disabled = true;
+                this.textContent = 'Resetting...';
+                
+                // Update semua user di memory
+                globalBinRecord.users.forEach(user => {
+                    user.reward = "0";
+                });
+                
+                const success = await updateJsonBinData(globalBinRecord);
+                
+                if (success) {
+                    filterAdminView(); 
+                    displayAdminCards(globalBinRecord.users);
+                    filterAdminView(); // Apply filter again
+                    alert('Semua reward berhasil di-reset!');
+                } else {
+                    alert('Gagal mereset reward.');
+                }
+                
+                this.disabled = false;
+                this.textContent = 'Reset Reward 0';
+            });
+
+             // --- FITUR BARU: Global Set Unclaimed ---
+             globalSetUnclaimedBtn.addEventListener('click', async function() {
+                if (!confirm('PERINGATAN: Anda akan mengubah status SEMUA user menjadi "Belum Claim". Lanjutkan?')) {
+                    return;
+                }
+                
+                this.disabled = true;
+                this.textContent = 'Processing...';
+                
+                globalBinRecord.users.forEach(user => {
+                    user.claim_status = ''; // Kosongkan status
+                });
+                
+                const success = await updateJsonBinData(globalBinRecord);
+                
+                if (success) {
+                    filterAdminView(); 
+                    displayAdminCards(globalBinRecord.users);
+                    filterAdminView();
+                    alert('Berhasil mereset semua status ke "Belum Claim".');
+                } else {
+                    alert('Gagal mengubah status.');
+                }
+                
+                this.disabled = false;
+                this.textContent = 'Set Semua "Belum Claim"';
+            });
+
+            // --- FITUR BARU: Global Set Claimed ---
+            globalSetClaimedBtn.addEventListener('click', async function() {
+                if (!confirm('PERINGATAN: Anda akan mengubah status SEMUA user menjadi "Claimed". Lanjutkan?')) {
+                    return;
+                }
+                
+                this.disabled = true;
+                this.textContent = 'Processing...';
+                
+                globalBinRecord.users.forEach(user => {
+                    user.claim_status = 'claimed';
+                });
+                
+                const success = await updateJsonBinData(globalBinRecord);
+                
+                if (success) {
+                    filterAdminView(); 
+                    displayAdminCards(globalBinRecord.users);
+                    filterAdminView();
+                    alert('Berhasil mengubah semua status ke "Claimed".');
+                } else {
+                    alert('Gagal mengubah status.');
+                }
+                
+                this.disabled = false;
+                this.textContent = 'Set Semua "Claimed"';
+            });
+
+            // --- FITUR: Hapus Input (Tombol X) ---
+            massClearInputBtn.addEventListener('click', function() {
+                massEmailInput.value = '';
+                massResultInfo.style.display = 'none';
+                massSetClaimedBtn.disabled = true;
+                massSetUnclaimedBtn.disabled = true;
+                massIdentifiedUsers = [];
+            });
+
+            // --- FITUR: Mass Email Check ---
+            massCheckBtn.addEventListener('click', function() {
+                const rawText = massEmailInput.value;
+                if (!rawText.trim()) {
+                    alert('Silakan tempel daftar email terlebih dahulu.');
+                    return;
+                }
+
+                // Pisahkan per baris, trim, lowercase, dan filter yang kosong
+                const inputEmails = rawText.split(/\r?\n/).map(e => e.trim().toLowerCase()).filter(e => e);
+                
+                massIdentifiedUsers = [];
+                let notFoundCount = 0;
+                let foundCount = 0;
+                
+                // Cari kecocokan di globalBinRecord
+                if (globalBinRecord && globalBinRecord.users) {
+                    // Untuk setiap email input, cek apakah ada di DB
+                    // Menggunakan filter agar jika ada duplikat di input tetap terhitung, 
+                    // tapi lebih baik kita cari usernya saja.
+                    
+                    // Cara 1: Cari user yang emailnya ada di input list
+                    massIdentifiedUsers = globalBinRecord.users.filter(user => 
+                        inputEmails.includes(user.email.toLowerCase())
+                    );
+                    
+                    foundCount = massIdentifiedUsers.length;
+                    notFoundCount = inputEmails.length - foundCount; // Estimasi kasar (asumsi input unik)
+                }
+
+                // Update UI
+                foundCountSpan.textContent = foundCount;
+                notFoundCountSpan.textContent = notFoundCount >= 0 ? notFoundCount : 0;
+                massResultInfo.style.display = 'block';
+
+                if (foundCount > 0) {
+                    massSetClaimedBtn.disabled = false;
+                    massSetUnclaimedBtn.disabled = false;
+                } else {
+                    massSetClaimedBtn.disabled = true;
+                    massSetUnclaimedBtn.disabled = true;
+                }
+            });
+
+            // --- FITUR: Mass Set Status ---
+            async function handleMassStatusChange(newStatus) {
+                if (massIdentifiedUsers.length === 0) return;
+                
+                const actionName = newStatus === 'claimed' ? 'Claimed' : 'Belum Claim';
+                if (!confirm(`Ubah status ${massIdentifiedUsers.length} user yang teridentifikasi menjadi "${actionName}"?`)) {
+                    return;
+                }
+
+                // Disable buttons
+                massSetClaimedBtn.disabled = true;
+                massSetUnclaimedBtn.disabled = true;
+
+                // Update data di memory globalBinRecord
+                // Kita harus update object asli di globalBinRecord, bukan copy di massIdentifiedUsers
+                massIdentifiedUsers.forEach(identifiedUser => {
+                    const originalUser = globalBinRecord.users.find(u => u.id === identifiedUser.id);
+                    if (originalUser) {
+                        originalUser.claim_status = newStatus;
+                    }
+                });
+
+                // Simpan ke server
+                const success = await updateJsonBinData(globalBinRecord);
+
+                if (success) {
+                    displayAdminCards(globalBinRecord.users); // Refresh UI kartu
+                    filterAdminView(); // Apply filter search/status jika ada
+                    alert(`Berhasil mengubah status masal ke: ${actionName}`);
+                } else {
+                    alert('Gagal menyimpan perubahan masal.');
+                }
+
+                // Enable buttons kembali
+                massSetClaimedBtn.disabled = false;
+                massSetUnclaimedBtn.disabled = false;
+            }
+
+            massSetClaimedBtn.addEventListener('click', () => handleMassStatusChange('claimed'));
+            massSetUnclaimedBtn.addEventListener('click', () => handleMassStatusChange(''));
+
+
+            // --- Existing Bulk Save Logic ---
             bulkSaveBtn.addEventListener('click', async function() {
                 const statusToUpdate = statusFilter.value;
                 const rewardValue = bulkRewardInput.value;
@@ -1379,7 +1858,6 @@ Terima kasih.`;
 
             // --- Fungsi Bantuan (Helper) ---
 
-            // --- FUNGSI DIUBAH: setLoading ---
             function setLoading(isLoading) {
                 signInBtn.disabled = isLoading;
                 if (isLoading) {
@@ -1405,7 +1883,6 @@ Terima kasih.`;
                 }, 3500);
             }
 
-            // --- FUNGSI BARU: Animasi Hitung Angka ---
             function animateCountUp(el, to, duration = 1500) {
                 let start = 0;
                 const end = to;
@@ -1416,7 +1893,6 @@ Terima kasih.`;
                     const timeElapsed = currentTime - startTime;
                     const progress = Math.min(timeElapsed / duration, 1);
                     
-                    // Fungsi easing (easeOutQuad)
                     const easedProgress = 1 - Math.pow(1 - progress, 3);
                     
                     let currentValue = Math.floor(easedProgress * (end - start) + start);
@@ -1432,8 +1908,6 @@ Terima kasih.`;
                 requestAnimationFrame(animation);
             }
             
-            // --- INISIALISASI ---
-            // (Splash screen sudah diatur di HTML untuk tampil)
         });
     </script>
 </body>
